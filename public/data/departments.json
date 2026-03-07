@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "IT",
+    "manager": "Nguyen Minh Khoa",
+    "employees": 180
+  },
+  {
+    "id": 2,
+    "name": "Marketing",
+    "manager": "Tran Thi Anh",
+    "employees": 160
+  },
+  {
+    "id": 3,
+    "name": "Sales",
+    "manager": "Le Hoang Nam",
+    "employees": 220
+  },
+  {
+    "id": 4,
+    "name": "Customer Service",
+    "manager": "Pham Thu Ha",
+    "employees": 170
+  },
+  {
+    "id": 5,
+    "name": "Logistics",
+    "manager": "Vo Quoc Bao",
+    "employees": 190
+  },
+  {
+    "id": 6,
+    "name": "Human Resources",
+    "manager": "Nguyen Thi Lan",
+    "employees": 80
+  }
+]

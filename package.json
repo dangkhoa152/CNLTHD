@@ -1,0 +1,15 @@
+{
+  "name": "hr-dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.11.3",
+    "chart.js": "^4.5.1",
+    "nuxt": "^4.3.1"
+  }
+}
