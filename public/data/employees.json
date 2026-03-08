@@ -1,0 +1,35 @@
+[
+  {
+    "id": "EMP001",
+    "name": "Nguyễn Văn A",
+    "email": "nva@congty.com",
+    "phone": "0901234567",
+    "avatar": "https://i.pravatar.cc/150?u=EMP001",
+    "department": "Phòng IT",
+    "position": "Frontend Developer",
+    "status": "Đang làm việc",
+    "joinDate": "2023-05-15"
+  },
+  {
+    "id": "EMP002",
+    "name": "Trần Thị B",
+    "email": "ttb@congty.com",
+    "phone": "0987654321",
+    "avatar": "https://i.pravatar.cc/150?u=EMP002",
+    "department": "Phòng Nhân sự",
+    "position": "HR Specialist",
+    "status": "Đang làm việc",
+    "joinDate": "2022-08-10"
+  },
+  {
+    "id": "EMP003",
+    "name": "Lê Hoàng C",
+    "email": "lhc@congty.com",
+    "phone": "0912345678",
+    "avatar": "https://i.pravatar.cc/150?u=EMP003",
+    "department": "Phòng Marketing",
+    "position": "Content Creator",
+    "status": "Thử việc",
+    "joinDate": "2026-02-01"
+  }
+]

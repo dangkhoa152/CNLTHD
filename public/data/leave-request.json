@@ -1,0 +1,32 @@
+[
+  {
+    "id": "LR001",
+    "employeeId": "EMP001",
+    "employeeName": "Nguyễn Văn A",
+    "type": "Nghỉ ốm",
+    "startDate": "2026-03-09",
+    "endDate": "2026-03-10",
+    "reason": "Sốt virus, cần đi khám",
+    "status": "Chờ duyệt"
+  },
+  {
+    "id": "LR002",
+    "employeeId": "EMP002",
+    "employeeName": "Trần Thị B",
+    "type": "Nghỉ phép năm",
+    "startDate": "2026-03-15",
+    "endDate": "2026-03-18",
+    "reason": "Giải quyết việc gia đình",
+    "status": "Đã duyệt"
+  },
+  {
+    "id": "LR003",
+    "employeeId": "EMP003",
+    "employeeName": "Lê Hoàng C",
+    "type": "Nghỉ không lương",
+    "startDate": "2026-02-25",
+    "endDate": "2026-02-25",
+    "reason": "Sửa nhà",
+    "status": "Từ chối"
+  }
+]
