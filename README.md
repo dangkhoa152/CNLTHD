@@ -17,13 +17,13 @@ Hiện tại dự án đang hoạt động độc lập ở phía Frontend (SPA)
 **Bước 1: Clone dự án và cài đặt thư viện**
 Mở terminal tại thư mục gốc của dự án và chạy lệnh sau để tải các thư viện cần thiết:
 
-    `npm install`
+    npm install
 
-**Bước 2: cài đặt thư viện Pinaa và tailwindcss cho nuxt**
+**Bước 2: cài đặt thư viện Pinia và tailwindcss cho nuxt**
 
-    `npm install pinia @pinia/nuxt`
+    npm install pinia @pinia/nuxt
 
-    `npm install -D @nuxtjs/tailwindcss`
+    npm install -D @nuxtjs/tailwindcss
 
 **Bước 3: Khởi động Server Development**
 
