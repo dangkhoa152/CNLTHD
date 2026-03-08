@@ -1,0 +1,23 @@
+[
+  {
+    "id": "DEP01",
+    "name": "Phòng IT",
+    "manager": "Đinh Văn D",
+    "employeeCount": 25,
+    "budget": 150000000
+  },
+  {
+    "id": "DEP02",
+    "name": "Phòng Nhân sự",
+    "manager": "Trần Thị B",
+    "employeeCount": 5,
+    "budget": 50000000
+  },
+  {
+    "id": "DEP03",
+    "name": "Phòng Marketing",
+    "manager": "Phạm Văn E",
+    "employeeCount": 12,
+    "budget": 80000000
+  }
+]
