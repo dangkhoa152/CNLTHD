@@ -1,0 +1,44 @@
+[
+  {
+    "id": "DEP01",
+    "name": "Phòng IT",
+    "manager": "Nguyễn Minh Tuấn",
+    "budget": 250000000,
+    "employeeCount": 169
+  },
+  {
+    "id": "DEP02",
+    "name": "Phòng Nhân sự",
+    "manager": "Trần Thu Hà",
+    "budget": 120000000,
+    "employeeCount": 153
+  },
+  {
+    "id": "DEP03",
+    "name": "Phòng Marketing",
+    "manager": "Lê Hoàng Nam",
+    "budget": 180000000,
+    "employeeCount": 169
+  },
+  {
+    "id": "DEP04",
+    "name": "Phòng Kế toán",
+    "manager": "Phạm Thị Mai",
+    "budget": 150000000,
+    "employeeCount": 185
+  },
+  {
+    "id": "DEP05",
+    "name": "Phòng Kinh doanh",
+    "manager": "Đỗ Quốc Bảo",
+    "budget": 300000000,
+    "employeeCount": 145
+  },
+  {
+    "id": "DEP06",
+    "name": "Phòng Chăm sóc khách hàng",
+    "manager": "Võ Ngọc Anh",
+    "budget": 140000000,
+    "employeeCount": 179
+  }
+]
