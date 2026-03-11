@@ -2,19 +2,41 @@
   {
     "id": 1,
     "type": "login",
-    "message": "Admin đã đăng nhập vào hệ thống",
-    "time": "2026-03-09 08:30"
+    "title": "Đăng nhập hệ thống",
+    "user": "Admin HR",
+    "target": "",
+    "time": "2026-03-11 13:09"
   },
   {
     "id": 2,
-    "type": "update",
-    "message": "Cập nhật thông tin nhân viên Nguyễn Thị Lan",
-    "time": "2026-03-09 09:00"
+    "type": "create",
+    "title": "Thêm mới nhân viên",
+    "user": "Admin HR",
+    "target": "Nguyễn Văn A",
+    "time": "2026-03-11 12:30"
   },
   {
     "id": 3,
+    "type": "approve",
+    "title": "Duyệt đơn nghỉ phép",
+    "user": "Admin HR",
+    "target": "Trần Thị B",
+    "time": "2026-03-11 11:45"
+  },
+  {
+    "id": 4,
+    "type": "update",
+    "title": "Cập nhật phòng ban",
+    "user": "Admin HR",
+    "target": "Phòng IT",
+    "time": "2026-03-11 10:20"
+  },
+  {
+    "id": 5,
     "type": "theme",
-    "message": "Chuyển giao diện sang Dark Mode",
-    "time": "2026-03-09 09:15"
+    "title": "Chuyển sang Dark Mode",
+    "user": "Admin HR",
+    "target": "",
+    "time": "2026-03-11 09:50"
   }
 ]
