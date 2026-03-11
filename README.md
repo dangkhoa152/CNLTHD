@@ -19,19 +19,15 @@ Mở terminal tại thư mục gốc của dự án và chạy lệnh sau để 
 
     npm install
 
-**Bước 2: cài đặt thư viện Pinaa và tailwindcss cho nuxt**
+**Bước 2: cài đặt thư viện Pinia và tailwindcss cho nuxt**
 
     npm install pinia @pinia/nuxt
 
     npm install -D @nuxtjs/tailwindcss
 
-    npm install -D @nuxtjs/color-mode
-
-    npm install chart.js vue-chartjs
-
 **Bước 3: Khởi động Server Development**
 
-    npm run dev
+    `npm run dev`
 
 Sau khi terminal báo khởi chạy thành công, mở trình duyệt và truy cập vào đường dẫn: http://localhost:3000
 
