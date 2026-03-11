@@ -1,0 +1,50 @@
+[
+  {
+    "id": "EMP-2026-001",
+    "personalInfo": {
+      "fullName": "Nguyễn Văn An",
+      "gender": "Nam",
+      "dateOfBirth": "1995-08-15",
+      "phone": "0901234567",
+      "email": "an.nguyen@company.com",
+      "address": "Quận 1, TP. Hồ Chí Minh",
+      "avatar": "https://i.pravatar.cc/150?u=EMP-2026-001"
+    },
+    "jobInfo": {
+      "departmentId": "DEP-IT",
+      "position": "Senior Frontend Developer",
+      "employmentType": "Toàn thời gian",
+      "joinDate": "2023-05-10",
+      "status": "Đang làm việc"
+    },
+    "financialInfo": {
+      "baseSalary": 25000000,
+      "bankName": "Vietcombank",
+      "bankAccount": "10123456789"
+    }
+  },
+  {
+    "id": "EMP-2026-002",
+    "personalInfo": {
+      "fullName": "Trần Thị Bích",
+      "gender": "Nữ",
+      "dateOfBirth": "1998-02-20",
+      "phone": "0987654321",
+      "email": "bich.tran@company.com",
+      "address": "Quận 7, TP. Hồ Chí Minh",
+      "avatar": "https://i.pravatar.cc/150?u=EMP-2026-002"
+    },
+    "jobInfo": {
+      "departmentId": "DEP-HR",
+      "position": "HR Specialist",
+      "employmentType": "Toàn thời gian",
+      "joinDate": "2024-01-15",
+      "status": "Thử việc"
+    },
+    "financialInfo": {
+      "baseSalary": 15000000,
+      "bankName": "Techcombank",
+      "bankAccount": "190333444555"
+    }
+  }
+]
