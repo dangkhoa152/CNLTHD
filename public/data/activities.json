@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "type": "login",
+    "message": "Admin đã đăng nhập vào hệ thống",
+    "time": "2026-03-09 08:30"
+  },
+  {
+    "id": 2,
+    "type": "update",
+    "message": "Cập nhật thông tin nhân viên Nguyễn Thị Lan",
+    "time": "2026-03-09 09:00"
+  },
+  {
+    "id": 3,
+    "type": "theme",
+    "message": "Chuyển giao diện sang Dark Mode",
+    "time": "2026-03-09 09:15"
+  }
+]
