@@ -58,6 +58,8 @@ const router = useRouter()
 const email = ref('admin@company.com')
 const password = ref('123456')
 
+const dashboard = useDashboardStore()
+
 async function handleLogin() {
   const result = await auth.login(email.value, password.value)
 
@@ -66,7 +68,13 @@ async function handleLogin() {
     return
   }
 
+  dashboard.addActivity({
+    type: 'login',
+    title: 'Đăng nhập hệ thống',
+    user: auth.user?.name || 'Admin HR'
+  })
+
   toast.success(result.message)
-  router.push('/')
+  await navigateTo('/')
 }
 </script>
