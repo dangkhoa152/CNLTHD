@@ -4,14 +4,21 @@
 
     <div class="space-y-4">
       <div
-        v-for="item in activities"
+        v-for="item in activities.slice(0, 6)"
         :key="item.id"
         class="flex gap-3"
       >
-        <div class="mt-1 h-3 w-3 rounded-full bg-blue-500 shrink-0" />
+        <div
+          class="mt-1 h-3 w-3 rounded-full shrink-0"
+          :class="dotClass(item.type)"
+        />
         <div>
-          <p class="text-sm font-medium">{{ item.message }}</p>
-          <p class="text-xs text-gray-500 dark:text-gray-400">{{ item.time }}</p>
+          <p class="text-sm font-semibold">{{ item.title }}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            bởi {{ item.user }}
+            <span v-if="item.target">• {{ item.target }}</span>
+          </p>
+          <p class="text-xs text-gray-400 mt-1">{{ item.time }}</p>
         </div>
       </div>
     </div>
@@ -25,4 +32,25 @@ defineProps({
     default: () => []
   }
 })
+
+function dotClass(type) {
+  switch (type) {
+    case 'login':
+      return 'bg-blue-500'
+    case 'create':
+      return 'bg-green-500'
+    case 'update':
+      return 'bg-yellow-500'
+    case 'approve':
+      return 'bg-purple-500'
+    case 'reject':
+      return 'bg-red-500'
+    case 'theme':
+      return 'bg-gray-500'
+    case 'delete':
+      return 'bg-pink-500'
+    default:
+      return 'bg-blue-500'
+  }
+}
 </script>

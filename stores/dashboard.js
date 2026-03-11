@@ -5,24 +5,78 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const activities = ref([])
   const loading = ref(false)
 
+  function getNowString() {
+    const now = new Date()
+    const yyyy = now.getFullYear()
+    const mm = String(now.getMonth() + 1).padStart(2, '0')
+    const dd = String(now.getDate()).padStart(2, '0')
+    const hh = String(now.getHours()).padStart(2, '0')
+    const mi = String(now.getMinutes()).padStart(2, '0')
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi}`
+  }
+
+  function saveActivitiesToLocal() {
+    if (process.client) {
+      localStorage.setItem('hrm_activities', JSON.stringify(activities.value))
+    }
+  }
+
+  function loadActivitiesFromLocal() {
+    if (process.client) {
+      const saved = localStorage.getItem('hrm_activities')
+      if (saved) {
+        activities.value = JSON.parse(saved)
+      }
+    }
+  }
+
   async function fetchAll() {
     loading.value = true
 
     try {
-      const [employeesData, departmentsData, leaveData, activitiesData] = await Promise.all([
+      const [employeesData, departmentsData, leaveData] = await Promise.all([
         $fetch('/data/employees.json'),
         $fetch('/data/departments.json'),
-        $fetch('/data/leave-request.json'),
-        $fetch('/data/activities.json')
+        $fetch('/data/leave-request.json')
       ])
 
       employees.value = employeesData
       departments.value = departmentsData
       leaveRequests.value = leaveData
-      activities.value = activitiesData
+
+      if (process.client) {
+        const saved = localStorage.getItem('hrm_activities')
+
+        if (saved) {
+          activities.value = JSON.parse(saved)
+        } else {
+          const activitiesData = await $fetch('/data/activities.json')
+          activities.value = activitiesData
+          saveActivitiesToLocal()
+        }
+      }
     } finally {
       loading.value = false
     }
+  }
+
+  function addActivity({ type, title, user, target = '' }) {
+    const newActivity = {
+      id: Date.now(),
+      type,
+      title,
+      user,
+      target,
+      time: getNowString()
+    }
+
+    activities.value.unshift(newActivity)
+
+    if (activities.value.length > 20) {
+      activities.value = activities.value.slice(0, 20)
+    }
+
+    saveActivitiesToLocal()
   }
 
   const totalEmployees = computed(() => employees.value.length)
@@ -37,11 +91,10 @@ export const useDashboardStore = defineStore('dashboard', () => {
     employees.value.filter(item => item.status === 'Đang làm việc').length
   )
 
-  // Biểu đồ tròn hiển thị tỷ lệ nhân viên theo phòng ban
   const employeesByDepartment = computed(() => {
     return departments.value.map(department => {
       const count = employees.value.filter(
-        employee => employee.department === department.name
+        employee => employee.departmentId === department.id
       ).length
 
       return {
@@ -51,7 +104,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
     })
   })
 
-  // Biểu đồ cột theo trạng thái nhân viên
   const employeesByStatus = computed(() => {
     const statusMap = {
       'Đang làm việc': 0,
@@ -79,6 +131,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
     activities,
     loading,
     fetchAll,
+    addActivity,
+    loadActivitiesFromLocal,
     totalEmployees,
     totalDepartments,
     pendingLeaveRequests,
