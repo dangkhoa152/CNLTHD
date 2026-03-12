@@ -5,43 +5,33 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const departments = [
-  {
-    id: 'DEP01',
-    name: 'Phòng IT',
-    manager: 'Nguyễn Minh Tuấn',
-    budget: 250000000
-  },
-  {
-    id: 'DEP02',
-    name: 'Phòng Nhân sự',
-    manager: 'Trần Thu Hà',
-    budget: 120000000
-  },
-  {
-    id: 'DEP03',
-    name: 'Phòng Marketing',
-    manager: 'Lê Hoàng Nam',
-    budget: 180000000
-  },
-  {
-    id: 'DEP04',
-    name: 'Phòng Kế toán',
-    manager: 'Phạm Thị Mai',
-    budget: 150000000
-  },
-  {
-    id: 'DEP05',
-    name: 'Phòng Kinh doanh',
-    manager: 'Đỗ Quốc Bảo',
-    budget: 300000000
-  },
-  {
-    id: 'DEP06',
-    name: 'Phòng Chăm sóc khách hàng',
-    manager: 'Võ Ngọc Anh',
-    budget: 140000000
-  }
+const departmentsSeed = [
+  { id: 'DEP01', name: 'Phòng IT', budget: 250000000 },
+  { id: 'DEP02', name: 'Phòng Nhân sự', budget: 120000000 },
+  { id: 'DEP03', name: 'Phòng Marketing', budget: 180000000 },
+  { id: 'DEP04', name: 'Phòng Kế toán', budget: 150000000 },
+  { id: 'DEP05', name: 'Phòng Kinh doanh', budget: 300000000 },
+  { id: 'DEP06', name: 'Phòng Chăm sóc khách hàng', budget: 140000000 }
+]
+
+const positionsByDepartment = {
+  'Phòng IT': ['Frontend Developer', 'Backend Developer', 'UI/UX Designer', 'QA Tester', 'System Admin'],
+  'Phòng Nhân sự': ['HR Executive', 'Recruiter', 'C&B Specialist', 'HR Manager'],
+  'Phòng Marketing': ['Content Marketing', 'Digital Marketing', 'Designer', 'Marketing Executive'],
+  'Phòng Kế toán': ['Kế toán viên', 'Kế toán tổng hợp', 'Kế toán trưởng'],
+  'Phòng Kinh doanh': ['Sales Executive', 'Sales Manager', 'Business Development'],
+  'Phòng Chăm sóc khách hàng': ['CSKH Executive', 'Call Center Agent', 'Customer Support Lead']
+}
+
+const cities = [
+  'TP.HCM',
+  'Hà Nội',
+  'Đà Nẵng',
+  'Cần Thơ',
+  'Biên Hòa',
+  'Thủ Đức',
+  'Bình Dương',
+  'Vũng Tàu'
 ]
 
 const lastNames = [
@@ -67,7 +57,14 @@ const firstNamesFemale = [
   'Ngân', 'Yến', 'Hương', 'Quỳnh', 'Chi', 'An'
 ]
 
-const statuses = ['Đang làm việc', 'Đang làm việc', 'Đang làm việc', 'Tạm nghỉ', 'Nghỉ việc']
+const employeeStatuses = [
+  'Đang làm việc',
+  'Đang làm việc',
+  'Đang làm việc',
+  'Đang làm việc',
+  'Tạm nghỉ',
+  'Nghỉ việc'
+]
 
 function randomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
@@ -78,7 +75,8 @@ function randomGender() {
 }
 
 function randomPhone(index) {
-  return `0${Math.floor(100000000 + index).toString().padStart(9, '0').slice(0, 9)}`
+  const prefix = ['032', '033', '034', '035', '036', '037', '038', '039', '070', '076', '077', '078', '079', '081', '082', '083', '084', '085', '086', '088', '089', '090', '091', '093', '094', '096', '097', '098', '099']
+  return `${randomItem(prefix)}${String(1000000 + index).padStart(7, '0').slice(0, 7)}`
 }
 
 function removeVietnamese(str) {
@@ -95,11 +93,19 @@ function slugify(str) {
     .replace(/\s+/g, '')
 }
 
-function randomJoinDate() {
-  const start = new Date('2020-01-01').getTime()
-  const end = new Date('2026-03-01').getTime()
+function randomDate(startDate, endDate) {
+  const start = new Date(startDate).getTime()
+  const end = new Date(endDate).getTime()
   const date = new Date(start + Math.random() * (end - start))
   return date.toISOString().split('T')[0]
+}
+
+function randomJoinDate() {
+  return randomDate('2020-01-01', '2026-03-01')
+}
+
+function randomBirthDate() {
+  return randomDate('1985-01-01', '2003-12-31')
 }
 
 function createName(gender) {
@@ -112,47 +118,60 @@ function createName(gender) {
   return `${lastName} ${randomItem(middleNamesFemale)} ${randomItem(firstNamesFemale)}`
 }
 
-function generateEmployees(count = 1000) {
-  const employees = []
+function createEmployee(i) {
+  const gender = randomGender()
+  const name = createName(gender)
+  const department = randomItem(departmentsSeed)
+  const emailBase = slugify(name)
+  const position = randomItem(positionsByDepartment[department.name])
 
-  for (let i = 1; i <= count; i++) {
-    const gender = randomGender()
-    const name = createName(gender)
-    const department = randomItem(departments)
-
-    const emailBase = slugify(name)
-    const email = `${emailBase}${i}@company.com`
-
-    employees.push({
-      id: i,
-      employeeCode: `EMP${String(i).padStart(4, '0')}`,
-      name,
-      gender,
-      email,
-      phone: randomPhone(i),
-      department: department.name,
-      status: randomItem(statuses),
-      joinDate: randomJoinDate()
-    })
+  return {
+    id: i,
+    employeeCode: `EMP${String(i).padStart(4, '0')}`,
+    name,
+    gender,
+    dateOfBirth: randomBirthDate(),
+    email: `${emailBase}${i}@company.com`,
+    phone: randomPhone(i),
+    address: randomItem(cities),
+    departmentId: department.id,
+    department: department.name,
+    position,
+    status: randomItem(employeeStatuses),
+    joinDate: randomJoinDate(),
+    avatar: '/images/avatar.png'
   }
-
-  return employees
 }
 
-function generateDepartmentsWithCount(employees) {
-  return departments.map(dept => {
-    const employeeCount = employees.filter(emp => emp.department === dept.name).length
+function generateEmployees(count = 1000) {
+  return Array.from({ length: count }, (_, index) => createEmployee(index + 1))
+}
+
+function generateDepartments(employees) {
+  return departmentsSeed.map((dept) => {
+    const employeesInDept = employees.filter(emp => emp.departmentId === dept.id)
+    const manager = employeesInDept.length ? employeesInDept[0].name : 'Chưa cập nhật'
 
     return {
       ...dept,
-      employeeCount
+      manager,
+      employeeCount: employeesInDept.length,
+      description: `Quản lý hoạt động của ${dept.name.toLowerCase()}`
     }
   })
 }
 
+function writeJson(outputDir, fileName, data) {
+  fs.writeFileSync(
+    path.join(outputDir, fileName),
+    JSON.stringify(data, null, 2),
+    'utf-8'
+  )
+}
+
 function main() {
   const employees = generateEmployees(1000)
-  const departmentData = generateDepartmentsWithCount(employees)
+  const departments = generateDepartments(employees)
 
   const outputDir = path.join(__dirname, 'public', 'data')
 
@@ -160,19 +179,12 @@ function main() {
     fs.mkdirSync(outputDir, { recursive: true })
   }
 
-  fs.writeFileSync(
-    path.join(outputDir, 'employees.json'),
-    JSON.stringify(employees, null, 2),
-    'utf-8'
-  )
+  writeJson(outputDir, 'employees.json', employees)
+  writeJson(outputDir, 'departments.json', departments)
 
-  fs.writeFileSync(
-    path.join(outputDir, 'departments.json'),
-    JSON.stringify(departmentData, null, 2),
-    'utf-8'
-  )
-
-  console.log('Đã tạo xong employees.json và departments.json trong public/data')
+  console.log('Đã tạo xong dữ liệu nhân viên và phòng ban trong public/data')
+  console.log('- employees.json')
+  console.log('- departments.json')
 }
 
 main()
