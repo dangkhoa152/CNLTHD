@@ -11,16 +11,23 @@
 import { toast } from 'vue3-toastify'
 
 const theme = useThemeStore()
+const dashboard = useDashboardStore()
+const auth = useAuthStore()
 
 function handleToggle() {
+  const isDarkBefore = theme.currentTheme === 'dark'
   theme.toggleTheme()
 
   setTimeout(() => {
-    toast.info(
-      theme.currentTheme === 'dark'
-        ? 'Đã chuyển sang Dark Mode'
-        : 'Đã chuyển sang Light Mode'
-    )
+    const title = isDarkBefore ? 'Chuyển sang Light Mode' : 'Chuyển sang Dark Mode'
+
+    dashboard.addActivity({
+      type: 'theme',
+      title,
+      user: auth.user?.name || 'Admin HR'
+    })
+
+    toast.info(`Đã cập nhật giao diện`)
   }, 50)
 }
 </script>
