@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-<<template>
-  <div>
-    
-  </div>
-</template>
-
-<script lang="ts" setup>
-
-</script>
-
-<style>
-
-</style>
-=======
 <template>
   <div class="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-lg p-8">
     <div class="text-center mb-8">
@@ -85,4 +70,3 @@ async function handleLogin() {
   router.push('/')
 }
 </script>
->>>>>>> e5d236f68a78a2662329d4cc0879742d1fb8fc1f
