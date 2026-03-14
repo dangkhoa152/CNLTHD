@@ -42,14 +42,6 @@ const filteredEmployees = computed(() => {
 
   return list
 })
-
-// format tiền
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'currency',
-    currency: 'VND'
-  }).format(value)
-}
 </script>
 
 <template>
@@ -82,6 +74,7 @@ const formatCurrency = (value) => {
           <th class="px-6 py-4 text-left">Email</th>
           <th class="px-6 py-4 text-left">Số điện thoại</th>
           <th class="px-6 py-4 text-left">Địa chỉ</th>
+          <th class="px-6 py-4 text-left">Id phòng ban</th>
           <th class="px-6 py-4 text-left">Phòng ban</th>
           <th class="px-6 py-4 text-left">Chức vụ</th>
           <th class="px-6 py-4 text-left">Trạng thái</th>
@@ -97,64 +90,20 @@ const formatCurrency = (value) => {
           :key="emp.id"
           class="hover:bg-gray-50 dark:hover:bg-gray-700"
         >
-
           <td class="px-6 py-4">{{ emp.id }}</td>
-
-          <td class="px-6 py-4 font-bold">
-            {{ emp.name }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ emp.employeeCode }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ emp.name }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.gender}}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.dateOfBirth}}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.email }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.phone}}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.address}}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.departmentId}}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.department}}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.position}}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.status}}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.joinDate}}
-          </td>
-
-          <td class="px-6 py-4">
-            {{emp.avatar}}
-          </td>
+          <td class="px-6 py-4 font-bold">{{ emp.employeeCode }}</td>
+          <td class="px-6 py-4">{{ emp.name }}</td>
+          <td class="px-6 py-4">{{ emp.gender }}</td>
+          <td class="px-6 py-4">{{emp.dateOfBirth}}</td>
+          <td class="px-6 py-4">{{emp.email}}</td>
+          <td class="px-6 py-4">{{emp.phone }}</td>
+          <td class="px-6 py-4">{{emp.address}}</td>
+          <td class="px-6 py-4">{{emp.departmentId}}</td>
+          <td class="px-6 py-4">{{emp.department}}</td>
+          <td class="px-6 py-4">{{emp.position}}</td>
+          <td class="px-6 py-4">{{emp.status}}</td>
+          <td class="px-6 py-4">{{emp.joinDate}}</td>
+          <td class="px-6 py-4">{{emp.avatar}}</td>
         </tr>
 
         <tr v-if="filteredEmployees.length === 0">
