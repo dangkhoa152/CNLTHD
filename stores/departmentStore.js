@@ -2,18 +2,17 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 export const useDepartmentStore = defineStore('department', () => {
-  // 1. State
   const departments = ref([])
   const searchQuery = ref('')
-  
-  // FIX 1: Đổi mặc định thành true. 
-  // Để khi F5, giao diện luôn hiện "Đang tải..." trước, chặn việc in ra lỗi "Không tìm thấy".
-  const isLoading = ref(true) 
+  const isLoading = ref(true)
 
-  // 2. Actions: Lấy dữ liệu từ file JSON tĩnh
+  // Hàm nội bộ: Lưu dữ liệu hiện tại vào LocalStorage của trình duyệt
+  const saveToStorage = () => {
+    localStorage.setItem('hr_departments', JSON.stringify(departments.value))
+  }
+
+  // 1. Action: LẤY DỮ LIỆU
   const fetchDepartments = async () => {
-    // TỐI ƯU UX: Nếu mảng đã có dữ liệu rồi thì không cần gọi lại API nữa.
-    // Giúp người dùng chuyển qua lại giữa trang Nhân viên và Phòng ban cực kỳ mượt mà.
     if (departments.value.length > 0) {
       isLoading.value = false
       return
@@ -21,12 +20,19 @@ export const useDepartmentStore = defineStore('department', () => {
 
     isLoading.value = true
     try {
-      // FIX 2: Bắt buộc dùng $fetch trong Pinia thay vì useFetch. 
-      // Hàm $fetch trả về thẳng data (không cần data.value)
-      const data = await $fetch('/data/departments.json')
+      // ƯU TIÊN 1: Kiểm tra xem LocalStorage đã có dữ liệu chưa (Do người dùng đã sửa/thêm trước đó)
+      const storedData = localStorage.getItem('hr_departments')
       
-      if (data) {
-        departments.value = data
+      if (storedData) {
+        // Nếu có thì lấy từ LocalStorage ra dùng
+        departments.value = JSON.parse(storedData)
+      } else {
+        // ƯU TIÊN 2: Nếu LocalStorage trống (Lần đầu tiên vào web), lấy từ file JSON gốc
+        const data = await $fetch('/data/departments.json')
+        if (data) {
+          departments.value = data
+          saveToStorage() // Lưu ngay một bản sao vào LocalStorage
+        }
       }
     } catch (error) {
       console.error('Lỗi khi tải dữ liệu phòng ban:', error)
@@ -35,19 +41,41 @@ export const useDepartmentStore = defineStore('department', () => {
     }
   }
 
-  const deleteDepartment = (deptId) => {
-    // Lọc bỏ phòng ban có id trùng với id cần xóa
-    departments.value = departments.value.filter(dep => dep.id !== deptId)
+  // 2. Action: THÊM MỚI
+  const addDepartment = (newDep) => {
+    const generateId = 'DEP' + Math.floor(1000 + Math.random() * 9000)
+    const departmentToSave = {
+      ...newDep,
+      id: generateId,
+      employeeCount: 0,
+      manager: 'Chưa bổ nhiệm'
+    }
+    departments.value.unshift(departmentToSave)
+    saveToStorage() // Cập nhật lại LocalStorage
   }
 
-  // 3. Getters: Tự động lọc danh sách khi có từ khóa tìm kiếm
+  // 3. Action: CẬP NHẬT (SỬA)
+  const updateDepartment = (updatedDep) => {
+    const index = departments.value.findIndex(d => d.id === updatedDep.id)
+    if (index !== -1) {
+      departments.value[index] = updatedDep
+      saveToStorage() // Cập nhật lại LocalStorage
+    }
+  }
+
+  // 4. Action: XÓA
+  const deleteDepartment = (deptId) => {
+    departments.value = departments.value.filter(dep => dep.id !== deptId)
+    saveToStorage() // Cập nhật lại LocalStorage
+  }
+
+  // 5. Getters: LỌC TÌM KIẾM
   const filteredDepartments = computed(() => {
     if (!searchQuery.value) return departments.value
-
     const query = searchQuery.value.toLowerCase()
     return departments.value.filter(dep => 
       dep.name.toLowerCase().includes(query) || 
-      dep.manager.toLowerCase().includes(query) ||
+      (dep.manager && dep.manager.toLowerCase().includes(query)) ||
       dep.id.toLowerCase().includes(query)
     )
   })
@@ -58,6 +86,8 @@ export const useDepartmentStore = defineStore('department', () => {
     isLoading, 
     fetchDepartments, 
     filteredDepartments,
+    addDepartment,
+    updateDepartment,
     deleteDepartment
   }
 })
