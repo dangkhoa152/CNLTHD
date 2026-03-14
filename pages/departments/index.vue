@@ -46,13 +46,17 @@ const openEditModal = async (dep) => {
 }
 
 // Hàm nhận tín hiệu 'save' từ Component Modal truyền lên
-const handleSaveDepartment = (updatedData) => {
-  const index = departmentStore.departments.findIndex(d => d.id === updatedData.id)
-  if (index !== -1) {
-    departmentStore.departments[index] = updatedData
-    isModalOpen.value = false
+const handleSaveDepartment = (formData) => {
+  if (formData.id) {
+    // Gọi action update của Pinia (Nó sẽ tự lo việc lưu LocalStorage)
+    departmentStore.updateDepartment(formData)
     alert('Cập nhật thành công!')
+  } else {
+    // Gọi action add của Pinia
+    departmentStore.addDepartment(formData)
+    alert('Thêm phòng ban thành công!')
   }
+  isModalOpen.value = false
 }
 
 // Hàm xử lý Xóa phòng ban có kiểm tra ràng buộc
