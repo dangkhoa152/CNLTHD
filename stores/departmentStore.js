@@ -20,18 +20,15 @@ export const useDepartmentStore = defineStore('department', () => {
 
     isLoading.value = true
     try {
-      // ƯU TIÊN 1: Kiểm tra xem LocalStorage đã có dữ liệu chưa (Do người dùng đã sửa/thêm trước đó)
       const storedData = localStorage.getItem('hr_departments')
       
       if (storedData) {
-        // Nếu có thì lấy từ LocalStorage ra dùng
         departments.value = JSON.parse(storedData)
       } else {
-        // ƯU TIÊN 2: Nếu LocalStorage trống (Lần đầu tiên vào web), lấy từ file JSON gốc
         const data = await $fetch('/data/departments.json')
         if (data) {
           departments.value = data
-          saveToStorage() // Lưu ngay một bản sao vào LocalStorage
+          saveToStorage() 
         }
       }
     } catch (error) {
@@ -42,18 +39,33 @@ export const useDepartmentStore = defineStore('department', () => {
   }
 
   // 2. Action: THÊM MỚI
-  const addDepartment = (newDep) => {
-    const generateId = 'DEP' + Math.floor(1000 + Math.random() * 9000)
+const addDepartment = (newDep) => {
+    let generateId = 'DEP01' 
+
+    if (departments.value.length > 0) {
+      const existingNumbers = departments.value.map(dep => {
+        const match = dep.id.match(/\d+/)
+        return match ? parseInt(match[0], 10) : 0
+      })
+
+      const maxNumber = Math.max(...existingNumbers)
+
+      const nextNumber = maxNumber + 1
+
+      generateId = 'DEP' + nextNumber.toString().padStart(2, '0')
+    }
+
     const departmentToSave = {
       ...newDep,
       id: generateId,
       employeeCount: 0,
       manager: 'Chưa bổ nhiệm'
     }
-    departments.value.unshift(departmentToSave)
-    saveToStorage() // Cập nhật lại LocalStorage
-  }
 
+    departments.value.unshift(departmentToSave)
+    saveToStorage()
+  }
+  
   // 3. Action: CẬP NHẬT (SỬA)
   const updateDepartment = (updatedDep) => {
     const index = departments.value.findIndex(d => d.id === updatedDep.id)
