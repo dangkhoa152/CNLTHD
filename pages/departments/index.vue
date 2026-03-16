@@ -45,41 +45,41 @@ const openEditModal = async (dep) => {
   isModalOpen.value = true
 }
 
-// Hàm nhận tín hiệu 'save' từ Component Modal truyền lên
+// HÀM MỞ MODAL THÊM MỚI
+const openCreateModal = () => {
+  selectedDept.value = null 
+  availableEmployees.value = []
+  isModalOpen.value = true
+}
+
+// HÀM LƯU (XỬ LÝ CẢ THÊM VÀ SỬA)
 const handleSaveDepartment = (formData) => {
   if (formData.id) {
-    // Gọi action update của Pinia (Nó sẽ tự lo việc lưu LocalStorage)
     departmentStore.updateDepartment(formData)
     alert('Cập nhật thành công!')
   } else {
-    // Gọi action add của Pinia
     departmentStore.addDepartment(formData)
-    alert('Thêm phòng ban thành công!')
+    alert('Thêm phòng ban mới thành công!')
   }
-  isModalOpen.value = false
+  isModalOpen.value = false 
 }
 
 // Hàm xử lý Xóa phòng ban có kiểm tra ràng buộc
 const confirmDelete = async (dep) => {
   try {
-    // 1. Gọi danh sách nhân viên để kiểm tra
     const allEmployees = await $fetch('/data/employees.json')
     const employeesInDept = allEmployees.filter(emp => emp.departmentId === dep.id)
 
-    // 2. RÀNG BUỘC: Nếu phòng ban đang có người -> Chặn không cho xóa
     if (employeesInDept.length > 0) {
       alert(`⛔ KHÔNG THỂ XÓA!\n[${dep.name}] đang có ${employeesInDept.length} nhân sự.\nVui lòng chuyển các nhân sự này sang phòng khác trước khi xóa.`)
-      return // Dừng hàm tại đây
+      return 
     }
 
-    // 3. Nếu phòng trống -> Hiện hộp thoại xác nhận (Confirm Dialog)
     const isConfirmed = confirm(`⚠️ Bạn có chắc chắn muốn xóa phòng ban: ${dep.name}?\nHành động này không thể hoàn tác!`)
     
-    // 4. Nếu Admin bấm "OK"
     if (isConfirmed) {
       departmentStore.deleteDepartment(dep.id)
       
-      // (Tùy chọn nâng cao): Nếu bạn có mảng activities trong Store, có thể push 1 log vào đây
       alert(`✅ Đã xóa thành công phòng ban: ${dep.name}`)
     }
   } catch (error) {
@@ -104,6 +104,15 @@ const confirmDelete = async (dep) => {
         <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
+
+        <button 
+          @click="openCreateModal" 
+          class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-bold shadow-sm transition-colors"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          Thêm Mới
+        </button>
+
       </div>
     </div>
 
