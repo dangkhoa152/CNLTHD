@@ -2,7 +2,10 @@
 
   <div class="flex items-center justify-between mb-4">
     <h1 class="text-2xl font-bold mb-4">Quản lý đơn xin nghỉ phép</h1>
-    <button @click="openCreate" class="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded">Thêm đơn</button>
+    <div class="flex items-center gap-2">
+      <button @click="toggleCalendar" class="bg-gray-200 dark:bg-gray-700 px-3 py-2 rounded">Xem lịch nghỉ</button>
+      <button @click="openCreate" class="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded">Thêm đơn</button>
+    </div>
   </div>
 
   <LeaveRequestFilter :departments="departments" @filter-changed="onFilter" />
@@ -26,12 +29,16 @@
     </div>
   </div>
 
-  <LeaveRequestTable :items="paginatedList" @view="open" @edit="openEdit" @delete="confirmDelete" />
+  <LeaveRequestTable :items="paginatedList" @view="open" @edit="openEdit" @delete="confirmDelete" @bulk-approve="handleBulkApprove" @bulk-reject="handleBulkReject" />
 
   <div class="flex justify-center items-center gap-4 mt-4">
     <button @click="prevPage" :disabled="currentPage === 1">Trước</button>
     <span>{{ currentPage }} / {{ totalPages || 1 }}</span>
     <button @click="nextPage" :disabled="currentPage === totalPages || totalPages === 0">Sau</button>
+  </div>
+
+  <div v-if="showCalendar" class="mt-6">
+    <LeaveCalendar :events="approvedLeaves" />
   </div>
 
   <LeaveRequestModal v-if="selected" :item="selected" @close="selected = null" @approve="approve" @reject="reject" />
@@ -47,6 +54,7 @@ import LeaveRequestFilter from '~/components/leaveRequests/LeaveRequestFilter.vu
 import LeaveRequestTable from '~/components/leaveRequests/LeaveRequestTable.vue'
 import LeaveRequestModal from '~/components/leaveRequests/LeaveRequestModal.vue'
 import LeaveRequestFormModal from '~/components/leaveRequests/LeaveRequestFormModal.vue'
+import LeaveCalendar from '~/components/leaveRequests/LeaveCalendar.vue'
 import { useLeaveRequestStore } from '~/stores/leaveRequestStore'
 const dashboard = useDashboardStore()
 const auth = useAuthStore()
@@ -56,6 +64,9 @@ const leaveStore = useLeaveRequestStore()
 const selected = ref(null as any | null)
 const formVisible = ref(false)
 const formItem = ref(null as any | null)
+const showCalendar = ref(false)
+// Hàm toggle hiển thị lịch nghỉ phép đã duyệt
+function toggleCalendar() { showCalendar.value = !showCalendar.value }
 
 const departments = computed(() => {
   return Array.from(new Set(leaveStore.leaveRequests.map((i: any) => i.department))).sort()
@@ -63,6 +74,8 @@ const departments = computed(() => {
 
 // filtered list lấy trực tiếp từ store (unwrap value để reactive đúng)
 const filtered = computed(() => leaveStore.searchLeaveRequest)
+// Lấy danh sách đơn nghỉ phép đã được duyệt để truyền vào component lịch
+const approvedLeaves = computed(() => leaveStore.leaveRequests.filter((i: any) => i.status === 'Đã duyệt'))
 // Khai báo pagination dựa trên filtered
 const {
   currentPage,
@@ -71,7 +84,7 @@ const {
   nextPage,
   prevPage
 } = usePagination(filtered, 12)
-
+// Tải dữ liệu đơn nghỉ phép khi component được mounted
 onMounted(async () => {
   try {
     await leaveStore.fetchLeaveRequests()
@@ -148,7 +161,7 @@ function handleUpdate() {
     dashboard.addActivity({
       type: 'update',
       title: `Sửa đơn nghỉ phép của ${formItem.value?.employeeName || 'một nhân viên'}`,
-      user: auth.user?.name || 'Admin HR'
+      user: (auth.user as any)?.name || 'Admin HR'
     })
 
     toast.info(`Cập nhật thành công`)
@@ -160,11 +173,35 @@ function handleDelete() {
     dashboard.addActivity({
       type: 'delete',
       title: `Đã xóa đơn nghỉ phép của ${formItem.value?.employeeName || 'một nhân viên'}`,
-      user: auth.user?.name || 'Admin HR'
+      user: (auth.user as any)?.name || 'Admin HR'
     })
 
     toast.info(`Xóa thành công`)
   }, 50)
+}
+// ghi log hoạt động khi duyệt hoặc từ chối hàng loạt đơn nghỉ phép
+function logBulkAction(action: string, count: number) {
+  setTimeout(() => {
+    dashboard.addActivity({
+      type: action,
+      title: `${action === 'approve' ? 'Duyệt' : 'Từ chối'} ${count} đơn nghỉ phép`,
+      user: (auth.user as any)?.name || 'Admin HR'
+    })
+
+    toast.info(`${action === 'approve' ? 'Duyệt' : 'Từ chối'} thành công ${count} đơn`)
+  }, 50)
+}
+// Xử lý duyệt hàng loạt
+function handleBulkApprove(ids: number[]) {
+  if (!ids || ids.length === 0) return
+  leaveStore.bulkUpdateStatus(ids, 'Đã duyệt', (auth.user as any)?.name || '')
+  logBulkAction('approve', ids.length)
+}
+// Xử lý từ chối hàng loạt
+function handleBulkReject(ids: number[]) {
+  if (!ids || ids.length === 0) return
+  leaveStore.bulkUpdateStatus(ids, 'Đã từ chối', (auth.user as any)?.name || '')
+  logBulkAction('reject', ids.length)
 }
 </script>
 
