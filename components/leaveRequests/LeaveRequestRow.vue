@@ -1,5 +1,8 @@
 <template>
   <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+    <td class="px-4 py-2">
+      <input type="checkbox" :checked="selected" @change="$emit('toggle-select', item.id, $event.target.checked)" />
+    </td>
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.id }}</td>
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.employeeName }}</td>
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.employeeCode }}</td>
@@ -20,7 +23,7 @@
 
 <script setup>
 // Khai báo props để lấy danh sách đơn nghỉ phép
-const props = defineProps({ item: { type: Object, required: true } })
+const props = defineProps({ item: { type: Object, required: true }, selected: { type: Boolean, default: false } })
 function statusClass(s) {
   if (s === 'Đã duyệt') return 'text-green-700 dark:text-green-300'
   if (s === 'Đã từ chối') return 'text-red-700 dark:text-red-300'
