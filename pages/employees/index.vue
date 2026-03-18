@@ -60,26 +60,26 @@ const filteredEmployees = computed(() => {
     />
   </div>
 
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
 
     <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
 
       <thead class="bg-gray-100 dark:bg-gray-900">
         <tr>
-          <th class="px-6 py-4 text-left">ID</th>
-          <th class="px-6 py-4 text-left">Mã nhân viên</th>
-          <th class="px-6 py-4 text-left">Tên</th>
-          <th class="px-6 py-4 text-left">Giới tính</th>
-          <th class="px-6 py-4 text-left">Ngày sinh</th>
-          <th class="px-6 py-4 text-left">Email</th>
-          <th class="px-6 py-4 text-left">Số điện thoại</th>
-          <th class="px-6 py-4 text-left">Địa chỉ</th>
-          <th class="px-6 py-4 text-left">Id phòng ban</th>
-          <th class="px-6 py-4 text-left">Phòng ban</th>
-          <th class="px-6 py-4 text-left">Chức vụ</th>
-          <th class="px-6 py-4 text-left">Trạng thái</th>
-          <th class="px-6 py-4 text-left">Ngày vào làm</th>
-          <th class="px-6 py-4 text-left">Avatar</th>
+          <th class="sticky left-0 z-10 bg-gray-200 w-[60px] px-5 py-4 text-center">ID</th>
+          <th class="sticky left-[60px] z-10 bg-gray-200 w-[140px] px-6 py-4 text-center">Mã nhân viên</th>
+          <th class="sticky left-[200px] z-10 bg-gray-200 w-[200px] px-6 py-4 text-center">Tên</th>
+          <th class="px-6 py-4 text-center">Giới tính</th>
+          <th class="px-6 py-4 text-center">Ngày sinh</th>
+          <th class="px-6 py-4 text-center">Email</th>
+          <th class="px-6 py-4 text-center">Số điện thoại</th>
+          <th class="px-6 py-4 text-center">Địa chỉ</th>
+          <th class="px-6 py-4 text-center">Id phòng ban</th>
+          <th class="px-6 py-4 text-center">Phòng ban</th>
+          <th class="px-6 py-4 text-center">Chức vụ</th>
+          <th class="px-6 py-4 text-center">Trạng thái</th>
+          <th class="px-6 py-4 text-center">Ngày vào làm</th>
+          <th class="px-6 py-4 text-center">Avatar</th>
         </tr>
       </thead>
 
@@ -90,19 +90,19 @@ const filteredEmployees = computed(() => {
           :key="emp.id"
           class="hover:bg-gray-50 dark:hover:bg-gray-700"
         >
-          <td class="px-6 py-4">{{ emp.id }}</td>
-          <td class="px-6 py-4 font-bold">{{ emp.employeeCode }}</td>
-          <td class="px-6 py-4">{{ emp.name }}</td>
-          <td class="px-6 py-4">{{ emp.gender }}</td>
-          <td class="px-6 py-4">{{emp.dateOfBirth}}</td>
+          <td class="sticky left-0 bg-white w-[60px] px-6 py-4 text-center">{{ emp.id }}</td>
+          <td class="sticky left-[60px] bg-white w-[140px] px-10 py-4 text-left font-bold">{{ emp.employeeCode }}</td>
+          <td class="sticky left-[200px] bg-white w-[200px] px-6 py-4 text-left">{{ emp.name }}</td>
+          <td class="px-6 py-4">{{emp.gender }}</td>
+          <td class="px-10 py-4">{{emp.dateOfBirth}}</td>
           <td class="px-6 py-4">{{emp.email}}</td>
-          <td class="px-6 py-4">{{emp.phone }}</td>
+          <td class="px-10 py-4">{{emp.phone }}</td>
           <td class="px-6 py-4">{{emp.address}}</td>
-          <td class="px-6 py-4">{{emp.departmentId}}</td>
-          <td class="px-6 py-4">{{emp.department}}</td>
+          <td class="px-10 py-4">{{emp.departmentId}}</td>
+          <td class="px-10 py-4">{{emp.department}}</td>
           <td class="px-6 py-4">{{emp.position}}</td>
-          <td class="px-6 py-4">{{emp.status}}</td>
-          <td class="px-6 py-4">{{emp.joinDate}}</td>
+          <td class="px-10 py-4">{{emp.status}}</td>
+          <td class="px-10 py-4">{{emp.joinDate}}</td>
           <td class="px-6 py-4">{{emp.avatar}}</td>
         </tr>
 
