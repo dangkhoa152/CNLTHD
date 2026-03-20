@@ -7,12 +7,47 @@ import { usePagination } from '~/composables/usePagination'
 const employees = ref([])
 const searchQuery = ref('')
 const route = useRoute()
+const showCreateModal = ref(false)
+const showEditModal = ref(false)
+
+// hàm lưu vào localStorage
+const saveToLocal = () => {
+  localStorage.setItem('employees', JSON.stringify(employees.value))
+}
+
+const formEmployee = ref({
+  id: '',
+  employeeCode: '',
+  name: '',
+  gender: '',
+  dateOfBirth: '',
+  email: '',
+  phone: '',
+  address: '',
+  departmentId: '',
+  department: '',
+  position: '',
+  status: '',
+  joinDate: '',
+  avatar: ''
+})
 
 // load dữ liệu khi mở trang
 onMounted(async () => {
   try {
-    const data = await $fetch('/data/employees.json')
-    employees.value = data
+    const saved = localStorage.getItem('employees')
+
+    if (saved) {
+      //nếu đã có dữ liệu lưu → dùng luôn
+      employees.value = JSON.parse(saved)
+    } else {
+      //chưa có → load từ JSON
+      const data = await $fetch('/data/employees.json')
+      employees.value = data
+
+      //lưu lần đầu
+      localStorage.setItem('employees', JSON.stringify(data))
+    }
   } catch (error) {
     console.error('Lỗi tải nhân viên:', error)
   }
@@ -21,17 +56,131 @@ onMounted(async () => {
 // lọc theo phòng ban từ query (?dept=IT)
 const deptFilter = computed(() => route.query.dept)
 
+// hàm lưu
+const saveCreateEmployee = () => {
+  const newEmp = formEmployee.value
+  // validate 
+  if (!newEmp.id || String(newEmp.id).trim() === '') {
+    alert('Vui lòng điền đầy đủ ID')
+    return
+  }
+  if (!newEmp.employeeCode || String(newEmp.employeeCode).trim() === '') {
+    alert('Vui lòng điền đầy đủ mã nhân viên')
+    return
+  }
+  if (!newEmp.name || String(newEmp.name).trim() === '') {
+    alert('Vui lòng điền đầy đủ tên')
+    return
+  }
+
+  // ép kiểu ID thành string để so sánh
+  const newId = String(newEmp.id)
+  const exists = employees.value.some(emp => String(emp.id) === newId)
+  if (exists) {
+    alert('ID đã tồn tại, vui lòng chọn ID khác')
+    return
+  }
+  const newCode = String(newEmp.employeeCode)
+  const codeExists = employees.value.some(emp => String(emp.employeeCode) === newCode)
+  if (codeExists) {
+    alert('Mã nhân viên đã tồn tại, vui lòng chọn mã khác')
+    return
+  }
+
+  // thêm nhân viên mới
+  employees.value.push({ ...newEmp })
+  saveToLocal()
+  closeCreateEmployee()
+}
+
+// mở modal thêm mới
 const openCreateEmployee = (emp) => {
-  alert('Chức năng thêm mới sẽ được triển khai sau!')
+  formEmployee.value = {...emp}
+  showCreateModal.value = true
 }
 
+// đóng modal thêm mới
+const closeCreateEmployee = () => {
+  showCreateModal.value = false
+}
+
+// mở modal sửa
 const openEditEmployee = (emp) => {
-  alert(`Chức năng sửa sẽ được triển khai sau! (ID: ${emp.id})`)
+  formEmployee.value = {...emp}
+  showEditModal.value = true
 }
 
+// đóng modal sửa
+const closeEditEmployee = () => {
+  showEditModal.value = false
+}
+
+// lưu sửa nhân viên
+const saveEditEmployee = () => {
+  //lưu thông tin truoc khi sửa để validate
+  const originalEmp = employees.value.find(emp => String(emp.id) === String(editingId.value))
+  const updatedEmp = formEmployee.value
+
+  // validate
+  if (!updatedEmp.id || String(updatedEmp.id).trim() === '') {
+    alert('Vui lòng điền đầy đủ ID')
+    return
+  }
+  if (!updatedEmp.employeeCode || String(updatedEmp.employeeCode).trim() === '') {
+    alert('Vui lòng điền đầy đủ mã nhân viên')
+    return
+  }
+  if (!updatedEmp.name || String(updatedEmp.name).trim() === '') {
+    alert('Vui lòng điền đầy đủ tên')
+    return
+  }
+
+  const updatedId = String(updatedEmp.id).trim()
+  const updatedCode = String(updatedEmp.employeeCode).trim().toLowerCase()
+
+  //tìm đúng record đang sửa (dựa vào ID gốc)
+  const index = employees.value.findIndex(
+    emp => String(emp.id) === String(editingId.value)
+  )
+
+  if (index === -1) {
+    alert('Không tìm thấy nhân viên')
+    return
+  }
+
+  //check trùng ID (trừ chính nó)
+  const idExists = employees.value.some((emp, i) =>
+    i !== index && String(emp.id) === updatedId
+  )
+
+  if (idExists) {
+    alert('ID đã tồn tại')
+    return
+  }
+
+  //check trùng mã NV (trừ chính nó)
+  const codeExists = employees.value.some((emp, i) =>
+    i !== index &&
+    String(emp.employeeCode).trim().toLowerCase() === updatedCode
+  )
+
+  if (codeExists) {
+    alert('Mã nhân viên đã tồn tại')
+    return
+  }
+
+  //update
+  employees.value[index] = updatedEmp
+
+  saveToLocal()
+  closeEditEmployee()
+}
+
+// xác nhận xóa
 const confirmDelete = (emp) => {
   if (confirm(`Bạn có chắc muốn xóa nhân viên ${emp.name} không?`)) {
-    alert('Chức năng xóa sẽ được triển khai sau!')
+    employees.value = employees.value.filter(e => e.id !== emp.id)
+    saveToLocal()
   }
 }
 
@@ -108,7 +257,7 @@ const filteredEmployees = computed(() => {
     </h2>
 
     <div class="relative">
-        <input 
+        <input
           v-model="searchQuery"
           type="text" 
           placeholder="Tìm tên, mã nhân viên..." 
@@ -119,8 +268,8 @@ const filteredEmployees = computed(() => {
         </svg>
 
         <button 
-          @click="openCreateEmployee(employees)" 
-          class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white my-[5px] px-3 py-3 rounded-lg font-bold shadow-sm transition-colors"
+          @click="openCreateEmployee" 
+          class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white my-[7px] px-3 py-3 rounded-lg font-bold shadow-sm transition-colors"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
           Thêm Mới
@@ -132,7 +281,6 @@ const filteredEmployees = computed(() => {
   <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
 
     <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-
       <thead class="bg-gray-100 dark:bg-gray-900">
         <tr>
           <th class="sticky left-0 z-10 bg-gray-200 w-[60px] px-5 py-4 text-center">ID</th>
@@ -189,10 +337,98 @@ const filteredEmployees = computed(() => {
       </tbody>
 
     </table>
+  
+  </div>
+  <div v-if="showCreateModal" class="fixed z-50 inset-0 bg-black/40 flex justify-center items-center">
+  <div class="space-y-4 bg-white px-[20px] rounded-lg w-[800px]">
+    <h2 class="font-bold text-lg text-blue-500 pt-8 pb-3">Thêm mới nhân viên </h2>
+    <div class="grid grid-cols-2 gap-2">
+      <div class="grid grid-cols-2 gap-2 ml-5">
+        <label class="mt-3 block mb-1 font-medium">ID</label>
+        <input v-model="formEmployee.id" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Mã nhân viên</label>
+        <input v-model="formEmployee.employeeCode" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Tên nhân viên</label>
+        <input v-model="formEmployee.name" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Giới tính</label>
+        <input v-model="formEmployee.gender" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Ngày sinh</label>
+        <input v-model="formEmployee.dateOfBirth" type="date" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Email</label>
+        <input v-model="formEmployee.email" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Số điện thoại</label>
+        <input v-model="formEmployee.phone" class="border mb-2 p-2 rounded" />
+        </div>
+        <div class="grid grid-cols-2 gap-2 ml-8 mr-5">
+        <label class="mt-3 block mb-1 font-medium">Địa chỉ</label>
+        <input v-model="formEmployee.address" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">ID phòng ban</label>
+        <input v-model="formEmployee.departmentId" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Phòng ban</label>
+        <input v-model="formEmployee.department" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Chức vụ</label>
+        <input v-model="formEmployee.position" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Trạng thái</label>
+        <input v-model="formEmployee.status" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Ngày vào làm</label>
+        <input v-model="formEmployee.joinDate" type="date" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Avatar URL</label>
+        <input v-model="formEmployee.avatar" class="border mb-2 p-2 rounded" />
+        </div>
+    </div>
+    <div class="flex justify-end gap-2 pt-3 pb-8">
+      <button @click="closeCreateEmployee" class="border border-gray-300 text-gray-700 px-3 py-2  rounded w-[75px]">Hủy</button>
+      <button @click="saveCreateEmployee" class="bg-blue-500 text-white px-3 py-2 rounded mr-5 w-[75px]">Lưu</button>
+    </div>
+    </div>
+  </div>
+
+  <div v-if="showEditModal" class="fixed z-50 inset-0 bg-black/40 flex justify-center items-center">
+  <div class="space-y-4 bg-white px-[20px] rounded-lg w-[800px]">
+    <h2 class="font-bold text-lg text-blue-500 pt-8 pb-3">Sửa nhân viên </h2>
+    <div class="grid grid-cols-2 gap-2">
+      <div class="grid grid-cols-2 gap-2 ml-5">
+        <label class="mt-3 block mb-1 font-medium">ID</label>
+        <input v-model="formEmployee.id" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Mã nhân viên</label>
+        <input v-model="formEmployee.employeeCode" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Tên nhân viên</label>
+        <input v-model="formEmployee.name" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Giới tính</label>
+        <input v-model="formEmployee.gender" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Ngày sinh</label>
+        <input v-model="formEmployee.dateOfBirth" type="date" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Email</label>
+        <input v-model="formEmployee.email" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Số điện thoại</label>
+        <input v-model="formEmployee.phone" class="border mb-2 p-2 rounded" />
+        </div>
+        <div class="grid grid-cols-2 gap-2 ml-8 mr-5">
+        <label class="mt-3 block mb-1 font-medium">Địa chỉ</label>
+        <input v-model="formEmployee.address" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">ID phòng ban</label>
+        <input v-model="formEmployee.departmentId" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Phòng ban</label>
+        <input v-model="formEmployee.department" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Chức vụ</label>
+        <input v-model="formEmployee.position" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Trạng thái</label>
+        <input v-model="formEmployee.status" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Ngày vào làm</label>
+        <input v-model="formEmployee.joinDate" type="date" class="border mb-2 p-2 rounded" />
+        <label class="mt-3 block mb-1 font-medium">Avatar URL</label>
+        <input v-model="formEmployee.avatar" class="border mb-2 p-2 rounded" />
+        </div>
+    </div>
+    <div class="flex justify-end gap-2 pt-3 pb-8">
+      <button @click="closeEditEmployee" class="border border-gray-300 text-gray-700 px-3 py-2  rounded w-[75px]">Hủy</button>
+      <button @click="saveEditEmployee" class="bg-blue-500 text-white px-3 py-2 rounded mr-5 w-[75px]">Lưu</button>
+    </div>
+    </div>
+  </div>
 
   </div>
   <div class="flex justify-center mt-4 gap-2 items-center">
-
   <!-- Prev -->
   <button
     @click="prevPage"
@@ -225,8 +461,6 @@ const filteredEmployees = computed(() => {
   >
     →
   </button>
-
-</div>
 
 </div>
 </template>
