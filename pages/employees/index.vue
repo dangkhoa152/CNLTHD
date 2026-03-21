@@ -53,8 +53,28 @@ onMounted(async () => {
   }
 })
 
-// lọc theo phòng ban từ query (?dept=IT)
-const deptFilter = computed(() => route.query.dept)
+// Tìm kiếm nhân viên với tất cả dữ liệu
+const filteredEmployees = computed(() => {
+  if (!searchQuery.value) {
+    return employees.value
+  }
+  const query = searchQuery.value.toLowerCase()
+  return employees.value.filter (emp => 
+    String(emp.id).toLowerCase().includes(query) ||
+    String(emp.employeeCode).toLowerCase().includes(query) ||
+    String(emp.name).toLowerCase().includes(query) ||
+    String(emp.department).toLowerCase().includes(query) ||
+    String(emp.departmentId).toLowerCase().includes(query) ||
+    String(emp.gender).toLowerCase().includes(query) ||
+    String(emp.position).toLowerCase().includes(query) ||
+    String(emp.email).toLowerCase().includes(query) ||
+    String(emp.phone).toLowerCase().includes(query) ||
+    String(emp.address).toLowerCase().includes(query) ||
+    String(emp.status).toLowerCase().includes(query) ||
+    String(emp.joinDate).toLowerCase().includes(query) ||
+    String(emp.dateOfBirth).toLowerCase().includes(query)
+  )
+})
 
 // hàm lưu
 const saveCreateEmployee = () => {
@@ -95,6 +115,7 @@ const saveCreateEmployee = () => {
 
 // mở modal thêm mới
 const openCreateEmployee = (emp) => {
+  showEditModal.value = false
   formEmployee.value = {...emp}
   showCreateModal.value = true
 }
@@ -106,20 +127,24 @@ const closeCreateEmployee = () => {
 
 // mở modal sửa
 const openEditEmployee = (emp) => {
+  showCreateModal.value = false
   formEmployee.value = {...emp}
+  const originalEmp = employees.value.find(e => e.id === emp.id)
+  if (originalEmp) {
   showEditModal.value = true
 }
-
+}
 // đóng modal sửa
 const closeEditEmployee = () => {
   showEditModal.value = false
 }
 
-// lưu sửa nhân viên
+// hàm lưu sau khi sửa
 const saveEditEmployee = () => {
-  //lưu thông tin truoc khi sửa để validate
-  const originalEmp = employees.value.find(emp => String(emp.id) === String(editingId.value))
+  //lưu thông tin mới nhập vào mảng nhân viên
   const updatedEmp = formEmployee.value
+  //lưu vị trí của nhân viên đang sửa
+  const index = employees.value.findIndex(e => e.id === updatedEmp.id)
 
   // validate
   if (!updatedEmp.id || String(updatedEmp.id).trim() === '') {
@@ -135,46 +160,14 @@ const saveEditEmployee = () => {
     return
   }
 
-  const updatedId = String(updatedEmp.id).trim()
-  const updatedCode = String(updatedEmp.employeeCode).trim().toLowerCase()
 
-  //tìm đúng record đang sửa (dựa vào ID gốc)
-  const index = employees.value.findIndex(
-    emp => String(emp.id) === String(editingId.value)
+  // lưu thông tin mới vào mảng nhân viên và localStorage
+  employees.value.slice({...originalEmp},index,{...updatedEmp }
   )
-
-  if (index === -1) {
-    alert('Không tìm thấy nhân viên')
-    return
-  }
-
-  //check trùng ID (trừ chính nó)
-  const idExists = employees.value.some((emp, i) =>
-    i !== index && String(emp.id) === updatedId
-  )
-
-  if (idExists) {
-    alert('ID đã tồn tại')
-    return
-  }
-
-  //check trùng mã NV (trừ chính nó)
-  const codeExists = employees.value.some((emp, i) =>
-    i !== index &&
-    String(emp.employeeCode).trim().toLowerCase() === updatedCode
-  )
-
-  if (codeExists) {
-    alert('Mã nhân viên đã tồn tại')
-    return
-  }
-
-  //update
-  employees.value[index] = updatedEmp
-
   saveToLocal()
   closeEditEmployee()
 }
+
 
 // xác nhận xóa
 const confirmDelete = (emp) => {
@@ -183,29 +176,6 @@ const confirmDelete = (emp) => {
     saveToLocal()
   }
 }
-
-// lọc theo phòng ban + search
-const filteredEmployees = computed(() => {
-  let list = employees.value
-
-  // lọc phòng ban
-  if (deptFilter.value) {
-    list = list.filter(emp => emp.departmentId === deptFilter.value)
-  }
-
-  // search
-  if (searchQuery.value.trim()) {
-    const keyword = searchQuery.value.toLowerCase()
-
-    list = list.filter(emp =>
-      (emp.name && emp.name.toLowerCase().includes(keyword)) ||
-      (emp.employeeCode && emp.employeeCode.toLowerCase().includes(keyword)) ||
-      (emp.id && emp.id.toLowerCase().includes(keyword))
-    )
-  }
-
-  return list
-})
 
   const {
     currentPage,
@@ -382,6 +352,7 @@ const filteredEmployees = computed(() => {
     </div>
     </div>
   </div>
+  </div>
 
   <div v-if="showEditModal" class="fixed z-50 inset-0 bg-black/40 flex justify-center items-center">
   <div class="space-y-4 bg-white px-[20px] rounded-lg w-[800px]">
@@ -402,8 +373,8 @@ const filteredEmployees = computed(() => {
         <input v-model="formEmployee.email" class="border mb-2 p-2 rounded" />
         <label class="mt-3 block mb-1 font-medium">Số điện thoại</label>
         <input v-model="formEmployee.phone" class="border mb-2 p-2 rounded" />
-        </div>
-        <div class="grid grid-cols-2 gap-2 ml-8 mr-5">
+      </div>
+      <div class="grid grid-cols-2 gap-2 ml-8 mr-5">
         <label class="mt-3 block mb-1 font-medium">Địa chỉ</label>
         <input v-model="formEmployee.address" class="border mb-2 p-2 rounded" />
         <label class="mt-3 block mb-1 font-medium">ID phòng ban</label>
@@ -418,15 +389,13 @@ const filteredEmployees = computed(() => {
         <input v-model="formEmployee.joinDate" type="date" class="border mb-2 p-2 rounded" />
         <label class="mt-3 block mb-1 font-medium">Avatar URL</label>
         <input v-model="formEmployee.avatar" class="border mb-2 p-2 rounded" />
-        </div>
+      </div>
     </div>
     <div class="flex justify-end gap-2 pt-3 pb-8">
       <button @click="closeEditEmployee" class="border border-gray-300 text-gray-700 px-3 py-2  rounded w-[75px]">Hủy</button>
       <button @click="saveEditEmployee" class="bg-blue-500 text-white px-3 py-2 rounded mr-5 w-[75px]">Lưu</button>
     </div>
     </div>
-  </div>
-
   </div>
   <div class="flex justify-center mt-4 gap-2 items-center">
   <!-- Prev -->
