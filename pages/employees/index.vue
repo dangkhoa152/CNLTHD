@@ -146,7 +146,7 @@ const closeCreateEmployee = () => {
 const openEditEmployee = (emp) => {
   showCreateModal.value = false
   formEmployee.value = {...emp}
-  editingId.value = emp.id
+  editingId.value = emp.id 
   showEditModal.value = true
 }
 // đóng modal sửa
@@ -268,9 +268,9 @@ const confirmDelete = (emp) => {
     <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
       <thead class="bg-gray-100 dark:bg-gray-900">
         <tr>
-          <th class="sticky left-0 z-10 bg-gray-200 w-[60px] px-5 py-4 text-center">ID</th>
-          <th class="sticky left-[60px] z-10 bg-gray-200 w-[140px] px-6 py-4 text-center">Mã nhân viên</th>
-          <th class="sticky left-[200px] z-10 bg-gray-200 w-[200px] px-6 py-4 text-center">Tên</th>
+          <th class="sticky left-0 z-10 bg-gray-200 dark:bg-gray-700 w-[60px] px-5 py-4 text-center">ID</th>
+          <th class="sticky left-[60px] z-10 bg-gray-200 dark:bg-gray-700 w-[140px] px-6 py-4 text-center">Mã nhân viên</th>
+          <th class="sticky left-[200px] z-10 bg-gray-200 dark:bg-gray-700 w-[200px] px-6 py-4 text-center">Tên</th>
           <th class="whitespace-nowrap px-6 py-4 text-center">Giới tính</th>
           <th class="whitespace-nowrap  px-6 py-4 text-center">Ngày sinh</th>
           <th class="px-6 py-4 text-left">Email</th>
@@ -293,9 +293,9 @@ const confirmDelete = (emp) => {
           :key="emp.id"
           class="hover:bg-gray-50 dark:hover:bg-gray-700"
         >
-          <td class="sticky left-0 bg-white w-[60px] px-6 py-4 text-center">{{ emp.id }}</td>
-          <td class="sticky left-[60px] bg-white w-[140px] px-10 py-4 text-left font-bold">{{ emp.employeeCode }}</td>
-          <td class="sticky left-[200px] bg-white w-[200px] px-6 py-4 whitespace-nowrap text-center">{{ emp.name }}</td>
+          <td class="sticky left-0 bg-white dark:bg-gray-800 w-[60px] px-6 py-4 text-center">{{ emp.id }}</td>
+          <td class="sticky left-[60px] bg-white dark:bg-gray-800 w-[140px] px-10 py-4 text-left font-bold">{{ emp.employeeCode }}</td>
+          <td class="sticky left-[200px] bg-white dark:bg-gray-800 w-[200px] px-6 py-4 whitespace-nowrap text-center">{{ emp.name }}</td>
           <td class="px-6 py-4 text-center">{{emp.gender }}</td>
           <td class="px-10 py-4 whitespace-nowrap">{{emp.dateOfBirth}}</td>
           <td class="px-6 py-4">{{emp.email}}</td>
