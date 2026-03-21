@@ -37,9 +37,7 @@
     <button @click="nextPage" :disabled="currentPage === totalPages || totalPages === 0">Sau</button>
   </div>
 
-  <div v-if="showCalendar" class="mt-6">
-    <LeaveCalendar :events="approvedLeaves" />
-  </div>
+  
 
   <LeaveRequestModal v-if="selected" :item="selected" @close="selected = null" @approve="approve" @reject="reject" />
 
@@ -64,9 +62,9 @@ const leaveStore = useLeaveRequestStore()
 const selected = ref(null as any | null)
 const formVisible = ref(false)
 const formItem = ref(null as any | null)
-const showCalendar = ref(false)
-// Hàm toggle hiển thị lịch nghỉ phép đã duyệt
-function toggleCalendar() { showCalendar.value = !showCalendar.value }
+const router = useRouter()
+// Hàm chuyển sang trang lịch nghỉ phép
+function toggleCalendar() { router.push('/leave-requests/calendar') }
 
 const departments = computed(() => {
   return Array.from(new Set(leaveStore.leaveRequests.map((i: any) => i.department))).sort()
@@ -83,7 +81,7 @@ const {
   paginatedList,
   nextPage,
   prevPage
-} = usePagination(filtered, 12)
+} = usePagination(filtered, 10)
 // Tải dữ liệu đơn nghỉ phép khi component được mounted
 onMounted(async () => {
   try {

@@ -4,7 +4,7 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6 z-10">
       <div class="flex items-start justify-between mb-4">
         <div>
-          <h3 class="text-lg font-semibold">Chi tiết đơn</h3>
+          <h3 class="text-lg font-semibold text-blue-900 dark:text-white">Chi tiết đơn {{ item.id }}</h3>
           <div class="text-sm text-gray-500 dark:text-gray-400">{{ item.employeeName }} — {{ item.employeeCode }}</div>
         </div>
         <div class="flex items-center gap-3">
@@ -88,7 +88,8 @@
         form.reason = props.item.reason || ''
         form.status = props.item.status || ''
       }
-      editing.value = false
+      editing.value = false;
+      
     }
 
     function save(){

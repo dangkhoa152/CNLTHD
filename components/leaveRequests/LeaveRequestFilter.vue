@@ -42,7 +42,7 @@
       <button @click="clear" 
         class="bg-red-100 dark:bg-red-900 
       text-red-700 dark:text-red-200 px-4 py-2 rounded">
-      Xóa
+      Reset
     </button>
     </div>
   </div>
