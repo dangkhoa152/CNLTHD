@@ -73,6 +73,18 @@
         <span class="text-lg">📝</span>
         <span>Nghỉ phép</span>
       </NuxtLink>
+
+      <NuxtLink
+        to="/activities"
+        class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
+        :class="route.path === '/activities'
+          ? 'bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-sm'
+          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
+        @click="$emit('close')"
+      >
+        <span class="text-lg">🕒</span>
+        <span>Lịch sử hoạt động</span>
+      </NuxtLink>
     </nav>
 
     <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
