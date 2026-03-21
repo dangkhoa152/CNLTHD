@@ -76,41 +76,58 @@ const filteredEmployees = computed(() => {
   )
 })
 
-// hàm lưu
-const saveCreateEmployee = () => {
-  const newEmp = formEmployee.value
-  // validate 
-  if (!newEmp.id || String(newEmp.id).trim() === '') {
-    alert('Vui lòng điền đầy đủ ID')
-    return
-  }
-  if (!newEmp.employeeCode || String(newEmp.employeeCode).trim() === '') {
-    alert('Vui lòng điền đầy đủ mã nhân viên')
-    return
-  }
-  if (!newEmp.name || String(newEmp.name).trim() === '') {
-    alert('Vui lòng điền đầy đủ tên')
+// hàm lưu đồng thời khi thêm mới hoặc sửa nhân viên sẽ tự động lưu vào localStorage
+const editingId = ref(null)
+
+const saveEmployee = () => {
+  const emp = { ...formEmployee.value }
+
+  const error = validateEmployee(emp, employees.value, editingId.value)
+  if (error) {
+    alert(error)
     return
   }
 
-  // ép kiểu ID thành string để so sánh
-  const newId = String(newEmp.id)
-  const exists = employees.value.some(emp => String(emp.id) === newId)
-  if (exists) {
-    alert('ID đã tồn tại, vui lòng chọn ID khác')
-    return
-  }
-  const newCode = String(newEmp.employeeCode)
-  const codeExists = employees.value.some(emp => String(emp.employeeCode) === newCode)
-  if (codeExists) {
-    alert('Mã nhân viên đã tồn tại, vui lòng chọn mã khác')
-    return
+  if (editingId.value) {
+    // EDIT
+    const index = employees.value.findIndex(e => e.id === editingId.value)
+    if (index !== -1) {
+      employees.value.splice(index, 1, emp)
+    }
+  } else {
+    // CREATE
+    employees.value.push(emp)
   }
 
-  // thêm nhân viên mới
-  employees.value.push({ ...newEmp })
+  employees.value = [...employees.value] // đảm bảo re-render
   saveToLocal()
+
   closeCreateEmployee()
+  closeEditEmployee()
+  editingId.value = null
+}
+
+//hàm kiểm tra dữ liệu hợp lệ trước khi thêm mới hoặc sửa nhân viên
+const validateEmployee = (emp, list, editingId = null) => {
+  if (!emp.id?.toString().trim()) return 'Thiếu ID'
+  if (!emp.employeeCode?.trim()) return 'Thiếu mã NV'
+  if (!emp.name?.trim()) return 'Thiếu tên'
+
+  const id = String(emp.id).trim()
+  const code = emp.employeeCode.trim().toLowerCase()
+
+  const idExists = list.some(e =>
+    String(e.id) === id && String(e.id) !== String(editingId)
+  )
+  if (idExists) return 'ID đã tồn tại'
+
+  const codeExists = list.some(e =>
+    e.employeeCode?.toLowerCase() === code &&
+    String(e.id) !== String(editingId)
+  )
+  if (codeExists) return 'Mã NV đã tồn tại'
+
+  return null
 }
 
 // mở modal thêm mới
@@ -129,10 +146,8 @@ const closeCreateEmployee = () => {
 const openEditEmployee = (emp) => {
   showCreateModal.value = false
   formEmployee.value = {...emp}
-  const originalEmp = employees.value.find(e => e.id === emp.id)
-  if (originalEmp) {
+  editingId.value = emp.id
   showEditModal.value = true
-}
 }
 // đóng modal sửa
 const closeEditEmployee = () => {
@@ -348,7 +363,7 @@ const confirmDelete = (emp) => {
     </div>
     <div class="flex justify-end gap-2 pt-3 pb-8">
       <button @click="closeCreateEmployee" class="border border-gray-300 text-gray-700 px-3 py-2  rounded w-[75px]">Hủy</button>
-      <button @click="saveCreateEmployee" class="bg-blue-500 text-white px-3 py-2 rounded mr-5 w-[75px]">Lưu</button>
+      <button @click="saveEmployee" class="bg-blue-500 text-white px-3 py-2 rounded mr-5 w-[75px]">Lưu</button>
     </div>
     </div>
   </div>
@@ -393,7 +408,7 @@ const confirmDelete = (emp) => {
     </div>
     <div class="flex justify-end gap-2 pt-3 pb-8">
       <button @click="closeEditEmployee" class="border border-gray-300 text-gray-700 px-3 py-2  rounded w-[75px]">Hủy</button>
-      <button @click="saveEditEmployee" class="bg-blue-500 text-white px-3 py-2 rounded mr-5 w-[75px]">Lưu</button>
+      <button @click="saveEmployee" class="bg-blue-500 text-white px-3 py-2 rounded mr-5 w-[75px]">Lưu</button>
     </div>
     </div>
   </div>
