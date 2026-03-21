@@ -23,7 +23,7 @@
           <div class="mt-1 flex gap-2 relative">
             <input v-model="form.employeeName" @input="onNameInput" :disabled="isEdit" type="text" placeholder="Họ và tên" class="flex-1 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
-            <input v-model="form.employeeCode" :disabled="isEdit" type="text" placeholder="Mã nhân viên" class="w-36 rounded-md 
+            <input v-model="form.employeeCode"  :disabled="isEdit" type="text" placeholder="Mã nhân viên" class="w-36 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
             <input v-model="form.department" :disabled="isEdit" type="text" placeholder="Phòng ban" class="w-48 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
