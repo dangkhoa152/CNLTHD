@@ -154,36 +154,6 @@ const closeEditEmployee = () => {
   showEditModal.value = false
 }
 
-// hàm lưu sau khi sửa
-const saveEditEmployee = () => {
-  //lưu thông tin mới nhập vào mảng nhân viên
-  const updatedEmp = formEmployee.value
-  //lưu vị trí của nhân viên đang sửa
-  const index = employees.value.findIndex(e => e.id === updatedEmp.id)
-
-  // validate
-  if (!updatedEmp.id || String(updatedEmp.id).trim() === '') {
-    alert('Vui lòng điền đầy đủ ID')
-    return
-  }
-  if (!updatedEmp.employeeCode || String(updatedEmp.employeeCode).trim() === '') {
-    alert('Vui lòng điền đầy đủ mã nhân viên')
-    return
-  }
-  if (!updatedEmp.name || String(updatedEmp.name).trim() === '') {
-    alert('Vui lòng điền đầy đủ tên')
-    return
-  }
-
-
-  // lưu thông tin mới vào mảng nhân viên và localStorage
-  employees.value.slice({...originalEmp},index,{...updatedEmp }
-  )
-  saveToLocal()
-  closeEditEmployee()
-}
-
-
 // xác nhận xóa
 const confirmDelete = (emp) => {
   if (confirm(`Bạn có chắc muốn xóa nhân viên ${emp.name} không?`)) {
