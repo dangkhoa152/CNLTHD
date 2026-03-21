@@ -54,8 +54,11 @@ import LeaveRequestModal from '~/components/leaveRequests/LeaveRequestModal.vue'
 import LeaveRequestFormModal from '~/components/leaveRequests/LeaveRequestFormModal.vue'
 import LeaveCalendar from '~/components/leaveRequests/LeaveCalendar.vue'
 import { useLeaveRequestStore } from '~/stores/leaveRequestStore'
+// import { useActivityStore } from '~/stores/activityStore'
+
 const dashboard = useDashboardStore()
 const auth = useAuthStore()
+const activityStore = useActivityStore()
 // store-based state
 const leaveStore = useLeaveRequestStore()
 // sử dụng filter từ store: chỉ cần thay đổi filter ở component là store tự lọc
@@ -116,11 +119,21 @@ function openEdit(item: any) {
 function approve(item: any) {
   leaveStore.approveLeaveRequest(item.id)
   selected.value = null
+
+  const userName = (auth.user as any)?.name || 'Admin HR'
+  dashboard.addActivity({ type: 'approve', title: `Duyệt đơn nghỉ phép của ${item.employeeName}`, user: userName })
+  activityStore.logActivity('edit', 'Duyệt đơn nghỉ phép', item.employeeName)
+  toast.success('Đã duyệt đơn!')
 }
 // Từ chối đơn
 function reject(item: any) {
   leaveStore.rejectLeaveRequest(item.id)
   selected.value = null
+
+  const userName = (auth.user as any)?.name || 'Admin HR'
+  dashboard.addActivity({ type: 'reject', title: `Từ chối đơn nghỉ phép của ${item.employeeName}`, user: userName })
+  activityStore.logActivity('edit', 'Từ chối đơn nghỉ phép', item.employeeName)
+  toast.warning('Đã từ chối đơn!')
 }
 // Xác nhận trước khi xóa đơn nghỉ phép
 function confirmDelete(item: any) {
@@ -147,6 +160,11 @@ function create(payload: any) {
   if (!payload) return
   leaveStore.addLeaveRequest(payload)
   formVisible.value = false
+
+  const userName = (auth.user as any)?.name || 'Admin HR'
+  dashboard.addActivity({ type: 'add', title: `Tạo đơn nghỉ phép cho ${payload.employeeName}`, user: userName })
+  activityStore.logActivity('add', 'Tạo đơn xin nghỉ', payload.employeeName)
+  toast.success('Tạo đơn thành công!')
 }
 // Đóng form tạo/sửa đơn nghỉ phép
 function closeForm() {
@@ -156,11 +174,11 @@ function closeForm() {
 // Ghi log hoạt động khi cập nhật đơn nghỉ phép
 function handleUpdate() {
   setTimeout(() => {
-    dashboard.addActivity({
-      type: 'update',
-      title: `Sửa đơn nghỉ phép của ${formItem.value?.employeeName || 'một nhân viên'}`,
-      user: (auth.user as any)?.name || 'Admin HR'
-    })
+    const targetName = formItem.value?.employeeName || 'một nhân viên'
+    const userName = (auth.user as any)?.name || 'Admin HR'
+    
+    dashboard.addActivity({ type: 'update', title: `Sửa đơn nghỉ phép của ${targetName}`, user: userName })
+    activityStore.logActivity('edit', 'Cập nhật đơn nghỉ phép', targetName)
 
     toast.info(`Cập nhật thành công`)
   }, 50)
@@ -168,11 +186,11 @@ function handleUpdate() {
 // Ghi log hoạt động khi xóa đơn nghỉ phép
 function handleDelete() {
   setTimeout(() => {
-    dashboard.addActivity({
-      type: 'delete',
-      title: `Đã xóa đơn nghỉ phép của ${formItem.value?.employeeName || 'một nhân viên'}`,
-      user: (auth.user as any)?.name || 'Admin HR'
-    })
+    const targetName = formItem.value?.employeeName || 'một nhân viên'
+    const userName = (auth.user as any)?.name || 'Admin HR'
+
+    dashboard.addActivity({ type: 'delete', title: `Đã xóa đơn nghỉ phép của ${targetName}`, user: userName })
+    activityStore.logActivity('delete', 'Xóa đơn nghỉ phép', targetName)
 
     toast.info(`Xóa thành công`)
   }, 50)
@@ -180,13 +198,13 @@ function handleDelete() {
 // ghi log hoạt động khi duyệt hoặc từ chối hàng loạt đơn nghỉ phép
 function logBulkAction(action: string, count: number) {
   setTimeout(() => {
-    dashboard.addActivity({
-      type: action,
-      title: `${action === 'approve' ? 'Duyệt' : 'Từ chối'} ${count} đơn nghỉ phép`,
-      user: (auth.user as any)?.name || 'Admin HR'
-    })
+    const titleText = action === 'approve' ? 'Duyệt' : 'Từ chối'
+    const userName = (auth.user as any)?.name || 'Admin HR'
 
-    toast.info(`${action === 'approve' ? 'Duyệt' : 'Từ chối'} thành công ${count} đơn`)
+    dashboard.addActivity({ type: action, title: `${titleText} ${count} đơn nghỉ phép`, user: userName })
+    activityStore.logActivity('edit', `${titleText} hàng loạt`, `${count} đơn từ`)
+
+    toast.info(`${titleText} thành công ${count} đơn`)
   }, 50)
 }
 // Xử lý duyệt hàng loạt
