@@ -22,8 +22,8 @@ const formatCurrency = (value) => {
 }
 
 // Hàm xử lý khi bấm nút "Xem"
-const viewEmployees = (deptId) => {
-  router.push({ path: '/employees', query: { dept: deptId } })
+const viewEmployees = (department) => {
+  router.push({ path: '/employees', query: { department: department } })
 }
 
 // === QUẢN LÝ MODAL TỪ TRANG CHÍNH ===
@@ -160,7 +160,7 @@ const confirmDelete = async (dep) => {
             </td>
             
             <td class="px-6 py-5 whitespace-nowrap text-center text-base font-medium">
-              <button @click="viewEmployees(dep.id)" class="text-emerald-600 hover:text-emerald-900 dark:text-emerald-400 dark:hover:text-emerald-300 mr-4 font-bold transition-colors">Xem</button>
+              <button @click="viewEmployees(dep.name)" class="text-emerald-600 hover:text-emerald-900 dark:text-emerald-400 dark:hover:text-emerald-300 mr-4 font-bold transition-colors">Xem</button>
               <button @click="openEditModal(dep)" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-4 font-bold transition-colors">Sửa</button>
               <button @click="confirmDelete(dep)" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 font-bold transition-colors">Xóa</button>
             </td>
