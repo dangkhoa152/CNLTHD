@@ -1,450 +1,224 @@
-<script setup>
+<template>
+
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold mb-4">Quản lý nhân viên</h1>
+    <div class="flex items-center gap-2">
+      <button @click="openCreate" class="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded">Thêm nhân
+        viên</button>
+    </div>
+  </div>
+
+  <EmployeeFilter 
+    :departments="departments" 
+    @filter-changed="onFilter" 
+    v-model:department="employeeStore.selectedDepartment"
+    @reset="handleResetFilters" />
+
+  <div class="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
+      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Tổng nhân viên</div>
+      <div class="text-2xl text-blue-500 dark:text-blue-300 font-bold">{{ filtered.length }}</div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
+      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Đang làm việc</div>
+      <div class="text-2xl text-green-500 dark:text-green-300 font-bold">{{ countFilteredStatus("Đang làm việc") }}
+      </div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
+      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Tạm nghỉ</div>
+      <div class="text-2xl text-yellow-500 dark:text-yellow-300 font-bold">{{ countFilteredStatus("Tạm nghỉ") }}</div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
+      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Nghỉ việc</div>
+      <div class="text-2xl text-red-500 dark:text-red-300 font-bold">{{ countFilteredStatus("Nghỉ việc") }}</div>
+    </div>
+  </div>
+
+  <EmployeeTable :items="paginatedList" @click="open" @edit="openEdit" @delete="handleDeleteClick" />
+
+  <Pagination :current-page="currentPage" :total-pages="totalPages" :visible-pages="visiblePages" @prev="prevPage"
+    @next="nextPage" @go-to="goToPage" />
+
+  <EmployeeForm v-if="formVisible" :isEdit="isEdit" :item="formItem" :departments="departments" @close="closeForm"
+    @create="create" @update="update" />
+
+  <div class="p-6">
+    <ConfirmModal :isOpen="isConfirmOpen" title="Xóa nhân viên"
+      message="Bạn có chắc chắn muốn xóa nhân viên này? Dữ liệu sẽ không thể khôi phục." confirmText="Xác nhận"
+      type="danger" @cancel="isConfirmOpen = false" @confirm="executeDelete" />
+  </div>
+
+</template>
+<script lang="ts" setup>
 import { ref, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { usePagination } from '~/composables/usePagination'
-
-// dữ liệu nhân viên
-const employees = ref([])
-const searchQuery = ref('')
+import { toast } from 'vue3-toastify'
+import EmployeeFilter from '~/components/employees/EmployeeFilter.vue'
+import EmployeeTable from '~/components/employees/EmployeeTable.vue'
+import Pagination from '~/components/common/Pagination.vue'
+import EmployeeForm from '~/components/employees/EmployeeForm.vue'
+import ConfirmModal from '~/components/common/ConfirmModal.vue'
+// import EmployeeFormModal from '~/components/employees/EmployeeFormModal.vue'
+import { useEmployeeStore } from '~/stores/employeeStore'
+// import { useActivityStore } from '~/stores/activityStore'
+const router = useRouter()
 const route = useRoute()
-const showCreateModal = ref(false)
-const showEditModal = ref(false)
+const dashboard = useDashboardStore()
+const auth = useAuthStore()
+const activityStore = useActivityStore()
+// store-based state
+const employeeStore = useEmployeeStore()
 
-// hàm lưu vào localStorage
-const saveToLocal = () => {
-  localStorage.setItem('employees', JSON.stringify(employees.value))
-}
-
-const formEmployee = ref({
-  id: '',
-  employeeCode: '',
-  name: '',
-  gender: '',
-  dateOfBirth: '',
-  email: '',
-  phone: '',
-  address: '',
-  departmentId: '',
-  department: '',
-  position: '',
-  status: '',
-  joinDate: '',
-  avatar: ''
+// sử dụng filter từ store: chỉ cần thay đổi filter ở component là store tự lọc
+const selected = ref(null as any | null)
+const formVisible = ref(false)
+const isEdit = ref(false)
+const formItem = ref(null as any | null)
+const isConfirmOpen = ref(false)
+// Lay danh sach phong ban
+const departments = computed(() => {
+  return Array.from(new Set(employeeStore.employees.map((i: any) => i.department))).sort()
 })
 
-// load dữ liệu khi mở trang
+// filtered list lấy trực tiếp từ store (unwrap value để reactive đúng)
+const filtered = computed(() => employeeStore.searchEmployees)
+
+// Khai báo pagination dựa trên filtered
+const {
+  currentPage,
+  totalPages,
+  paginatedList,
+  nextPage,
+  prevPage,
+  goToPage,
+  visiblePages
+} = usePagination(filtered, 12)
+
+// Tải dữ liệu nhân viên khi component được mounted
 onMounted(async () => {
   try {
-    const saved = localStorage.getItem('employees')
-
-    if (saved) {
-      //nếu đã có dữ liệu lưu → dùng luôn
-      employees.value = JSON.parse(saved)
+    await employeeStore.fetchEmployees()
+    if (route.query.department) {
+      // Nạp giá trị từ URL vào Store
+      employeeStore.selectedDepartment = route.query.department as string
     } else {
-      //chưa có → load từ JSON
-      const data = await $fetch('/data/employees.json')
-      employees.value = data
-
-      //lưu lần đầu
-      localStorage.setItem('employees', JSON.stringify(data))
+      // Nếu không có trên URL (người dùng bấm menu bình thường), reset lại bộ lọc
+      employeeStore.selectedDepartment = ''
     }
-  } catch (error) {
-    console.error('Lỗi tải nhân viên:', error)
+  } catch (e) {
+    console.error('Không thể load dữ liệu', e)
   }
 })
 
-// Tìm kiếm nhân viên với tất cả dữ liệu
-const filteredEmployees = computed(() => {
-  if (!searchQuery.value) {
-    return employees.value
-  }
-  const query = searchQuery.value.toLowerCase()
-  return employees.value.filter (emp => 
-    String(emp.id).toLowerCase().includes(query) ||
-    String(emp.employeeCode).toLowerCase().includes(query) ||
-    String(emp.name).toLowerCase().includes(query) ||
-    String(emp.department).toLowerCase().includes(query) ||
-    String(emp.departmentId).toLowerCase().includes(query) ||
-    String(emp.gender).toLowerCase().includes(query) ||
-    String(emp.position).toLowerCase().includes(query) ||
-    String(emp.email).toLowerCase().includes(query) ||
-    String(emp.phone).toLowerCase().includes(query) ||
-    String(emp.address).toLowerCase().includes(query) ||
-    String(emp.status).toLowerCase().includes(query) ||
-    String(emp.joinDate).toLowerCase().includes(query) ||
-    String(emp.dateOfBirth).toLowerCase().includes(query)
-  )
-})
-
-// hàm lưu đồng thời khi thêm mới hoặc sửa nhân viên sẽ tự động lưu vào localStorage
-const editingId = ref(null)
-
-const saveEmployee = () => {
-  const emp = { ...formEmployee.value }
-
-  const error = validateEmployee(emp, employees.value, editingId.value)
-  if (error) {
-    alert(error)
-    return
-  }
-
-  if (editingId.value) {
-    // EDIT
-    const index = employees.value.findIndex(e => e.id === editingId.value)
-    if (index !== -1) {
-      employees.value.splice(index, 1, emp)
-    }
-  } else {
-    // CREATE
-    employees.value.push(emp)
-  }
-
-  employees.value = [...employees.value] // đảm bảo re-render
-  saveToLocal()
-
-  closeCreateEmployee()
-  closeEditEmployee()
-  editingId.value = null
+// Cập nhật filter trong store khi filter component thay đổi
+function onFilter(payload: any) {
+  employeeStore.setFilter(payload)
 }
 
-//hàm kiểm tra dữ liệu hợp lệ trước khi thêm mới hoặc sửa nhân viên
-const validateEmployee = (emp, list, editingId = null) => {
-  if (!emp.id?.toString().trim()) return 'Thiếu ID'
-  if (!emp.employeeCode?.trim()) return 'Thiếu mã NV'
-  if (!emp.name?.trim()) return 'Thiếu tên'
-
-  const id = String(emp.id).trim()
-  const code = emp.employeeCode.trim().toLowerCase()
-
-  const idExists = list.some(e =>
-    String(e.id) === id && String(e.id) !== String(editingId)
-  )
-  if (idExists) return 'ID đã tồn tại'
-
-  const codeExists = list.some(e =>
-    e.employeeCode?.toLowerCase() === code &&
-    String(e.id) !== String(editingId)
-  )
-  if (codeExists) return 'Mã NV đã tồn tại'
-
-  return null
+// Hàm đếm số lượng đơn theo trạng thái
+function countFilteredStatus(s: string) {
+  return filtered.value.filter((i: any) => i.status === s).length
+}
+//
+function handleResetFilters() {
+  // 1. Xóa dữ liệu lọc trong Store (Bảng sẽ tự động hiển thị lại toàn bộ)
+  employeeStore.clearFilter()
+  employeeStore.selectedDepartment = ''
+  router.replace({ query: {} })
+}
+// sự kiện mở modal xem chi tiết
+function open(item: any) {
+  selected.value = item
+  router.push('/employees/[id]')
 }
 
-// mở modal thêm mới
-const openCreateEmployee = (emp) => {
-  showEditModal.value = false
-  formEmployee.value = {...emp}
-  showCreateModal.value = true
+// Mở form tạo mới nhân viên
+function openCreate() {
+  formItem.value = null
+  formVisible.value = true
+  isEdit.value = false
+}
+// Mở form chỉnh sửa nhân viên
+function openEdit(item: any) {
+  formItem.value = item
+  formVisible.value = true
+  isEdit.value = true
 }
 
-// đóng modal thêm mới
-const closeCreateEmployee = () => {
-  showCreateModal.value = false
-}
-
-// mở modal sửa
-const openEditEmployee = (emp) => {
-  showCreateModal.value = false
-  formEmployee.value = {...emp}
-  editingId.value = emp.id 
-  showEditModal.value = true
-}
-// đóng modal sửa
-const closeEditEmployee = () => {
-  showEditModal.value = false
-}
-
-// hàm lưu sau khi sửa
-const saveEditEmployee = () => {
-  //lưu thông tin mới nhập vào mảng nhân viên
-  const updatedEmp = formEmployee.value
-  //lưu vị trí của nhân viên đang sửa
-  const index = employees.value.findIndex(e => e.id === updatedEmp.id)
-
-  // validate
-  if (!updatedEmp.id || String(updatedEmp.id).trim() === '') {
-    alert('Vui lòng điền đầy đủ ID')
-    return
-  }
-  if (!updatedEmp.employeeCode || String(updatedEmp.employeeCode).trim() === '') {
-    alert('Vui lòng điền đầy đủ mã nhân viên')
-    return
-  }
-  if (!updatedEmp.name || String(updatedEmp.name).trim() === '') {
-    alert('Vui lòng điền đầy đủ tên')
-    return
-  }
-
-
-  // lưu thông tin mới vào mảng nhân viên và localStorage
-  employees.value.slice({...originalEmp},index,{...updatedEmp }
-  )
-  saveToLocal()
-  closeEditEmployee()
-}
-
-
-// xác nhận xóa
-const confirmDelete = (emp) => {
-  if (confirm(`Bạn có chắc muốn xóa nhân viên ${emp.name} không?`)) {
-    employees.value = employees.value.filter(e => e.id !== emp.id)
-    saveToLocal()
+// Hàm sửa thông tin nhân viên
+function update(payload: any) {
+  if (formVisible.value) {
+    if (!payload || !payload.id) return
+    employeeStore.updateEmployee(payload.id, payload.patch || {})
+    selected.value = null;
+    logUpdate(payload)
+    closeForm()
   }
 }
 
-  const {
-    currentPage,
-    totalPages,
-    paginatedList,
-    nextPage,
-    prevPage,
-    goToPage
-  } = usePagination(filteredEmployees, 10)
+// Ghi log hoạt động khi cập nhật hồ sơ nhân viên
+function logUpdate(payload: any) {
+  setTimeout(() => {
+    const targetName = formItem.value?.name || payload.name
+    const userName = (auth.user as any)?.name || 'Admin HR'
+    dashboard.addActivity({ type: 'update', title: `Cập nhật thông tin của ${targetName}`, user: userName })
+    activityStore.logActivity('edit', 'Cập nhật hồ sơ nhân viên', targetName)
+    toast.info(`Cập nhật thành công`)
+  }, 50)
+}
 
-  const visiblePages = computed(() => {
-    const pages = []
-    const total = totalPages.value
-    const current = currentPage.value
+function create(payload: any) {
+  if (formVisible.value) {
+    if (!payload) return
+    employeeStore.addEmployee(payload)
+    logCreate(payload)
+    closeForm()
+  }
+}
+// Đóng form tạo/sửa thông tin nhân viên
+function closeForm() {
+  formVisible.value = false
+  formItem.value = null
+}
+// Ghi log hoạt động khi tạo nhân viên
+function logCreate(payload: any) {
+  setTimeout(() => {
+    const userName = (auth.user as any)?.name || 'Admin HR'
+    dashboard.addActivity({ type: 'add', title: `Tạo nhân viên mới : ${payload.name}`, user: userName })
+    activityStore.logActivity('add', 'Tạo hồ sơ nhân viên', payload.name)
+    toast.success('Tạo thành công!')
+  }, 50)
+}
 
-    if (total <= 7) {
-      return Array.from({ length: total }, (_, i) => i + 1)
-    }
+function handleDeleteClick(item: any) {
+  isConfirmOpen.value = true
+  formItem.value = item;
+}
 
-    pages.push(1)
+// function deleteEmp(item: any){
+//   if (!item || !item.id) return
+//   employeeStore.deleteEmployee(item.id)
+//   logDelete()
+// }
+// Ghi log hoạt động khi xóa nhân viên (chuyển trạng thái = nghỉ việc)
+function logDelete() {
+  setTimeout(() => {
+    const targetName = formItem.value?.name || "Một nhân viên"
+    const userName = (auth.user as any)?.name || 'Admin HR'
 
-    if (current > 3) {
-      pages.push('...')
-    }
+    dashboard.addActivity({ type: 'delete', title: `Hồ sơ nhân viên ${targetName} đã xóa`, user: userName })
+    activityStore.logActivity('delete', 'Xóa hồ sơ nhân viên', targetName)
 
-    const start = Math.max(2, current - 1)
-    const end = Math.min(total - 1, current + 1)
+    toast.info(`Xóa thành công`)
+  }, 50)
+}
 
-    for (let i = start; i <= end; i++) {
-      pages.push(i)
-    }
-
-    if (current < total - 2) {
-      pages.push('...')
-    }
-
-    pages.push(total)
-
-    return pages
-  })
+function executeDelete() {
+  if (formItem.value.id) {
+    employeeStore.deleteEmployee(formItem.value.id)
+    isConfirmOpen.value = false
+    logDelete()
+  }
+}
 </script>
 
-<template>
-<div class="p-6">
-
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
-      Trang quản lý nhân viên
-    </h2>
-
-    <div class="relative">
-        <input
-          v-model="searchQuery"
-          type="text" 
-          placeholder="Tìm tên, mã nhân viên..." 
-          class="pl-10 pr-4 py-2.5 text-base border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white min-w-[300px]"
-        />
-        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
-
-        <button 
-          @click="openCreateEmployee" 
-          class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white my-[7px] px-3 py-3 rounded-lg font-bold shadow-sm transition-colors"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-          Thêm Mới
-        </button>
-
-      </div>
-  </div>
-
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-x-auto">
-
-    <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-      <thead class="bg-gray-100 dark:bg-gray-900">
-        <tr>
-          <th class="sticky left-0 z-10 bg-gray-200 dark:bg-gray-700 w-[60px] px-5 py-4 text-center">ID</th>
-          <th class="sticky left-[60px] z-10 bg-gray-200 dark:bg-gray-700 w-[140px] px-6 py-4 text-center">Mã nhân viên</th>
-          <th class="sticky left-[200px] z-10 bg-gray-200 dark:bg-gray-700 w-[200px] px-6 py-4 text-center">Tên</th>
-          <th class="whitespace-nowrap px-6 py-4 text-center">Giới tính</th>
-          <th class="whitespace-nowrap  px-6 py-4 text-center">Ngày sinh</th>
-          <th class="px-6 py-4 text-left">Email</th>
-          <th class="px-6 py-4 text-center">Số điện thoại</th>
-          <th class="px-6 py-4 text-center">Địa chỉ</th>
-          <th class="whitespace-nowrap px-6 py-4 text-center">Id phòng ban</th>
-          <th class="px-6 py-4 text-center">Phòng ban</th>
-          <th class="px-6 py-4 text-center">Chức vụ</th>
-          <th class="whitespace-nowrap px-6 py-4 text-center">Trạng thái</th>
-          <th class="whitespace-nowrap px-6 py-4 text-center">Ngày vào làm</th>
-          <th class="px-6 py-4 text-center">Avatar</th>
-          <th class="px-6 py-4 text-center">Thao tác</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        <tr
-          v-for="emp in paginatedList"
-          :key="emp.id"
-          class="hover:bg-gray-50 dark:hover:bg-gray-700"
-        >
-          <td class="sticky left-0 bg-white dark:bg-gray-800 w-[60px] px-6 py-4 text-center">{{ emp.id }}</td>
-          <td class="sticky left-[60px] bg-white dark:bg-gray-800 w-[140px] px-10 py-4 text-left font-bold">{{ emp.employeeCode }}</td>
-          <td class="sticky left-[200px] bg-white dark:bg-gray-800 w-[200px] px-6 py-4 whitespace-nowrap text-center">{{ emp.name }}</td>
-          <td class="px-6 py-4 text-center">{{emp.gender }}</td>
-          <td class="px-10 py-4 whitespace-nowrap">{{emp.dateOfBirth}}</td>
-          <td class="px-6 py-4">{{emp.email}}</td>
-          <td class="px-10 py-4">{{emp.phone }}</td>
-          <td class="px-6 py-4 whitespace-nowrap text-center">{{emp.address}}</td>
-          <td class="px-10 py-4">{{emp.departmentId}}</td>
-          <td class="whitespace-nowrap px-10 py-4 text-center">{{emp.department}}</td>
-          <td class="whitespace-nowrap px-6 py-4 text-center">{{emp.position}}</td>
-          <td class="whitespace-nowrap px-10 py-4">{{emp.status}}</td>
-          <td class="whitespace-nowrap px-10 py-4">{{emp.joinDate}}</td>
-          <td class="px-6 py-4">{{emp.avatar}}</td>
-          <td class="whitespace-nowrap px-6 py-4 text-center">
-            <button @click="openEditEmployee(emp)" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mx-2 mr-4 font-bold transition-colors">Sửa</button>
-            <button @click="confirmDelete(emp)" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 font-bold transition-colors">Xóa</button>
-          </td>
-        </tr>
-
-        <tr v-if="paginatedList.length === 0">
-          <td colspan="5" class="text-center py-8 text-gray-500">
-            Không tìm thấy nhân viên
-          </td>
-        </tr>
-
-      </tbody>
-
-    </table>
-  
-  </div>
-  <div v-if="showCreateModal" class="fixed z-50 inset-0 bg-black/40 flex justify-center items-center">
-  <div class="space-y-4 bg-white px-[20px] rounded-lg w-[800px]">
-    <h2 class="font-bold text-lg text-blue-500 pt-8 pb-3">Thêm mới nhân viên </h2>
-    <div class="grid grid-cols-2 gap-2">
-      <div class="grid grid-cols-2 gap-2 ml-5">
-        <label class="mt-3 block mb-1 font-medium">ID</label>
-        <input v-model="formEmployee.id" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Mã nhân viên</label>
-        <input v-model="formEmployee.employeeCode" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Tên nhân viên</label>
-        <input v-model="formEmployee.name" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Giới tính</label>
-        <input v-model="formEmployee.gender" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Ngày sinh</label>
-        <input v-model="formEmployee.dateOfBirth" type="date" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Email</label>
-        <input v-model="formEmployee.email" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Số điện thoại</label>
-        <input v-model="formEmployee.phone" class="border mb-2 p-2 rounded" />
-        </div>
-        <div class="grid grid-cols-2 gap-2 ml-8 mr-5">
-        <label class="mt-3 block mb-1 font-medium">Địa chỉ</label>
-        <input v-model="formEmployee.address" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">ID phòng ban</label>
-        <input v-model="formEmployee.departmentId" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Phòng ban</label>
-        <input v-model="formEmployee.department" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Chức vụ</label>
-        <input v-model="formEmployee.position" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Trạng thái</label>
-        <input v-model="formEmployee.status" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Ngày vào làm</label>
-        <input v-model="formEmployee.joinDate" type="date" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Avatar URL</label>
-        <input v-model="formEmployee.avatar" class="border mb-2 p-2 rounded" />
-        </div>
-    </div>
-    <div class="flex justify-end gap-2 pt-3 pb-8">
-      <button @click="closeCreateEmployee" class="border border-gray-300 text-gray-700 px-3 py-2  rounded w-[75px]">Hủy</button>
-      <button @click="saveEmployee" class="bg-blue-500 text-white px-3 py-2 rounded mr-5 w-[75px]">Lưu</button>
-    </div>
-    </div>
-  </div>
-  </div>
-
-  <div v-if="showEditModal" class="fixed z-50 inset-0 bg-black/40 flex justify-center items-center">
-  <div class="space-y-4 bg-white px-[20px] rounded-lg w-[800px]">
-    <h2 class="font-bold text-lg text-blue-500 pt-8 pb-3">Sửa nhân viên </h2>
-    <div class="grid grid-cols-2 gap-2">
-      <div class="grid grid-cols-2 gap-2 ml-5">
-        <label class="mt-3 block mb-1 font-medium">ID</label>
-        <input v-model="formEmployee.id" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Mã nhân viên</label>
-        <input v-model="formEmployee.employeeCode" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Tên nhân viên</label>
-        <input v-model="formEmployee.name" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Giới tính</label>
-        <input v-model="formEmployee.gender" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Ngày sinh</label>
-        <input v-model="formEmployee.dateOfBirth" type="date" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Email</label>
-        <input v-model="formEmployee.email" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Số điện thoại</label>
-        <input v-model="formEmployee.phone" class="border mb-2 p-2 rounded" />
-      </div>
-      <div class="grid grid-cols-2 gap-2 ml-8 mr-5">
-        <label class="mt-3 block mb-1 font-medium">Địa chỉ</label>
-        <input v-model="formEmployee.address" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">ID phòng ban</label>
-        <input v-model="formEmployee.departmentId" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Phòng ban</label>
-        <input v-model="formEmployee.department" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Chức vụ</label>
-        <input v-model="formEmployee.position" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Trạng thái</label>
-        <input v-model="formEmployee.status" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Ngày vào làm</label>
-        <input v-model="formEmployee.joinDate" type="date" class="border mb-2 p-2 rounded" />
-        <label class="mt-3 block mb-1 font-medium">Avatar URL</label>
-        <input v-model="formEmployee.avatar" class="border mb-2 p-2 rounded" />
-      </div>
-    </div>
-    <div class="flex justify-end gap-2 pt-3 pb-8">
-      <button @click="closeEditEmployee" class="border border-gray-300 text-gray-700 px-3 py-2  rounded w-[75px]">Hủy</button>
-      <button @click="saveEmployee" class="bg-blue-500 text-white px-3 py-2 rounded mr-5 w-[75px]">Lưu</button>
-    </div>
-    </div>
-  </div>
-  <div class="flex justify-center mt-4 gap-2 items-center">
-  <!-- Prev -->
-  <button
-    @click="prevPage"
-    :disabled="currentPage === 1"
-    class="px-3 py-1 border rounded disabled:opacity-50"
-  >
-    ←
-  </button>
-
-  <!-- Pages -->
-  <button
-    v-for="(page, index) in visiblePages"
-    :key="index"
-    @click="typeof page === 'number' && goToPage(page)"
-    :disabled="page === '...'"
-    :class="[
-      'px-3 py-1 border rounded',
-      page === currentPage ? 'bg-blue-500 text-white' : '',
-      page === '...' ? 'cursor-default border-none' : ''
-    ]"
-  >
-    {{ page }}
-  </button>
-
-  <!-- Next -->
-  <button
-    @click="nextPage"
-    :disabled="currentPage === totalPages"
-    class="px-3 py-1 border rounded disabled:opacity-50"
-  >
-    →
-  </button>
-
-</div>
-</template>
+<style></style>

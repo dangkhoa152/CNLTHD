@@ -3,31 +3,47 @@ import { ref } from 'vue'
 
 export const useActivityStore = defineStore('activity', () => {
   const activities = ref([])
+  const isLoading = ref(false)
+
+  function saveToLocal() {
+    if (process.client) {
+      localStorage.setItem('hr_activities', JSON.stringify(activities.value))
+    }
+  }
+
+  function loadFromLocal() {
+    if (process.client) {
+      const saved = localStorage.getItem('hr_activities')
+      if (saved) activities.value = JSON.parse(saved)
+    }
+  }
 
   // Hàm load dữ liệu ban đầu (gọi từ file json của nhóm nếu localStorage trống)
   const fetchActivities = async () => {
-    const storedData = localStorage.getItem('hr_activities')
-    if (storedData) {
-      activities.value = JSON.parse(storedData)
-    } else {
-      try {
+    isLoading.value = true
+    try {
+      // Thử lấy từ LocalStorage trước
+      const saved = process.client ? localStorage.getItem('hr_activities') : null
+      if (saved && JSON.parse(saved).length > 0) {
+        // Nếu có dữ liệu cũ trong máy thì dùng luôn
+        activities.value = JSON.parse(saved)
+      } else {
         const data = await $fetch('/data/activities.json')
-        // Đảm bảo data là mảng (nếu file json của bạn đang là 1 object thì biến thành mảng)
-        if (data) {
-          activities.value = Array.isArray(data) ? data : [data]
-          localStorage.setItem('hr_activities', JSON.stringify(activities.value))
-        }
-      } catch (error) {
-        console.error('Lỗi lấy dữ liệu activities:', error)
+        activities.value = data
+        saveToLocal()
       }
+    } catch (error) {
+      console.error("Lỗi tải dữ liệu:", error)
+    } finally {
+      isLoading.value = false
     }
   }
 
   // Hàm ghi nhận hoạt động mới (Khớp 100% với JSON của bạn)
   const logActivity = (type, title, target, user = 'Admin HR') => {
     // 1. Tự động tăng ID (Tìm id lớn nhất hiện tại rồi + 1)
-    const nextId = activities.value.length > 0 
-      ? Math.max(...activities.value.map(a => a.id)) + 1 
+    const nextId = activities.value.length > 0
+      ? Math.max(...activities.value.map(a => a.id)) + 1
       : 1
 
     // 2. Format thời gian chuẩn "YYYY-MM-DD HH:mm"
@@ -42,10 +58,10 @@ export const useActivityStore = defineStore('activity', () => {
     // 3. Khởi tạo Object đúng chuẩn file activities.json
     const newLog = {
       id: nextId,
-      type: type,            
-      title: title,       
-      user: user,           
-      target: target,       
+      type: type,
+      title: title,
+      user: user,
+      target: target,
       time: formattedTime
     }
 
