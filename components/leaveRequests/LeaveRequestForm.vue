@@ -19,7 +19,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="md:col-span-2">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Người xin</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Người xin <span class="text-sm text-red-600">*</span></label>
           <div class="mt-1 flex gap-2 relative">
             <input v-model="form.employeeName" @input="onNameInput" :disabled="isEdit" type="text" placeholder="Họ và tên" class="flex-1 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
@@ -40,14 +40,14 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Từ ngày</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Từ ngày <span class="text-sm text-red-600">*</span></label>
           <input v-model="form.fromDate" type="date" class="mt-1 block w-full rounded-md 
           border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
           <div v-if="errors.fromDate" class="text-sm text-red-600 mt-1">{{ errors.fromDate }}</div>
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Đến ngày</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Đến ngày <span class="text-sm text-red-600">*</span></label>
           <input v-model="form.toDate" type="date" class="mt-1 block w-full rounded-md 
           border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
           <div v-if="errors.toDate" class="text-sm text-red-600 mt-1">{{ errors.toDate }}</div>

@@ -62,7 +62,7 @@ const dashboard = useDashboardStore()
 const activityStore = useActivityStore()
 
 const userName = auth.user?.name || 'Admin HR'
-await activityStore.fetchActivities()
+
 
 async function handleLogin() {
   const result = await auth.login(email.value, password.value)

@@ -4,7 +4,6 @@
     class="fixed inset-0 z-30 bg-black/50 md:hidden"
     @click="$emit('close')"
   />
-
   <aside
     class="fixed inset-y-0 left-0 z-40 w-64 transform bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-transform duration-300 md:translate-x-0 shadow-sm"
     :class="isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
