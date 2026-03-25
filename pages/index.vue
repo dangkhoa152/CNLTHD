@@ -3,7 +3,7 @@
     <div class="mb-6">
       <h1 class="text-2xl font-bold">Tổng quan hệ thống</h1>
       <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-        Theo dõi nhanh tình hình nhân sự và hoạt động gần đây
+        Theo dõi nhanh tình hình nhân sự và các chỉ số tổng quan của hệ thống
       </p>
     </div>
 
@@ -30,17 +30,11 @@
       />
     </div>
 
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
-      <div class="xl:col-span-2">
-        <DepartmentPieChart
-          :labels="departmentLabels"
-          :values="departmentValues"
-        />
-      </div>
-
-      <div class="xl:col-span-1">
-        <RecentActivities :activities="dashboard.activities" />
-      </div>
+    <div class="grid grid-cols-1 gap-6 mb-6">
+      <DepartmentPieChart
+        :labels="departmentLabels"
+        :values="departmentValues"
+      />
     </div>
 
     <div class="grid grid-cols-1 gap-6">
@@ -55,7 +49,6 @@
 <script setup>
 import StatCard from '~/components/dashboard/StatCard.vue'
 import DepartmentPieChart from '~/components/dashboard/DepartmentPieChart.vue'
-import RecentActivities from '~/components/dashboard/RecentActivities.vue'
 import EmployeeStatusChart from '~/components/dashboard/EmployeeStatusChart.vue'
 
 definePageMeta({
