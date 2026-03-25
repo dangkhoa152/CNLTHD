@@ -1,68 +1,88 @@
+import getNowString from '~/utils/formatDate'
 export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     const leaveRequests = ref([])
     const loading = ref(false)
     const query = ref({})
+
+    const dashboard = useDashboardStore()
+    const auth = useAuthStore()
+    const activityStore = useActivityStore()
+
     // Định dạng ngày tháng hiện tại thành chuỗi
-    function getNowString() {
-        const now = new Date()
-        const yyyy = now.getFullYear()
-        const mm = String(now.getMonth() + 1).padStart(2, '0')
-        const dd = String(now.getDate()).padStart(2, '0')
-        const hh = String(now.getHours()).padStart(2, '0')
-        const mi = String(now.getMinutes()).padStart(2, '0')
-        return `${yyyy}-${mm}-${dd} ${hh}:${mi}`
-    }
+    // function getNowString() {
+    //     const now = new Date()
+    //     const yyyy = now.getFullYear()
+    //     const mm = String(now.getMonth() + 1).padStart(2, '0')
+    //     const dd = String(now.getDate()).padStart(2, '0')
+    //     const hh = String(now.getHours()).padStart(2, '0')
+    //     const mi = String(now.getMinutes()).padStart(2, '0')
+    //     return `${yyyy}-${mm}-${dd} ${hh}:${mi}`
+    // }
     // Lưu data vào LocalStorage
+
     function saveToLocal() {
         if (process.client) {
             localStorage.setItem('hrm_leaveRequests', JSON.stringify(leaveRequests.value))
         }
     }
-    // Tải data từ localStorage
-    function loadFromLocal() {
+
+    function loadDataFromLocal() {
         if (process.client) {
-            const saved = localStorage.getItem('hrm_leaveRequests')
-            if (saved) leaveRequests.value = JSON.parse(saved)
+            const data = localStorage.getItem('hrm_leaveRequests')
+            leaveRequests.value = JSON.parse(data)
+            return leaveRequests;
         }
+        return null;
     }
     // lấy data từ file JSON 
     async function fetchLeaveRequests() {
         loading.value = true
         try {
-            const data = await $fetch('/data/leave-request.json')
-            leaveRequests.value = data
-
-            if (process.client) {
-                const saved = localStorage.getItem('hrm_leaveRequests')
-                if (saved) {
-                    // Nếu đã có dữ liệu lưu trên local thì dùng dữ liệu đó thay vì dữ liệu mới tải về
-                    leaveRequests.value = JSON.parse(saved)
-                }
+            // Thử lấy từ LocalStorage trước
+            const saved = process.client ? localStorage.getItem('hrm_leaveRequests') : null
+            if (saved && JSON.parse(saved).length > 0) {
+                leaveRequests.value = JSON.parse(saved)
+            } else {
+                const data = await $fetch('/data/leave-request.json')
+                leaveRequests.value = data
+                saveToLocal()
             }
+        } catch (error) {
+            console.error("Lỗi tải dữ liệu:", error)
         } finally {
             loading.value = false
         }
     }
     // Thêm mới đơn nghỉ phép
     function addLeaveRequest(payload) {
-        const id = Date.now()
-        const item = {
-            id,
-            employeeName: payload.employeeName || '',
-            employeeCode: payload.employeeCode || '',
-            department: payload.department || '',
-            fromDate: payload.fromDate || '',
-            toDate: payload.toDate || '',
-            days: payload.days || 1,
-            reason: payload.reason || '',
-            status: payload.status || 'Chờ duyệt',
-            createdAt: getNowString(),
-            ...payload
+        try {
+            const nextId = leaveRequests.value.length > 0
+                ? Math.max(...leaveRequests.value.map(a => a.id)) + 1
+                : 1
+            const item = {
+                nextId,
+                employeeName: payload.employeeName || '',
+                employeeCode: payload.employeeCode || '',
+                department: payload.department || '',
+                fromDate: payload.fromDate || '',
+                toDate: payload.toDate || '',
+                days: payload.days || 1,
+                reason: payload.reason || '',
+                status: payload.status || 'Chờ duyệt',
+                createdAt: getNowString(),
+                ...payload
+            }
+            // Thêm vào đầu danh sách
+            leaveRequests.value.unshift(item)
+            saveToLocal()
+            const userName = auth.user.name || 'Admin HR';
+            dashboard.addActivity({ type: 'add', title: `Tạo đơn nghỉ phép cho ${payload.employeeName}`, user: userName })
+            activityStore.logActivity('add', 'Tạo đơn xin nghỉ', payload.employeeName)
+            return item
         }
-        // Thêm vào đầu danh sách
-        leaveRequests.value.unshift(item)
-        saveToLocal()
-        return item
+        catch (error) {
+            console.log('Lỗi khi thêm đơn nghỉ phép')
+        }
     }
     // Sửa đơn nghỉ phép
     function updateLeaveRequest(id, patch) {
@@ -148,12 +168,12 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     return {
         leaveRequests,
         loading,
+        loadDataFromLocal,
         searchLeaveRequest,
         query,
         setFilter,
         clearFilter,
         fetchLeaveRequests,
-        loadFromLocal,
         saveToLocal,
         addLeaveRequest,
         updateLeaveRequest,
