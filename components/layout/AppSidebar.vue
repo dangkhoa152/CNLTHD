@@ -4,7 +4,6 @@
     class="fixed inset-0 z-30 bg-black/50 md:hidden"
     @click="$emit('close')"
   />
-
   <aside
     class="fixed inset-y-0 left-0 z-40 w-64 transform bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-transform duration-300 md:translate-x-0 shadow-sm"
     :class="isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
@@ -72,6 +71,18 @@
       >
         <span class="text-lg">📝</span>
         <span>Nghỉ phép</span>
+      </NuxtLink>
+
+      <NuxtLink
+        to="/activities"
+        class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
+        :class="route.path === '/activities'
+          ? 'bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-sm'
+          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
+        @click="$emit('close')"
+      >
+        <span class="text-lg">🕒</span>
+        <span>Lịch sử hoạt động</span>
       </NuxtLink>
     </nav>
 

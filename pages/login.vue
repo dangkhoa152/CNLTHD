@@ -59,6 +59,10 @@ const email = ref('admin@company.com')
 const password = ref('123456')
 
 const dashboard = useDashboardStore()
+const activityStore = useActivityStore()
+
+const userName = auth.user?.name || 'Admin HR'
+
 
 async function handleLogin() {
   const result = await auth.login(email.value, password.value)
@@ -71,8 +75,17 @@ async function handleLogin() {
   dashboard.addActivity({
     type: 'login',
     title: 'Đăng nhập hệ thống',
-    user: auth.user?.name || 'Admin HR'
+    user: userName
   })
+
+  activityStore.logActivity(
+    'login', 
+    'Đăng nhập hệ thống', 
+    'Hệ thống', 
+    userName
+  )
+
+
 
   toast.success(result.message)
   await navigateTo('/')

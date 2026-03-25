@@ -1,122 +1,224 @@
-<script setup>
+<template>
+
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold mb-4">Quản lý nhân viên</h1>
+    <div class="flex items-center gap-2">
+      <button @click="openCreate" class="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded">Thêm nhân
+        viên</button>
+    </div>
+  </div>
+
+  <EmployeeFilter 
+    :departments="departments" 
+    @filter-changed="onFilter" 
+    v-model:department="employeeStore.selectedDepartment"
+    @reset="handleResetFilters" />
+
+  <div class="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
+      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Tổng nhân viên</div>
+      <div class="text-2xl text-blue-500 dark:text-blue-300 font-bold">{{ filtered.length }}</div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
+      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Đang làm việc</div>
+      <div class="text-2xl text-green-500 dark:text-green-300 font-bold">{{ countFilteredStatus("Đang làm việc") }}
+      </div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
+      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Tạm nghỉ</div>
+      <div class="text-2xl text-yellow-500 dark:text-yellow-300 font-bold">{{ countFilteredStatus("Tạm nghỉ") }}</div>
+    </div>
+    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
+      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Nghỉ việc</div>
+      <div class="text-2xl text-red-500 dark:text-red-300 font-bold">{{ countFilteredStatus("Nghỉ việc") }}</div>
+    </div>
+  </div>
+
+  <EmployeeTable :items="paginatedList" @click="open" @edit="openEdit" @delete="handleDeleteClick" />
+
+  <Pagination :current-page="currentPage" :total-pages="totalPages" :visible-pages="visiblePages" @prev="prevPage"
+    @next="nextPage" @go-to="goToPage" />
+
+  <EmployeeForm v-if="formVisible" :isEdit="isEdit" :item="formItem" :departments="departments" @close="closeForm"
+    @create="create" @update="update" />
+
+  <div class="p-6">
+    <ConfirmModal :isOpen="isConfirmOpen" title="Xóa nhân viên"
+      message="Bạn có chắc chắn muốn xóa nhân viên này? Dữ liệu sẽ không thể khôi phục." confirmText="Xác nhận"
+      type="danger" @cancel="isConfirmOpen = false" @confirm="executeDelete" />
+  </div>
+
+</template>
+<script lang="ts" setup>
 import { ref, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
-
-// dữ liệu nhân viên
-const employees = ref([])
-const searchQuery = ref('')
+import { toast } from 'vue3-toastify'
+import EmployeeFilter from '~/components/employees/EmployeeFilter.vue'
+import EmployeeTable from '~/components/employees/EmployeeTable.vue'
+import Pagination from '~/components/common/Pagination.vue'
+import EmployeeForm from '~/components/employees/EmployeeForm.vue'
+import ConfirmModal from '~/components/common/ConfirmModal.vue'
+// import EmployeeFormModal from '~/components/employees/EmployeeFormModal.vue'
+import { useEmployeeStore } from '~/stores/employeeStore'
+// import { useActivityStore } from '~/stores/activityStore'
+const router = useRouter()
 const route = useRoute()
+const dashboard = useDashboardStore()
+const auth = useAuthStore()
+const activityStore = useActivityStore()
+// store-based state
+const employeeStore = useEmployeeStore()
 
-// load dữ liệu khi mở trang
+// sử dụng filter từ store: chỉ cần thay đổi filter ở component là store tự lọc
+const selected = ref(null as any | null)
+const formVisible = ref(false)
+const isEdit = ref(false)
+const formItem = ref(null as any | null)
+const isConfirmOpen = ref(false)
+// Lay danh sach phong ban
+const departments = computed(() => {
+  return Array.from(new Set(employeeStore.employees.map((i: any) => i.department))).sort()
+})
+
+// filtered list lấy trực tiếp từ store (unwrap value để reactive đúng)
+const filtered = computed(() => employeeStore.searchEmployees)
+
+// Khai báo pagination dựa trên filtered
+const {
+  currentPage,
+  totalPages,
+  paginatedList,
+  nextPage,
+  prevPage,
+  goToPage,
+  visiblePages
+} = usePagination(filtered, 12)
+
+// Tải dữ liệu nhân viên khi component được mounted
 onMounted(async () => {
   try {
-    const data = await $fetch('/data/employees.json')
-    employees.value = data
-  } catch (error) {
-    console.error('Lỗi tải nhân viên:', error)
+    await employeeStore.fetchEmployees()
+    if (route.query.department) {
+      // Nạp giá trị từ URL vào Store
+      employeeStore.selectedDepartment = route.query.department as string
+    } else {
+      // Nếu không có trên URL (người dùng bấm menu bình thường), reset lại bộ lọc
+      employeeStore.selectedDepartment = ''
+    }
+  } catch (e) {
+    console.error('Không thể load dữ liệu', e)
   }
 })
 
-// lọc theo phòng ban từ query (?dept=IT)
-const deptFilter = computed(() => route.query.dept)
+// Cập nhật filter trong store khi filter component thay đổi
+function onFilter(payload: any) {
+  employeeStore.setFilter(payload)
+}
 
-// lọc theo phòng ban + search
-const filteredEmployees = computed(() => {
-  let list = employees.value
+// Hàm đếm số lượng đơn theo trạng thái
+function countFilteredStatus(s: string) {
+  return filtered.value.filter((i: any) => i.status === s).length
+}
+//
+function handleResetFilters() {
+  // 1. Xóa dữ liệu lọc trong Store (Bảng sẽ tự động hiển thị lại toàn bộ)
+  employeeStore.clearFilter()
+  employeeStore.selectedDepartment = ''
+  router.replace({ query: {} })
+}
+// sự kiện mở modal xem chi tiết
+function open(item: any) {
+  selected.value = item
+  router.push('/employees/[id]')
+}
 
-  // lọc phòng ban
-  if (deptFilter.value) {
-    list = list.filter(emp => emp.departmentId === deptFilter.value)
+// Mở form tạo mới nhân viên
+function openCreate() {
+  formItem.value = null
+  formVisible.value = true
+  isEdit.value = false
+}
+// Mở form chỉnh sửa nhân viên
+function openEdit(item: any) {
+  formItem.value = item
+  formVisible.value = true
+  isEdit.value = true
+}
+
+// Hàm sửa thông tin nhân viên
+function update(payload: any) {
+  if (formVisible.value) {
+    if (!payload || !payload.id) return
+    employeeStore.updateEmployee(payload.id, payload.patch || {})
+    selected.value = null;
+    logUpdate(payload)
+    closeForm()
   }
+}
 
-  // search
-  if (searchQuery.value) {
-    const keyword = searchQuery.value.toLowerCase()
+// Ghi log hoạt động khi cập nhật hồ sơ nhân viên
+function logUpdate(payload: any) {
+  setTimeout(() => {
+    const targetName = formItem.value?.name || payload.name
+    const userName = (auth.user as any)?.name || 'Admin HR'
+    dashboard.addActivity({ type: 'update', title: `Cập nhật thông tin của ${targetName}`, user: userName })
+    activityStore.logActivity('edit', 'Cập nhật hồ sơ nhân viên', targetName)
+    toast.info(`Cập nhật thành công`)
+  }, 50)
+}
 
-    list = list.filter(emp =>
-      emp.name.toLowerCase().includes(keyword) ||
-      emp.id.toLowerCase().includes(keyword) ||
-      emp.position.toLowerCase().includes(keyword)
-    )
+function create(payload: any) {
+  if (formVisible.value) {
+    if (!payload) return
+    employeeStore.addEmployee(payload)
+    logCreate(payload)
+    closeForm()
   }
+}
+// Đóng form tạo/sửa thông tin nhân viên
+function closeForm() {
+  formVisible.value = false
+  formItem.value = null
+}
+// Ghi log hoạt động khi tạo nhân viên
+function logCreate(payload: any) {
+  setTimeout(() => {
+    const userName = (auth.user as any)?.name || 'Admin HR'
+    dashboard.addActivity({ type: 'add', title: `Tạo nhân viên mới : ${payload.name}`, user: userName })
+    activityStore.logActivity('add', 'Tạo hồ sơ nhân viên', payload.name)
+    toast.success('Tạo thành công!')
+  }, 50)
+}
 
-  return list
-})
+function handleDeleteClick(item: any) {
+  isConfirmOpen.value = true
+  formItem.value = item;
+}
+
+// function deleteEmp(item: any){
+//   if (!item || !item.id) return
+//   employeeStore.deleteEmployee(item.id)
+//   logDelete()
+// }
+// Ghi log hoạt động khi xóa nhân viên (chuyển trạng thái = nghỉ việc)
+function logDelete() {
+  setTimeout(() => {
+    const targetName = formItem.value?.name || "Một nhân viên"
+    const userName = (auth.user as any)?.name || 'Admin HR'
+
+    dashboard.addActivity({ type: 'delete', title: `Hồ sơ nhân viên ${targetName} đã xóa`, user: userName })
+    activityStore.logActivity('delete', 'Xóa hồ sơ nhân viên', targetName)
+
+    toast.info(`Xóa thành công`)
+  }, 50)
+}
+
+function executeDelete() {
+  if (formItem.value.id) {
+    employeeStore.deleteEmployee(formItem.value.id)
+    isConfirmOpen.value = false
+    logDelete()
+  }
+}
 </script>
 
-<template>
-<div class="p-6">
-
-  <div class="flex justify-between items-center mb-6">
-    <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
-      Trang quản lý nhân viên
-    </h2>
-
-    <input
-      v-model="searchQuery"
-      type="text"
-      placeholder="Tìm nhân viên..."
-      class="border px-4 py-2 rounded-lg dark:bg-gray-800 dark:text-white"
-    />
-  </div>
-
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-
-    <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-
-      <thead class="bg-gray-100 dark:bg-gray-900">
-        <tr>
-          <th class="px-6 py-4 text-left">ID</th>
-          <th class="px-6 py-4 text-left">Mã nhân viên</th>
-          <th class="px-6 py-4 text-left">Tên</th>
-          <th class="px-6 py-4 text-left">Giới tính</th>
-          <th class="px-6 py-4 text-left">Ngày sinh</th>
-          <th class="px-6 py-4 text-left">Email</th>
-          <th class="px-6 py-4 text-left">Số điện thoại</th>
-          <th class="px-6 py-4 text-left">Địa chỉ</th>
-          <th class="px-6 py-4 text-left">Id phòng ban</th>
-          <th class="px-6 py-4 text-left">Phòng ban</th>
-          <th class="px-6 py-4 text-left">Chức vụ</th>
-          <th class="px-6 py-4 text-left">Trạng thái</th>
-          <th class="px-6 py-4 text-left">Ngày vào làm</th>
-          <th class="px-6 py-4 text-left">Avatar</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        <tr
-          v-for="emp in filteredEmployees"
-          :key="emp.id"
-          class="hover:bg-gray-50 dark:hover:bg-gray-700"
-        >
-          <td class="px-6 py-4">{{ emp.id }}</td>
-          <td class="px-6 py-4 font-bold">{{ emp.employeeCode }}</td>
-          <td class="px-6 py-4">{{ emp.name }}</td>
-          <td class="px-6 py-4">{{ emp.gender }}</td>
-          <td class="px-6 py-4">{{emp.dateOfBirth}}</td>
-          <td class="px-6 py-4">{{emp.email}}</td>
-          <td class="px-6 py-4">{{emp.phone }}</td>
-          <td class="px-6 py-4">{{emp.address}}</td>
-          <td class="px-6 py-4">{{emp.departmentId}}</td>
-          <td class="px-6 py-4">{{emp.department}}</td>
-          <td class="px-6 py-4">{{emp.position}}</td>
-          <td class="px-6 py-4">{{emp.status}}</td>
-          <td class="px-6 py-4">{{emp.joinDate}}</td>
-          <td class="px-6 py-4">{{emp.avatar}}</td>
-        </tr>
-
-        <tr v-if="filteredEmployees.length === 0">
-          <td colspan="5" class="text-center py-8 text-gray-500">
-            Không tìm thấy nhân viên
-          </td>
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</div>
-</template>
+<style></style>
