@@ -1,19 +1,19 @@
 <template>
   <div class="p-6 max-w-7xl mx-auto" v-if="employee">
     
-    <button @click="$router.back()" class="mb-6 flex items-center text-gray-500 hover:text-blue-600 transition-colors font-medium">
+    <button @click="$router.back()" class="mb-6 flex items-center text-gray-500 dark:text-gray-100 hover:text-blue-600 transition-colors font-medium">
       <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
       Quay lại danh sách
     </button>
 
-    <div class="bg-white p-6 rounded-xl shadow-sm border mb-6 flex flex-col md:flex-row gap-8 items-start">
+    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow-sm border mb-6 flex flex-col md:flex-row gap-8 items-start">
       
       <div class="flex flex-col items-center min-w-[200px]">
-        <div class="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center text-5xl font-bold text-blue-600 shadow-inner mb-4 border-4 border-white ring-1 ring-gray-100">
+        <div class="w-32 h-32 rounded-full bg-blue-50 flex items-center justify-center text-5xl font-bold text-blue-600 dark:text-blue-300 shadow-inner mb-4 border-4 border-white ring-1 ring-gray-100">
           {{ employee.name.charAt(0) }}
         </div>
-        <h1 class="text-2xl font-bold text-gray-800 text-center">{{ employee.name }}</h1>
-        <p class="text-blue-600 font-medium mt-1 text-center">{{ currentRole?.position || 'Chưa cập nhật' }}</p>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200 text-center">{{ employee.name }}</h1>
+        <p class="text-blue-600 dark:text-blue-200 font-medium mt-1 text-center">{{ currentRole?.position || 'Chưa cập nhật' }}</p>
         <span class="mt-3 px-4 py-1.5 text-sm rounded-full font-medium" :class="employee.status === 'Đang làm việc' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'">
           {{ employee.status }}
         </span>
