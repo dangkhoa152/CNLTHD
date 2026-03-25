@@ -1,50 +1,72 @@
 [
   {
     "id": "DEP01",
-    "name": "Phòng IT",
-    "budget": 250000000,
-    "manager": "Bùi Bảo An",
-    "employeeCount": 176,
-    "description": "Quản lý hoạt động của phòng it"
+    "name": "Phòng CNTT",
+    "totalEmployees": 180,
+    "positions": [
+      "Frontend Developer",
+      "Backend Developer",
+      "Fullstack Developer",
+      "UI/UX Designer",
+      "QA Tester",
+      "DevOps Engineer"
+    ]
   },
   {
     "id": "DEP02",
-    "name": "Phòng Nhân sự",
-    "budget": 120000000,
-    "manager": "Đặng Ngọc Ngân",
-    "employeeCount": 134,
-    "description": "Quản lý hoạt động của phòng nhân sự"
+    "name": "Phòng Marketing",
+    "totalEmployees": 160,
+    "positions": [
+      "Digital Marketer",
+      "SEO Specialist",
+      "Content Creator",
+      "Brand Executive",
+      "Ads Specialist"
+    ]
   },
   {
     "id": "DEP03",
-    "name": "Phòng Marketing",
-    "budget": 180000000,
-    "manager": "Đỗ Quốc Bảo",
-    "employeeCount": 168,
-    "description": "Quản lý hoạt động của phòng marketing"
+    "name": "Phòng Kinh doanh",
+    "totalEmployees": 220,
+    "positions": [
+      "Sales Executive",
+      "Senior Sales Executive",
+      "Sales Manager",
+      "Business Development Executive",
+      "Key Account Executive"
+    ]
   },
   {
     "id": "DEP04",
-    "name": "Phòng Kế toán",
-    "budget": 150000000,
-    "manager": "Phạm Ngọc An",
-    "employeeCount": 180,
-    "description": "Quản lý hoạt động của phòng kế toán"
+    "name": "Phòng Chăm sóc khách hàng",
+    "totalEmployees": 170,
+    "positions": [
+      "Customer Support Staff",
+      "Call Center Agent",
+      "Complaint Handler",
+      "Customer Care Executive"
+    ]
   },
   {
     "id": "DEP05",
-    "name": "Phòng Kinh doanh",
-    "budget": 300000000,
-    "manager": "Võ Phương Thảo",
-    "employeeCount": 169,
-    "description": "Quản lý hoạt động của phòng kinh doanh"
+    "name": "Phòng Logistics",
+    "totalEmployees": 190,
+    "positions": [
+      "Warehouse Staff",
+      "Inventory Controller",
+      "Delivery Coordinator",
+      "Supply Chain Executive"
+    ]
   },
   {
     "id": "DEP06",
-    "name": "Phòng Chăm sóc khách hàng",
-    "budget": 140000000,
-    "manager": "Hoàng Ngọc Linh",
-    "employeeCount": 173,
-    "description": "Quản lý hoạt động của phòng chăm sóc khách hàng"
+    "name": "Phòng Nhân sự",
+    "totalEmployees": 80,
+    "positions": [
+      "HR Executive",
+      "Recruiter",
+      "Training Specialist",
+      "C&B Specialist"
+    ]
   }
 ]
