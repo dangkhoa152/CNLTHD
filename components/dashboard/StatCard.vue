@@ -1,34 +1,15 @@
 <template>
-  <div class="stat-card">
-    <p class="label">{{ title }}</p>
-    <h2 class="value">{{ value }}</h2>
+  <div class="rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-5 shadow-sm hover:shadow-md transition duration-300">
+    <p class="text-sm text-gray-500 dark:text-gray-400">{{ title }}</p>
+    <h3 class="mt-2 text-3xl font-bold">{{ value }}</h3>
+    <p class="mt-2 text-xs text-gray-400">{{ subtitle }}</p>
   </div>
 </template>
 
 <script setup>
 defineProps({
   title: String,
-  value: [String, Number]
+  value: [Number, String],
+  subtitle: String
 })
 </script>
-
-<style scoped>
-.stat-card {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-}
-
-.label {
-  color: #64748b;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
-
-.value {
-  color: #0f172a;
-  font-size: 28px;
-  font-weight: 700;
-}
-</style>
