@@ -34,7 +34,13 @@
     </div>
   </div>
 
-  <EmployeeTable :items="paginatedList" @click="open" @edit="openEdit" @delete="handleDeleteClick" />
+  <EmployeeTable 
+    :items="paginatedList" 
+    @view="open" 
+    @edit="openEdit"
+    @delete="handleDeleteClick"
+    @sort="handleSort" 
+    />
 
   <Pagination :current-page="currentPage" :total-pages="totalPages" :visible-pages="visiblePages" @prev="prevPage"
     @next="nextPage" @go-to="goToPage" />
@@ -57,15 +63,12 @@ import EmployeeTable from '~/components/employees/EmployeeTable.vue'
 import Pagination from '~/components/common/Pagination.vue'
 import EmployeeForm from '~/components/employees/EmployeeForm.vue'
 import ConfirmModal from '~/components/common/ConfirmModal.vue'
-// import EmployeeFormModal from '~/components/employees/EmployeeFormModal.vue'
 import { useEmployeeStore } from '~/stores/employeeStore'
-// import { useActivityStore } from '~/stores/activityStore'
 const router = useRouter()
 const route = useRoute()
 const dashboard = useDashboardStore()
 const auth = useAuthStore()
 const activityStore = useActivityStore()
-// store-based state
 const employeeStore = useEmployeeStore()
 
 // sử dụng filter từ store: chỉ cần thay đổi filter ở component là store tự lọc
@@ -74,6 +77,22 @@ const formVisible = ref(false)
 const isEdit = ref(false)
 const formItem = ref(null as any | null)
 const isConfirmOpen = ref(false)
+
+// Tải dữ liệu nhân viên khi component được mounted
+onMounted(async () => {
+  try {
+    await employeeStore.fetchEmployees()
+    if (route.query.department) {
+      // Nạp giá trị từ URL vào Store
+      employeeStore.selectedDepartment = route.query.department as string
+    } else {
+      employeeStore.selectedDepartment = ''
+    }
+  } catch (e) {
+    console.error('Không thể load dữ liệu', e)
+  }
+})
+
 // Lay danh sach phong ban
 const departments = computed(() => {
   return Array.from(new Set(employeeStore.employees.map((i: any) => i.department))).sort()
@@ -93,21 +112,10 @@ const {
   visiblePages
 } = usePagination(filtered, 12)
 
-// Tải dữ liệu nhân viên khi component được mounted
-onMounted(async () => {
-  try {
-    await employeeStore.fetchEmployees()
-    if (route.query.department) {
-      // Nạp giá trị từ URL vào Store
-      employeeStore.selectedDepartment = route.query.department as string
-    } else {
-      // Nếu không có trên URL (người dùng bấm menu bình thường), reset lại bộ lọc
-      employeeStore.selectedDepartment = ''
-    }
-  } catch (e) {
-    console.error('Không thể load dữ liệu', e)
-  }
-})
+// sorting
+function handleSort(column: string) {
+  employeeStore.setSort(column)
+}
 
 // Cập nhật filter trong store khi filter component thay đổi
 function onFilter(payload: any) {
@@ -128,7 +136,7 @@ function handleResetFilters() {
 // sự kiện mở modal xem chi tiết
 function open(item: any) {
   selected.value = item
-  router.push('/employees/[id]')
+  router.push(`/employees/[${item.id}]`)
 }
 
 // Mở form tạo mới nhân viên

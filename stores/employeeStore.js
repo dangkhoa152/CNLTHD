@@ -8,11 +8,9 @@ export const useEmployeeStore = defineStore('employees', () => {
   const usedepartment = useDepartmentStore()
   const departments = usedepartment.departments
   const selectedDepartment = ref('')
-  // Trạng thái cho Data Grid
-  const searchQuery = ref('')
-  const sortBy = ref('name') // Cột đang sắp xếp
-  const sortDesc = ref(false) // Tăng dần hay giảm dần
 
+  const sortColumn = ref('')
+  const sortOrder = ref('asc')
   // Lưu data vào LocalStorage
   function saveToLocal() {
     if (process.client) {
@@ -131,14 +129,42 @@ export const useEmployeeStore = defineStore('employees', () => {
     saveToLocal()
     usedepartment.saveToLocal()
   }
+
+  function setSort(column) {
+      if (sortColumn.value === column) {
+        sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
+      } else {
+        sortColumn.value = column
+        sortOrder.value = 'asc'
+      }
+  }
+
+  const sortedEmployees = computed(() => {
+    // Tạo một bản sao của mảng ĐÃ LỌC để không làm hỏng mảng gốc
+    let result = searchEmployees.value; 
+    // Nếu không có cột nào được chọn để sắp xếp thì trả về luôn
+    if (!sortColumn.value) return result;
+    // Tiến hành sắp xếp
+    result.sort((a, b) => {
+      let valueA = a[sortColumn.value];
+      let valueB = b[sortColumn.value];
+      // Đưa về chữ thường hết để so sánh chuỗi (A và a phải bằng nhau)
+      if (typeof valueA === 'string') valueA = valueA.toLowerCase();
+      if (typeof valueB === 'string') valueB = valueB.toLowerCase();
+      // Thuật toán so sánh
+      if (valueA < valueB) return sortOrder.value === 'asc' ? -1 : 1;
+      if (valueA > valueB) return sortOrder.value === 'asc' ? 1 : -1;
+      return 0; // Bằng nhau
+    });
+    return result;
+});
   // Trả ra các biến và hàm để Component sử dụng
   return {
     employees,
     isLoading,
     selectedDepartment,
-    searchQuery,
-    sortBy,
-    sortDesc,
+    sortedEmployees,
+    setSort,
     fetchEmployees,
     searchEmployees,
     setFilter,
