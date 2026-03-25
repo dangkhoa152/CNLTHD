@@ -2,7 +2,7 @@
   <div class="rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-5 shadow-sm">
     <h3 class="text-lg font-semibold mb-4">Tỉ lệ nhân viên theo phòng ban</h3>
 
-    <div class="h-[320px]">
+    <div class="h-[360px]">
       <Pie :data="chartData" :options="chartOptions" />
     </div>
   </div>
@@ -54,9 +54,21 @@ const chartData = computed(() => ({
 const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
+  layout: {
+    padding: {
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0
+    }
+  },
   plugins: {
     legend: {
-      position: 'top'
+      position: 'bottom',
+      labels: {
+        boxWidth: 14,
+        padding: 12
+      }
     },
     tooltip: {
       enabled: true,
@@ -66,7 +78,7 @@ const chartOptions = computed(() => ({
           const value = context.raw || 0
 
           const data = context.dataset.data || []
-          const total = data.reduce((sum, item) => sum + item, 0)
+          const total = data.reduce((sum, item) => sum + Number(item), 0)
 
           const percent = total ? ((value / total) * 100).toFixed(1) : 0
 
