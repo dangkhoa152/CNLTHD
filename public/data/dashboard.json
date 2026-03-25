@@ -1,0 +1,20 @@
+{
+  "totalEmployees": 124,
+  "newEmployeesThisMonth": 5,
+  "onLeaveToday": 3,
+  "pendingLeaveRequests": 7,
+  "recentActivities": [
+    {
+      "id": 1,
+      "user": "Trần Thị B",
+      "action": "đã nộp đơn xin nghỉ phép",
+      "time": "10 phút trước"
+    },
+    {
+      "id": 2,
+      "user": "Quản trị viên",
+      "action": "đã thêm nhân viên mới Nguyễn Văn A",
+      "time": "2 giờ trước"
+    }
+  ]
+}
