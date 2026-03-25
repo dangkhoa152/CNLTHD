@@ -42,6 +42,37 @@ export function usePagination<T>(dataList: Ref<T[]>, defaultItemsPerPage = 12) {
     currentPage.value = 1
   }, { deep: true })
 
+  const visiblePages = computed(() => {
+    const pages = []
+    const total = totalPages.value
+    const current = currentPage.value
+
+    if (total <= 7) {
+      return Array.from({ length: total }, (_, i) => i + 1)
+    }
+
+    pages.push(1)
+
+    if (current > 3) {
+      pages.push('...')
+    }
+
+    const start = Math.max(2, current - 1)
+    const end = Math.min(total - 1, current + 1)
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i)
+    }
+
+    if (current < total - 2) {
+      pages.push('...')
+    }
+
+    pages.push(total)
+
+    return pages
+  })
+
   // Trả về những biến và hàm cần thiết để các Component khác sử dụng
   return {
     currentPage,
@@ -50,6 +81,7 @@ export function usePagination<T>(dataList: Ref<T[]>, defaultItemsPerPage = 12) {
     paginatedList,
     nextPage,
     prevPage,
-    goToPage
+    goToPage,
+    visiblePages
   }
 }
