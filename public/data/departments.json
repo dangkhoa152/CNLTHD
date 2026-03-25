@@ -1,38 +1,50 @@
 [
   {
-    "id": 1,
-    "name": "IT",
-    "manager": "Nguyen Minh Khoa",
-    "employees": 180
+    "id": "DEP01",
+    "name": "Phòng IT",
+    "budget": 250000000,
+    "manager": "Bùi Bảo An",
+    "employeeCount": 176,
+    "description": "Quản lý hoạt động của phòng it"
   },
   {
-    "id": 2,
-    "name": "Marketing",
-    "manager": "Tran Thi Anh",
-    "employees": 160
+    "id": "DEP02",
+    "name": "Phòng Nhân sự",
+    "budget": 120000000,
+    "manager": "Đặng Ngọc Ngân",
+    "employeeCount": 134,
+    "description": "Quản lý hoạt động của phòng nhân sự"
   },
   {
-    "id": 3,
-    "name": "Sales",
-    "manager": "Le Hoang Nam",
-    "employees": 220
+    "id": "DEP03",
+    "name": "Phòng Marketing",
+    "budget": 180000000,
+    "manager": "Đỗ Quốc Bảo",
+    "employeeCount": 168,
+    "description": "Quản lý hoạt động của phòng marketing"
   },
   {
-    "id": 4,
-    "name": "Customer Service",
-    "manager": "Pham Thu Ha",
-    "employees": 170
+    "id": "DEP04",
+    "name": "Phòng Kế toán",
+    "budget": 150000000,
+    "manager": "Phạm Ngọc An",
+    "employeeCount": 180,
+    "description": "Quản lý hoạt động của phòng kế toán"
   },
   {
-    "id": 5,
-    "name": "Logistics",
-    "manager": "Vo Quoc Bao",
-    "employees": 190
+    "id": "DEP05",
+    "name": "Phòng Kinh doanh",
+    "budget": 300000000,
+    "manager": "Võ Phương Thảo",
+    "employeeCount": 169,
+    "description": "Quản lý hoạt động của phòng kinh doanh"
   },
   {
-    "id": 6,
-    "name": "Human Resources",
-    "manager": "Nguyen Thi Lan",
-    "employees": 80
+    "id": "DEP06",
+    "name": "Phòng Chăm sóc khách hàng",
+    "budget": 140000000,
+    "manager": "Hoàng Ngọc Linh",
+    "employeeCount": 173,
+    "description": "Quản lý hoạt động của phòng chăm sóc khách hàng"
   }
 ]
