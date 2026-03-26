@@ -22,8 +22,8 @@
         border-gray-200 dark:border-gray-600">
         <option value="">Tất cả trạng thái</option>
         <option value="Đang làm việc">Đang làm việc</option>
-        <option value="Nghỉ việc">Nghỉ việc</option>
-        <option value="Tạm nghỉ">Tạm nghỉ</option>
+        <option value="Đã nghỉ việc">Đã nghỉ việc</option>
+        <option value="Nghỉ phép">Nghỉ phép</option>
       </select>
     </div>
     <!-- Dropdown phòng ban -->
@@ -34,7 +34,7 @@
       text-gray-900 dark:text-gray-100 
       border-gray-200 dark:border-gray-600">
         <option value="">Tất cả phòng ban</option>
-        <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
+        <option v-for="d in departments" :key="d.name" :value="d.name">{{ d.name }}</option>
       </select>
     </div>
     <!-- Nút xóa bộ lọc -->

@@ -146,12 +146,11 @@ const confirmDelete = async (dep) => {
             </td>
 
             <td class="px-6 py-5 whitespace-nowrap text-base text-gray-800 dark:text-gray-200">
-              {{ dep.employeeName - dep.employeeID || 'Chưa bổ nhiệm' }} 
+              {{ dep.employeeName || 'Chưa bổ nhiệm' }} 
             </td>
 
             <td class="px-6 py-5 whitespace-nowrap text-center text-base">
               <span class="px-3 py-1 inline-flex text-sm font-bold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                {{ dep.totalEmployee }}
                 {{ dep.totalEmployee }}
               </span>
             </td>

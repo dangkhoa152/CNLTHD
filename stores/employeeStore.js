@@ -69,7 +69,7 @@ export const useEmployeeStore = defineStore('employees', () => {
       // Lọc theo từ khóa tìm kiếm (Search box)
       const q = (query.value.query || '').toLowerCase()
       if (q) {
-        return [i.name, i.employeeCode, department, i.position || '']
+        return [i.name, i.employeeCode, i.history[0].department, i.history[0].position || '']
           .join(' ')
           .toLowerCase()
           .includes(q)
@@ -90,7 +90,6 @@ export const useEmployeeStore = defineStore('employees', () => {
   function clearFilter() {
     query.value = {}
     selectedDepartment.value = ''
-    searchQuery.value = ''
   }
 
   function addEmployee(payload) {
@@ -255,16 +254,10 @@ export const useEmployeeStore = defineStore('employees', () => {
     return result;
   });
 
-  // get employee history
-  function getEmployeeHistory(id) {
+  // get employee by id
+  function getEmployeeById(id) {
     const numericId = Number(id)
-
-    const emp = employees.value.map(e => e.id === numericId)
-    if(emp && emp.history){
-      return emp.history
-    }
-
-    return []
+    return employees.value.filter(emp => emp.id === numericId)
   } 
   // Trả ra các biến và hàm để Component sử dụng
   return {
@@ -283,6 +276,6 @@ export const useEmployeeStore = defineStore('employees', () => {
     updateEmployee,
     addEmployee,
     deleteEmployee,
-    getEmployeeHistory
+    getEmployeeById
   }
 })

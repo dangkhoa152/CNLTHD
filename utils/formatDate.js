@@ -1,6 +1,6 @@
 function getNowString(dateString) {
     let date;
-    if (dateFormat === '') {
+    if (dateString === '') {
         date = new Date()
     } else {
         date = new Date(dateString)

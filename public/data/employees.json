@@ -12,7 +12,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -20,7 +20,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -42,7 +42,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -58,7 +58,7 @@
         "endDate": "2025-11-09"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -146,7 +146,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -154,7 +154,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -220,7 +220,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -228,7 +228,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -250,7 +250,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -266,7 +266,7 @@
         "endDate": "2021-10-25"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -442,7 +442,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -450,7 +450,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -472,7 +472,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -480,7 +480,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -502,7 +502,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -518,7 +518,7 @@
         "endDate": "2024-12-10"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -540,7 +540,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -548,7 +548,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -592,7 +592,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -600,7 +600,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -644,7 +644,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -652,7 +652,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -740,7 +740,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -748,7 +748,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -770,7 +770,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -778,7 +778,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -800,7 +800,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -816,7 +816,7 @@
         "endDate": "2023-01-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -1168,7 +1168,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -1176,7 +1176,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -1198,7 +1198,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -1206,7 +1206,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -1338,7 +1338,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -1346,7 +1346,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -1412,7 +1412,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -1428,7 +1428,7 @@
         "endDate": "2024-06-10"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -1516,7 +1516,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -1524,7 +1524,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -1634,7 +1634,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -1642,7 +1642,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -1796,7 +1796,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -1804,7 +1804,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -1826,7 +1826,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -1842,7 +1842,7 @@
         "endDate": "2021-09-04"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -1908,7 +1908,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -1916,7 +1916,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -2114,7 +2114,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -2130,7 +2130,7 @@
         "endDate": "2024-12-31"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -2152,7 +2152,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -2168,7 +2168,7 @@
         "endDate": "2023-03-23"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -2234,7 +2234,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -2250,7 +2250,7 @@
         "endDate": "2023-06-22"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -2294,7 +2294,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -2302,7 +2302,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -2346,7 +2346,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -2362,7 +2362,7 @@
         "endDate": "2026-07-24"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -2428,7 +2428,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -2444,7 +2444,7 @@
         "endDate": "2023-08-18"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -2466,7 +2466,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -2482,7 +2482,7 @@
         "endDate": "2024-07-19"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -2526,7 +2526,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -2542,7 +2542,7 @@
         "endDate": "2023-06-17"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -2586,7 +2586,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -2602,7 +2602,7 @@
         "endDate": "2021-01-13"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -2624,7 +2624,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -2640,7 +2640,7 @@
         "endDate": "2026-05-22"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -2684,7 +2684,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -2700,7 +2700,7 @@
         "endDate": "2022-02-06"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -2722,7 +2722,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -2738,7 +2738,7 @@
         "endDate": "2026-08-28"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -2804,7 +2804,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -2812,7 +2812,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -2834,7 +2834,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -2850,7 +2850,7 @@
         "endDate": "2025-05-08"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -2872,7 +2872,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -2880,7 +2880,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -2924,7 +2924,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -2932,7 +2932,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -3020,7 +3020,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -3028,7 +3028,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -3050,7 +3050,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -3058,7 +3058,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -3124,7 +3124,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -3132,7 +3132,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -3154,7 +3154,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -3162,7 +3162,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -3184,7 +3184,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -3192,7 +3192,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -3214,7 +3214,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -3230,7 +3230,7 @@
         "endDate": "2025-01-06"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -3406,7 +3406,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -3414,7 +3414,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -3458,7 +3458,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -3466,7 +3466,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -3532,7 +3532,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -3540,7 +3540,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -3606,7 +3606,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -3622,7 +3622,7 @@
         "endDate": "2021-06-18"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Fullstack Developer",
@@ -3710,7 +3710,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -3718,7 +3718,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -3740,7 +3740,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -3756,7 +3756,7 @@
         "endDate": "2022-09-19"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -3822,7 +3822,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -3838,7 +3838,7 @@
         "endDate": "2023-11-12"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -3860,7 +3860,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -3868,7 +3868,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "DevOps Engineer",
@@ -3912,7 +3912,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -3928,7 +3928,7 @@
         "endDate": "2024-11-21"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -4016,7 +4016,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -4024,7 +4024,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -4046,7 +4046,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "UI/UX Designer",
@@ -4054,7 +4054,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -4164,7 +4164,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -4172,7 +4172,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -4238,7 +4238,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Backend Developer",
@@ -4246,7 +4246,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "Frontend Developer",
@@ -4466,7 +4466,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "QA Tester",
@@ -4482,7 +4482,7 @@
         "endDate": "2026-04-17"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP01",
         "department": "Phòng IT",
         "position": "IT Manager",
@@ -4548,7 +4548,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -4556,7 +4556,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -4622,7 +4622,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -4630,7 +4630,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -4674,7 +4674,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -4682,7 +4682,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -4946,7 +4946,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -4954,7 +4954,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -4976,7 +4976,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -4984,7 +4984,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -5028,7 +5028,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -5036,7 +5036,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -5080,7 +5080,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -5088,7 +5088,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -5110,7 +5110,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -5126,7 +5126,7 @@
         "endDate": "2026-06-03"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -5214,7 +5214,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -5222,7 +5222,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -5244,7 +5244,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -5252,7 +5252,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -5318,7 +5318,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -5326,7 +5326,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -5370,7 +5370,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -5378,7 +5378,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -5466,7 +5466,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -5482,7 +5482,7 @@
         "endDate": "2022-05-08"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -5504,7 +5504,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -5512,7 +5512,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -5600,7 +5600,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -5616,7 +5616,7 @@
         "endDate": "2021-10-04"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -5638,7 +5638,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -5646,7 +5646,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -5668,7 +5668,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -5684,7 +5684,7 @@
         "endDate": "2025-11-29"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -5750,7 +5750,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -5758,7 +5758,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -5780,7 +5780,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -5788,7 +5788,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -5876,7 +5876,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -5884,7 +5884,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -6016,7 +6016,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -6032,7 +6032,7 @@
         "endDate": "2022-05-14"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -6054,7 +6054,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -6070,7 +6070,7 @@
         "endDate": "2024-12-13"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -6114,7 +6114,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -6122,7 +6122,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -6254,7 +6254,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -6262,7 +6262,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -6328,7 +6328,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -6344,7 +6344,7 @@
         "endDate": "2022-05-24"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -6366,7 +6366,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -6382,7 +6382,7 @@
         "endDate": "2025-12-01"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -6404,7 +6404,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -6420,7 +6420,7 @@
         "endDate": "2021-11-05"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -6574,7 +6574,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -6582,7 +6582,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -6604,7 +6604,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -6620,7 +6620,7 @@
         "endDate": "2026-07-07"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -6730,7 +6730,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -6738,7 +6738,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -6782,7 +6782,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -6790,7 +6790,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -6812,7 +6812,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -6820,7 +6820,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -6842,7 +6842,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -6850,7 +6850,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -6872,7 +6872,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -6888,7 +6888,7 @@
         "endDate": "2026-10-06"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -6910,7 +6910,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -6926,7 +6926,7 @@
         "endDate": "2024-11-16"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -7102,7 +7102,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -7110,7 +7110,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7132,7 +7132,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7148,7 +7148,7 @@
         "endDate": "2022-05-02"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -7192,7 +7192,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -7208,7 +7208,7 @@
         "endDate": "2023-07-25"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7230,7 +7230,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -7238,7 +7238,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7326,7 +7326,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -7342,7 +7342,7 @@
         "endDate": "2025-06-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -7408,7 +7408,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -7424,7 +7424,7 @@
         "endDate": "2024-04-13"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -7468,7 +7468,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7484,7 +7484,7 @@
         "endDate": "2022-08-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -7506,7 +7506,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "C&B Specialist",
@@ -7514,7 +7514,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7602,7 +7602,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Training Specialist",
@@ -7610,7 +7610,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7654,7 +7654,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -7662,7 +7662,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7904,7 +7904,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7912,7 +7912,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "Recruiter",
@@ -7956,7 +7956,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Executive",
@@ -7972,7 +7972,7 @@
         "endDate": "2025-04-19"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP02",
         "department": "Phòng Nhân sự",
         "position": "HR Manager",
@@ -8016,7 +8016,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -8032,7 +8032,7 @@
         "endDate": "2025-10-04"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -8054,7 +8054,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -8062,7 +8062,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -8084,7 +8084,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -8092,7 +8092,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -8180,7 +8180,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -8188,7 +8188,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -8232,7 +8232,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -8248,7 +8248,7 @@
         "endDate": "2024-12-31"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -8270,7 +8270,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -8286,7 +8286,7 @@
         "endDate": "2025-05-14"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -8352,7 +8352,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -8368,7 +8368,7 @@
         "endDate": "2021-02-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -8390,7 +8390,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -8406,7 +8406,7 @@
         "endDate": "2021-03-16"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -8516,7 +8516,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -8524,7 +8524,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -8546,7 +8546,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -8554,7 +8554,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -8576,7 +8576,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -8592,7 +8592,7 @@
         "endDate": "2025-02-02"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -8614,7 +8614,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -8622,7 +8622,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -8644,7 +8644,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -8652,7 +8652,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -8696,7 +8696,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -8712,7 +8712,7 @@
         "endDate": "2022-03-15"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -8778,7 +8778,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -8786,7 +8786,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -8896,7 +8896,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -8904,7 +8904,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -8948,7 +8948,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -8964,7 +8964,7 @@
         "endDate": "2026-04-06"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -9030,7 +9030,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -9038,7 +9038,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -9060,7 +9060,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -9068,7 +9068,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -9200,7 +9200,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -9216,7 +9216,7 @@
         "endDate": "2025-02-19"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -9238,7 +9238,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -9246,7 +9246,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -9356,7 +9356,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -9364,7 +9364,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -9452,7 +9452,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -9468,7 +9468,7 @@
         "endDate": "2021-10-12"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -9666,7 +9666,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -9674,7 +9674,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -9740,7 +9740,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -9756,7 +9756,7 @@
         "endDate": "2025-03-08"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -9778,7 +9778,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -9786,7 +9786,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -9808,7 +9808,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -9824,7 +9824,7 @@
         "endDate": "2023-06-13"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -9934,7 +9934,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -9950,7 +9950,7 @@
         "endDate": "2021-06-20"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -10126,7 +10126,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10134,7 +10134,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -10222,7 +10222,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -10238,7 +10238,7 @@
         "endDate": "2021-09-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -10260,7 +10260,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -10276,7 +10276,7 @@
         "endDate": "2025-04-01"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -10320,7 +10320,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -10328,7 +10328,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -10372,7 +10372,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10380,7 +10380,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -10402,7 +10402,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10418,7 +10418,7 @@
         "endDate": "2024-01-31"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -10462,7 +10462,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -10470,7 +10470,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10624,7 +10624,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10632,7 +10632,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -10676,7 +10676,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -10684,7 +10684,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -10706,7 +10706,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10714,7 +10714,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -10758,7 +10758,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -10774,7 +10774,7 @@
         "endDate": "2025-09-30"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10796,7 +10796,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10812,7 +10812,7 @@
         "endDate": "2024-07-04"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -10900,7 +10900,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10908,7 +10908,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -10930,7 +10930,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -10946,7 +10946,7 @@
         "endDate": "2022-03-14"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -11144,7 +11144,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -11152,7 +11152,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -11174,7 +11174,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -11190,7 +11190,7 @@
         "endDate": "2024-12-12"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -11234,7 +11234,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -11242,7 +11242,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -11330,7 +11330,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -11346,7 +11346,7 @@
         "endDate": "2024-12-31"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -11434,7 +11434,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -11442,7 +11442,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -11464,7 +11464,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -11472,7 +11472,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -11604,7 +11604,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -11620,7 +11620,7 @@
         "endDate": "2023-03-25"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -11686,7 +11686,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -11694,7 +11694,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -11892,7 +11892,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -11908,7 +11908,7 @@
         "endDate": "2025-08-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -11952,7 +11952,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -11960,7 +11960,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -12004,7 +12004,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -12020,7 +12020,7 @@
         "endDate": "2025-12-03"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -12042,7 +12042,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -12050,7 +12050,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -12094,7 +12094,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -12102,7 +12102,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -12146,7 +12146,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "SEO Specialist",
@@ -12154,7 +12154,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Brand Executive",
@@ -12176,7 +12176,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -12184,7 +12184,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Marketing Manager",
@@ -12294,7 +12294,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Digital Marketer",
@@ -12302,7 +12302,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -12346,7 +12346,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Ads Specialist",
@@ -12362,7 +12362,7 @@
         "endDate": "2022-03-20"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP03",
         "department": "Phòng Marketing",
         "position": "Content Creator",
@@ -12384,7 +12384,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -12400,7 +12400,7 @@
         "endDate": "2023-02-01"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -12422,7 +12422,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -12430,7 +12430,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -12452,7 +12452,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -12460,7 +12460,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -12504,7 +12504,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -12520,7 +12520,7 @@
         "endDate": "2022-03-21"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -12652,7 +12652,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -12660,7 +12660,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -12748,7 +12748,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -12756,7 +12756,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -12844,7 +12844,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -12860,7 +12860,7 @@
         "endDate": "2025-06-02"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -12926,7 +12926,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -12942,7 +12942,7 @@
         "endDate": "2023-06-19"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -12986,7 +12986,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -13002,7 +13002,7 @@
         "endDate": "2022-12-24"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -13178,7 +13178,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -13186,7 +13186,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -13208,7 +13208,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -13224,7 +13224,7 @@
         "endDate": "2024-08-12"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -13268,7 +13268,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -13276,7 +13276,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -13364,7 +13364,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -13372,7 +13372,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -13394,7 +13394,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -13402,7 +13402,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -13446,7 +13446,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -13454,7 +13454,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -13542,7 +13542,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -13558,7 +13558,7 @@
         "endDate": "2022-11-25"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -13624,7 +13624,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -13632,7 +13632,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -13654,7 +13654,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -13670,7 +13670,7 @@
         "endDate": "2024-09-10"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -13714,7 +13714,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -13722,7 +13722,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -13832,7 +13832,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -13840,7 +13840,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -13862,7 +13862,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -13878,7 +13878,7 @@
         "endDate": "2026-03-12"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -13922,7 +13922,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -13930,7 +13930,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -13952,7 +13952,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -13960,7 +13960,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -14004,7 +14004,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -14012,7 +14012,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -14122,7 +14122,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -14138,7 +14138,7 @@
         "endDate": "2023-10-07"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -14182,7 +14182,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -14190,7 +14190,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -14278,7 +14278,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -14294,7 +14294,7 @@
         "endDate": "2025-11-21"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -14448,7 +14448,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -14456,7 +14456,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -14544,7 +14544,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -14552,7 +14552,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -14574,7 +14574,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -14582,7 +14582,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -14604,7 +14604,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -14620,7 +14620,7 @@
         "endDate": "2026-01-12"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -14840,7 +14840,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -14848,7 +14848,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -14870,7 +14870,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -14886,7 +14886,7 @@
         "endDate": "2026-01-31"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -15084,7 +15084,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -15092,7 +15092,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -15202,7 +15202,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -15210,7 +15210,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -15276,7 +15276,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -15284,7 +15284,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -15306,7 +15306,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -15322,7 +15322,7 @@
         "endDate": "2025-12-22"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -15476,7 +15476,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -15484,7 +15484,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -15506,7 +15506,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -15514,7 +15514,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -15580,7 +15580,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -15596,7 +15596,7 @@
         "endDate": "2023-02-05"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -15684,7 +15684,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -15692,7 +15692,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -15714,7 +15714,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -15730,7 +15730,7 @@
         "endDate": "2021-06-20"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -15796,7 +15796,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -15804,7 +15804,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -15848,7 +15848,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -15856,7 +15856,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -15966,7 +15966,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -15982,7 +15982,7 @@
         "endDate": "2022-01-09"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -16048,7 +16048,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -16064,7 +16064,7 @@
         "endDate": "2024-01-03"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -16152,7 +16152,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -16168,7 +16168,7 @@
         "endDate": "2025-12-08"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -16212,7 +16212,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -16220,7 +16220,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -16308,7 +16308,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -16316,7 +16316,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -16360,7 +16360,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -16376,7 +16376,7 @@
         "endDate": "2025-10-05"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -16420,7 +16420,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -16428,7 +16428,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -16450,7 +16450,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -16458,7 +16458,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -16502,7 +16502,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -16518,7 +16518,7 @@
         "endDate": "2021-12-08"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -16540,7 +16540,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -16556,7 +16556,7 @@
         "endDate": "2026-11-30"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -16578,7 +16578,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -16586,7 +16586,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -16608,7 +16608,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -16616,7 +16616,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -16638,7 +16638,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -16654,7 +16654,7 @@
         "endDate": "2025-02-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -16698,7 +16698,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -16714,7 +16714,7 @@
         "endDate": "2023-03-08"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "General Accountant",
@@ -16758,7 +16758,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -16766,7 +16766,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -16854,7 +16854,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -16862,7 +16862,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -16884,7 +16884,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Accounting Assistant",
@@ -16892,7 +16892,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Internal Auditor",
@@ -16914,7 +16914,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Tax Accountant",
@@ -16930,7 +16930,7 @@
         "endDate": "2021-05-26"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP04",
         "department": "Phòng Kế toán",
         "position": "Chief Accountant",
@@ -17040,7 +17040,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -17056,7 +17056,7 @@
         "endDate": "2021-07-01"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -17078,7 +17078,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -17086,7 +17086,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -17240,7 +17240,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -17248,7 +17248,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -17270,7 +17270,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -17286,7 +17286,7 @@
         "endDate": "2025-01-04"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -17352,7 +17352,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -17360,7 +17360,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -17536,7 +17536,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -17544,7 +17544,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -17566,7 +17566,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -17574,7 +17574,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -17596,7 +17596,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -17612,7 +17612,7 @@
         "endDate": "2021-04-16"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -17722,7 +17722,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -17738,7 +17738,7 @@
         "endDate": "2025-11-10"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -17826,7 +17826,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -17834,7 +17834,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -17944,7 +17944,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -17960,7 +17960,7 @@
         "endDate": "2024-09-09"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -18048,7 +18048,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -18064,7 +18064,7 @@
         "endDate": "2023-02-07"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -18130,7 +18130,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -18138,7 +18138,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -18226,7 +18226,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -18234,7 +18234,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -18256,7 +18256,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -18272,7 +18272,7 @@
         "endDate": "2024-08-19"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -18382,7 +18382,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -18398,7 +18398,7 @@
         "endDate": "2024-01-12"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -18420,7 +18420,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -18428,7 +18428,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -18494,7 +18494,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -18502,7 +18502,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -18524,7 +18524,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -18540,7 +18540,7 @@
         "endDate": "2022-12-24"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -18716,7 +18716,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -18732,7 +18732,7 @@
         "endDate": "2024-08-21"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -18842,7 +18842,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -18850,7 +18850,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -19070,7 +19070,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -19078,7 +19078,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -19100,7 +19100,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -19116,7 +19116,7 @@
         "endDate": "2025-01-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -19138,7 +19138,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -19154,7 +19154,7 @@
         "endDate": "2025-01-13"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -19198,7 +19198,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -19206,7 +19206,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -19228,7 +19228,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -19244,7 +19244,7 @@
         "endDate": "2026-03-30"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -19288,7 +19288,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -19296,7 +19296,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -19318,7 +19318,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -19326,7 +19326,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -19524,7 +19524,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -19532,7 +19532,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -19554,7 +19554,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -19570,7 +19570,7 @@
         "endDate": "2024-03-04"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -19680,7 +19680,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -19688,7 +19688,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -19754,7 +19754,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -19762,7 +19762,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -19850,7 +19850,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -19866,7 +19866,7 @@
         "endDate": "2025-07-24"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -19910,7 +19910,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -19926,7 +19926,7 @@
         "endDate": "2025-09-06"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -19992,7 +19992,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -20008,7 +20008,7 @@
         "endDate": "2022-08-01"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -20052,7 +20052,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -20068,7 +20068,7 @@
         "endDate": "2022-04-19"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -20090,7 +20090,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -20098,7 +20098,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -20120,7 +20120,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -20128,7 +20128,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -20172,7 +20172,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -20180,7 +20180,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -20246,7 +20246,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -20262,7 +20262,7 @@
         "endDate": "2023-09-04"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -20328,7 +20328,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -20344,7 +20344,7 @@
         "endDate": "2022-09-24"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -20498,7 +20498,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -20514,7 +20514,7 @@
         "endDate": "2024-06-29"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -20690,7 +20690,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -20698,7 +20698,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Manager",
@@ -20764,7 +20764,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -20772,7 +20772,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -20838,7 +20838,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Senior Sales Executive",
@@ -20846,7 +20846,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Sales Executive",
@@ -21132,7 +21132,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -21140,7 +21140,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -21162,7 +21162,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Key Account Executive",
@@ -21178,7 +21178,7 @@
         "endDate": "2025-04-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP05",
         "department": "Phòng Kinh doanh",
         "position": "Business Development Executive",
@@ -21310,7 +21310,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -21318,7 +21318,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -21340,7 +21340,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -21356,7 +21356,7 @@
         "endDate": "2020-12-17"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -21378,7 +21378,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -21386,7 +21386,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -21496,7 +21496,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -21504,7 +21504,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -21526,7 +21526,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -21534,7 +21534,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -21556,7 +21556,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -21572,7 +21572,7 @@
         "endDate": "2024-01-13"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -21594,7 +21594,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -21610,7 +21610,7 @@
         "endDate": "2024-01-20"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -21654,7 +21654,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -21662,7 +21662,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -21816,7 +21816,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -21824,7 +21824,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -21846,7 +21846,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -21862,7 +21862,7 @@
         "endDate": "2022-07-17"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -21884,7 +21884,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -21892,7 +21892,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -21980,7 +21980,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -21996,7 +21996,7 @@
         "endDate": "2022-01-04"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -22040,7 +22040,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -22048,7 +22048,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -22092,7 +22092,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -22108,7 +22108,7 @@
         "endDate": "2026-01-05"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -22152,7 +22152,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -22168,7 +22168,7 @@
         "endDate": "2021-09-21"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -22190,7 +22190,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -22198,7 +22198,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -22220,7 +22220,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -22236,7 +22236,7 @@
         "endDate": "2022-07-22"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -22324,7 +22324,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -22340,7 +22340,7 @@
         "endDate": "2026-07-13"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -22450,7 +22450,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -22458,7 +22458,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -22480,7 +22480,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -22488,7 +22488,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -22620,7 +22620,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -22628,7 +22628,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -22782,7 +22782,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -22790,7 +22790,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -22834,7 +22834,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -22850,7 +22850,7 @@
         "endDate": "2023-08-06"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -22894,7 +22894,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -22910,7 +22910,7 @@
         "endDate": "2025-03-27"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -22976,7 +22976,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -22992,7 +22992,7 @@
         "endDate": "2025-05-20"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -23146,7 +23146,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -23162,7 +23162,7 @@
         "endDate": "2023-03-22"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -23228,7 +23228,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -23244,7 +23244,7 @@
         "endDate": "2024-08-01"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -23442,7 +23442,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -23450,7 +23450,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -23472,7 +23472,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -23480,7 +23480,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -23568,7 +23568,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -23576,7 +23576,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -23598,7 +23598,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -23606,7 +23606,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -23628,7 +23628,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -23636,7 +23636,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -23680,7 +23680,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -23696,7 +23696,7 @@
         "endDate": "2024-10-16"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -23850,7 +23850,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -23866,7 +23866,7 @@
         "endDate": "2023-09-08"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -23954,7 +23954,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -23970,7 +23970,7 @@
         "endDate": "2023-10-03"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -24080,7 +24080,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -24088,7 +24088,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -24176,7 +24176,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -24184,7 +24184,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -24404,7 +24404,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -24412,7 +24412,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -24478,7 +24478,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -24486,7 +24486,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -24508,7 +24508,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -24524,7 +24524,7 @@
         "endDate": "2023-07-26"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -24634,7 +24634,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -24642,7 +24642,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -24708,7 +24708,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -24716,7 +24716,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -24804,7 +24804,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -24812,7 +24812,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -24834,7 +24834,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -24850,7 +24850,7 @@
         "endDate": "2025-07-12"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -24894,7 +24894,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -24910,7 +24910,7 @@
         "endDate": "2024-06-19"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -24932,7 +24932,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -24940,7 +24940,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -25028,7 +25028,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -25036,7 +25036,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -25234,7 +25234,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -25250,7 +25250,7 @@
         "endDate": "2021-11-30"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -25382,7 +25382,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -25398,7 +25398,7 @@
         "endDate": "2023-02-06"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -25464,7 +25464,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -25472,7 +25472,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -25516,7 +25516,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -25532,7 +25532,7 @@
         "endDate": "2025-06-21"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -25554,7 +25554,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -25562,7 +25562,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -25606,7 +25606,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Care Executive",
@@ -25614,7 +25614,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
@@ -25658,7 +25658,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 3,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Support Staff",
@@ -25674,7 +25674,7 @@
         "endDate": "2026-02-28"
       },
       {
-        "id": 3,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Complaint Handler",
@@ -25696,7 +25696,7 @@
     "avatar": "/images/avatar.png",
     "history": [
       {
-        "id": 1,
+        "id": 2,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Call Center Agent",
@@ -25704,7 +25704,7 @@
         "endDate": null
       },
       {
-        "id": 2,
+        "id": 1,
         "departmentId": "DEP06",
         "department": "Phòng Chăm sóc khách hàng",
         "position": "Customer Service Manager",
