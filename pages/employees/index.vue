@@ -9,7 +9,7 @@
   </div>
 
   <EmployeeFilter 
-    :departments="departments" 
+    :departments="departmentStore.departments" 
     @filter-changed="onFilter" 
     v-model:department="employeeStore.selectedDepartment"
     @reset="handleResetFilters" />
@@ -25,12 +25,12 @@
       </div>
     </div>
     <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
-      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Tạm nghỉ</div>
-      <div class="text-2xl text-yellow-500 dark:text-yellow-300 font-bold">{{ countFilteredStatus("Tạm nghỉ") }}</div>
+      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Nghỉ phép</div>
+      <div class="text-2xl text-yellow-500 dark:text-yellow-300 font-bold">{{ countFilteredStatus("Nghỉ phép") }}</div>
     </div>
     <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
       <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Nghỉ việc</div>
-      <div class="text-2xl text-red-500 dark:text-red-300 font-bold">{{ countFilteredStatus("Nghỉ việc") }}</div>
+      <div class="text-2xl text-red-500 dark:text-red-300 font-bold">{{ countFilteredStatus("Đã nghỉ việc") }}</div>
     </div>
   </div>
 
@@ -45,7 +45,7 @@
   <Pagination :current-page="currentPage" :total-pages="totalPages" :visible-pages="visiblePages" @prev="prevPage"
     @next="nextPage" @go-to="goToPage" />
 
-  <EmployeeForm v-if="formVisible" :isEdit="isEdit" :item="formItem" :departments="departments" @close="closeForm"
+  <EmployeeForm v-if="formVisible" :isEdit="isEdit" :item="formItem" :departments="departmentStore.departments" @close="closeForm"
     @create="create" @update="update" />
 
   <div class="p-6">
@@ -70,7 +70,7 @@ const dashboard = useDashboardStore()
 const auth = useAuthStore()
 const activityStore = useActivityStore()
 const employeeStore = useEmployeeStore()
-
+const departmentStore = useDepartmentStore()
 // sử dụng filter từ store: chỉ cần thay đổi filter ở component là store tự lọc
 const selected = ref(null as any | null)
 const formVisible = ref(false)
@@ -82,6 +82,7 @@ const isConfirmOpen = ref(false)
 onMounted(async () => {
   try {
     await employeeStore.fetchEmployees()
+    await departmentStore.fetchDepartments()
     if (route.query.department) {
       // Nạp giá trị từ URL vào Store
       employeeStore.selectedDepartment = route.query.department as string
@@ -94,10 +95,6 @@ onMounted(async () => {
 })
 
 // Lay danh sach phong ban
-const departments = computed(() => {
-  return Array.from(new Set(employeeStore.employees.map((i: any) => i.department))).sort()
-})
-
 // filtered list lấy trực tiếp từ store (unwrap value để reactive đúng)
 const filtered = computed(() => employeeStore.searchEmployees)
 

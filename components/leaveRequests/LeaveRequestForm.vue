@@ -30,7 +30,7 @@
           </div>
           <div v-if="showSuggestions && suggestions.length" class="absolute bg-white dark:bg-gray-800 border w-full max-w-2xl mt-1 rounded shadow z-20">
             <ul>
-              <li v-for="s in suggestions" :key="s.employeeCode" @click="pickSuggestion(s)" class="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{{ s.name }} — {{ s.employeeCode }} — {{ s.department }}</li>
+              <li v-for="s in suggestions" :key="s.employeeCode" @click="pickSuggestion(s)" class="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{{ s.name }} — {{ s.employeeCode }} — {{ s.history[0].department }}</li>
             </ul>
           </div>
           <div class="mt-1">
@@ -168,7 +168,7 @@ watch(() => [form.fromDate, form.toDate], ([from, to]) => {
 function pickSuggestion(emp: any) {
   form.employeeName = emp.name || emp.employeeName || ''
   form.employeeCode = emp.employeeCode || ''
-  form.department = emp.department || ''
+  form.department = emp.history[0].department || ''
   showSuggestions.value = false
 }
 // Hàm xử lý khi người dùng nhập vào trường tên để hiển thị gợi ý

@@ -8,18 +8,6 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     const auth = useAuthStore()
     const activityStore = useActivityStore()
 
-    // Định dạng ngày tháng hiện tại thành chuỗi
-    // function getNowString() {
-    //     const now = new Date()
-    //     const yyyy = now.getFullYear()
-    //     const mm = String(now.getMonth() + 1).padStart(2, '0')
-    //     const dd = String(now.getDate()).padStart(2, '0')
-    //     const hh = String(now.getHours()).padStart(2, '0')
-    //     const mi = String(now.getMinutes()).padStart(2, '0')
-    //     return `${yyyy}-${mm}-${dd} ${hh}:${mi}`
-    // }
-    // Lưu data vào LocalStorage
-
     function saveToLocal() {
         if (process.client) {
             localStorage.setItem('hrm_leaveRequests', JSON.stringify(leaveRequests.value))
@@ -57,10 +45,11 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     function addLeaveRequest(payload) {
         try {
             const nextId = leaveRequests.value.length > 0
-                ? Math.max(...leaveRequests.value.map(a => a.id)) + 1
-                : 1
+                ? Math.max(...leaveRequests.value.filter(a => a.id).map(a => Number(a.id))) + 1
+                : 1;
+
             const item = {
-                nextId,
+                id: nextId,
                 employeeName: payload.employeeName || '',
                 employeeCode: payload.employeeCode || '',
                 department: payload.department || '',
@@ -69,7 +58,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
                 days: payload.days || 1,
                 reason: payload.reason || '',
                 status: payload.status || 'Chờ duyệt',
-                createdAt: getNowString(),
+                createdAt: getNowString(''),
                 ...payload
             }
             // Thêm vào đầu danh sách
@@ -106,7 +95,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         if (it) {
             it.status = 'Đã duyệt'
             it.approvedBy = approver
-            it.approvedAt = getNowString()
+            it.approvedAt = getNowString('')
             saveToLocal()
         }
     }
@@ -116,7 +105,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         if (it) {
             it.status = 'Đã từ chối'
             it.rejectedBy = approver
-            it.rejectedAt = getNowString()
+            it.rejectedAt = getNowString('')
             if (reason) it.rejectionReason = reason
             saveToLocal()
         }
@@ -129,10 +118,10 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
                 it.status = status
                 if (status === 'Đã duyệt') {
                     it.approvedBy = by
-                    it.approvedAt = getNowString()
+                    it.approvedAt = getNowString('')
                 } else if (status === 'Đã từ chối') {
                     it.rejectedBy = by
-                    it.rejectedAt = getNowString()
+                    it.rejectedAt = getNowString('')
                 }
             }
         })
@@ -163,6 +152,10 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         })
     })
 
+    function getAllRequestByEmpID(empID) {
+    return leaveRequests.value.filter(item => String(item.employeeCode) === String(empID));
+}
+
     const total = computed(() => leaveRequests.value.length)
 
     return {
@@ -182,5 +175,6 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         rejectLeaveRequest,
         bulkUpdateStatus,
         total,
+        getAllRequestByEmpID
     }
 })
