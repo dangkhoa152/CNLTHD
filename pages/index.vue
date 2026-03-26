@@ -3,7 +3,7 @@
     <div class="mb-6">
       <h1 class="text-2xl font-bold">Tổng quan hệ thống</h1>
       <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-        Theo dõi nhanh tình hình nhân sự và các chỉ số tổng quan của hệ thống
+        Theo dõi nhanh tình hình nhân sự của hệ thống
       </p>
     </div>
 

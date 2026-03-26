@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import getNowString from '~/utils/formatDate'
 
+
 export const useEmployeeStore = defineStore('employees', () => {
   const employees = ref([])
   const isLoading = ref(false)
@@ -68,8 +69,12 @@ export const useEmployeeStore = defineStore('employees', () => {
       // Lọc theo từ khóa tìm kiếm (Search box)
       const q = (query.value.query || '').toLowerCase()
       if (q) {
-        return [i.name, i.employeeCode].join(' ').toLowerCase().includes(q)
+        return [i.name, i.employeeCode, department, i.position || '']
+          .join(' ')
+          .toLowerCase()
+          .includes(q)
       }
+
       return true
     })
   })
@@ -84,6 +89,8 @@ export const useEmployeeStore = defineStore('employees', () => {
 
   function clearFilter() {
     query.value = {}
+    selectedDepartment.value = ''
+    searchQuery.value = ''
   }
 
   function addEmployee(payload) {
@@ -210,6 +217,7 @@ export const useEmployeeStore = defineStore('employees', () => {
         usedepartment.saveToLocal()
       }
     }
+
 
     saveToLocal()
   }
