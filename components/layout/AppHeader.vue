@@ -19,11 +19,6 @@
         <ThemeToggle />
 
         <div class="hidden sm:flex items-center gap-2">
-          <img
-            :src="auth.user?.avatar || '/images/avatar.png'"
-            alt="avatar"
-            class="w-9 h-9 rounded-full object-cover"
-          />
           <div class="text-sm">
             <p class="font-medium">{{ auth.user?.name }}</p>
             <p class="text-xs text-gray-500 dark:text-gray-400">{{ auth.user?.role }}</p>
