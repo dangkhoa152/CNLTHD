@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import getNowString from '~/utils/formatDate'
 
 export const useActivityStore = defineStore('activity', () => {
   const activities = ref([])
@@ -41,28 +42,20 @@ export const useActivityStore = defineStore('activity', () => {
 
   // Hàm ghi nhận hoạt động mới (Khớp 100% với JSON của bạn)
   const logActivity = (type, title, target, user = 'Admin HR') => {
-    // 1. Tự động tăng ID (Tìm id lớn nhất hiện tại rồi + 1)
+    // Tự động tăng ID (Tìm id lớn nhất hiện tại rồi + 1)
     const nextId = activities.value.length > 0
       ? Math.max(...activities.value.map(a => a.id)) + 1
       : 1
 
-    // 2. Format thời gian chuẩn "YYYY-MM-DD HH:mm"
-    const now = new Date()
-    const year = now.getFullYear()
-    const month = String(now.getMonth() + 1).padStart(2, '0')
-    const day = String(now.getDate()).padStart(2, '0')
-    const hours = String(now.getHours()).padStart(2, '0')
-    const minutes = String(now.getMinutes()).padStart(2, '0')
-    const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}`
-
-    // 3. Khởi tạo Object đúng chuẩn file activities.json
+    // Khởi tạo Object đúng chuẩn file activities.json
     const newLog = {
       id: nextId,
       type: type,
       title: title,
       user: user,
       target: target,
-      time: formattedTime
+      time: getNowString()
+      
     }
 
     // 4. Đẩy lên đầu mảng và lưu localStorage

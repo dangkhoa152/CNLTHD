@@ -37,7 +37,10 @@ const openEditModal = async (dep) => {
   // Lấy nhân viên cùng phòng ban
   try {
     const allEmployees = await $fetch('/data/employees.json')
-    availableEmployees.value = allEmployees.filter(emp => emp.departmentId === dep.id)
+    availableEmployees.value = allEmployees.filter(emp => {
+      const currentDeptId = emp.history?.[0]?.departmentId
+      return currentDeptId === dep.id
+    })
   } catch (error) {
     console.error('Lỗi lấy nhân viên:', error)
   }
@@ -68,8 +71,10 @@ const handleSaveDepartment = (formData) => {
 const confirmDelete = async (dep) => {
   try {
     const allEmployees = await $fetch('/data/employees.json')
-    const employeesInDept = allEmployees.filter(emp => emp.departmentId === dep.id)
-
+    const employeesInDept = allEmployees.filter(emp => {
+      const currentDeptId = emp.history?.[0]?.departmentId
+      return currentDeptId === dep.id
+    })
     if (employeesInDept.length > 0) {
       alert(`⛔ KHÔNG THỂ XÓA!\n[${dep.name}] đang có ${employeesInDept.length} nhân sự.\nVui lòng chuyển các nhân sự này sang phòng khác trước khi xóa.`)
       return 
@@ -146,12 +151,12 @@ const confirmDelete = async (dep) => {
             </td>
             
             <td class="px-6 py-5 whitespace-nowrap text-base text-gray-800 dark:text-gray-200">
-              {{ dep.manager }}
+              {{ dep.employeeName - dep.employeeID || 'Chưa bổ nhiệm' }} 
             </td>
             
             <td class="px-6 py-5 whitespace-nowrap text-center text-base">
               <span class="px-3 py-1 inline-flex text-sm font-bold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                {{ dep.employeeCount }}
+                {{ dep.totalEmployee }}
               </span>
             </td>
             
