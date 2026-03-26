@@ -96,12 +96,10 @@ const {
 // Tải dữ liệu nhân viên khi component được mounted
 onMounted(async () => {
   try {
-    await employeeStore.fetchEmployees()
+    await employeeStore.fetchEmployees(true)
     if (route.query.department) {
-      // Nạp giá trị từ URL vào Store
       employeeStore.selectedDepartment = route.query.department as string
     } else {
-      // Nếu không có trên URL (người dùng bấm menu bình thường), reset lại bộ lọc
       employeeStore.selectedDepartment = ''
     }
   } catch (e) {
