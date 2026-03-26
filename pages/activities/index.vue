@@ -1,38 +1,48 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useActivityStore } from '@/stores/activityStore'
 
 const activityStore = useActivityStore()
 
-// Gọi dữ liệu khi trang vừa load
 onMounted(() => {
   activityStore.fetchActivities()
 })
 
-// Hàm tiện ích: Tự động đổi màu Badge dựa theo type
+const sortedActivities = computed(() => {
+  return [...activityStore.activities].reverse()
+})
+
 const getTypeBadgeStyle = (type) => {
   switch (type) {
-    case 'add': 
+    case 'add':
       return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200'
-    case 'edit': 
+    case 'edit':
       return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-    case 'delete': 
+    case 'delete':
       return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-    case 'login': 
+    case 'login':
       return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
-    default: 
+    case 'theme':
+      return 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+    default:
       return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
   }
 }
 
-// Hàm tiện ích: Đổi chữ type sang tiếng Việt
 const getTypeText = (type) => {
   switch (type) {
-    case 'add': return 'Thêm mới'
-    case 'edit': return 'Cập nhật'
-    case 'delete': return 'Xóa'
-    case 'login': return 'Đăng nhập'
-    default: return type
+    case 'add':
+      return 'Thêm mới'
+    case 'edit':
+      return 'Cập nhật'
+    case 'delete':
+      return 'Xóa'
+    case 'login':
+      return 'Đăng nhập'
+    case 'theme':
+      return 'Đổi giao diện'
+    default:
+      return type
   }
 }
 </script>
@@ -40,53 +50,82 @@ const getTypeText = (type) => {
 <template>
   <div class="p-6">
     <div class="mb-6">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Nhật ký hoạt động hệ thống</h2>
-      <p class="text-gray-600 dark:text-gray-400 mt-1">Theo dõi toàn bộ thao tác của quản trị viên và người dùng.</p>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+        Nhật ký hoạt động hệ thống
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400 mt-1">
+        Theo dõi toàn bộ thao tác của quản trị viên và người dùng.
+      </p>
     </div>
 
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-100 dark:border-gray-700">
       <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead class="bg-gray-50 dark:bg-gray-900">
           <tr>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Thời Gian</th>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Người Dùng</th>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Loại Thao Tác</th>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Hành Động</th>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Đối Tượng Tác Động</th>
+            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+              Thời gian
+            </th>
+            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+              Người dùng
+            </th>
+            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+              Loại thao tác
+            </th>
+            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+              Hành động
+            </th>
+            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+              Đối tượng tác động
+            </th>
           </tr>
         </thead>
-        
+
         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
-          <tr v-for="log in activityStore.activities" :key="log.id" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-            
+          <tr
+            v-for="log in sortedActivities"
+            :key="log.id"
+            class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+          >
             <td class="px-5 py-4 whitespace-nowrap text-base text-gray-700 dark:text-gray-300 font-mono">
               {{ log.time }}
             </td>
-            
+
             <td class="px-5 py-4 whitespace-nowrap text-base font-semibold text-gray-900 dark:text-white">
               {{ log.user }}
             </td>
-            
+
             <td class="px-5 py-4 whitespace-nowrap text-base">
               <span :class="`px-3 py-1 inline-flex text-xs font-bold rounded-full ${getTypeBadgeStyle(log.type)}`">
                 {{ getTypeText(log.type) }}
               </span>
             </td>
-            
+
             <td class="px-5 py-4 text-base text-gray-800 dark:text-gray-200">
               {{ log.title }}
             </td>
-            
+
             <td class="px-5 py-4 text-base font-bold text-gray-900 dark:text-white">
               {{ log.target || '-' }}
             </td>
-            
           </tr>
 
-          <tr v-if="activityStore.activities.length === 0">
-            <td colspan="5" class="px-6 py-12 text-center text-lg text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50">
-              <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          <tr v-if="sortedActivities.length === 0">
+            <td
+              colspan="5"
+              class="px-6 py-12 text-center text-lg text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50"
+            >
+              <svg
+                class="mx-auto h-12 w-12 text-gray-400 mb-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
               Hiện tại chưa có hoạt động nào được ghi lại trong hệ thống.
             </td>

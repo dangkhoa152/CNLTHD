@@ -93,9 +93,13 @@ export const useDashboardStore = defineStore('dashboard', () => {
 
   const employeesByDepartment = computed(() => {
     return departments.value.map(department => {
-      const count = employees.value.filter(
-        employee => employee.departmentId === department.id
-      ).length
+      const count = employees.value.filter(employee => {
+        if (employee.departmentId) {
+          return employee.departmentId === department.id
+        }
+
+        return employee.department === department.name
+      }).length
 
       return {
         label: department.name,
@@ -112,8 +116,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
     }
 
     employees.value.forEach(employee => {
-      if (statusMap[employee.status] !== undefined) {
-        statusMap[employee.status]++
+      if (employee.status === 'Đang làm việc') {
+        statusMap['Đang làm việc']++
+      } else if (employee.status === 'Nghỉ phép' || employee.status === 'Tạm nghỉ') {
+        statusMap['Tạm nghỉ']++
+      } else if (employee.status === 'Đã nghỉ việc' || employee.status === 'Nghỉ việc') {
+        statusMap['Nghỉ việc']++
       }
     })
 
