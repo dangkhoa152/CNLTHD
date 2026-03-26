@@ -21,6 +21,13 @@
           <p class="text-xs text-gray-400 mt-1">{{ item.time }}</p>
         </div>
       </div>
+
+      <div
+        v-if="activities.length === 0"
+        class="text-sm text-gray-500 dark:text-gray-400"
+      >
+        Chưa có hoạt động nào.
+      </div>
     </div>
   </div>
 </template>
@@ -35,22 +42,18 @@ defineProps({
 
 function dotClass(type) {
   switch (type) {
-    case 'login':
+    case 'add':
+      return 'bg-emerald-500'
+    case 'edit':
       return 'bg-blue-500'
-    case 'create':
-      return 'bg-green-500'
-    case 'update':
-      return 'bg-yellow-500'
-    case 'approve':
-      return 'bg-purple-500'
-    case 'reject':
+    case 'delete':
       return 'bg-red-500'
+    case 'login':
+      return 'bg-purple-500'
     case 'theme':
       return 'bg-gray-500'
-    case 'delete':
-      return 'bg-pink-500'
     default:
-      return 'bg-blue-500'
+      return 'bg-sky-500'
   }
 }
 </script>
