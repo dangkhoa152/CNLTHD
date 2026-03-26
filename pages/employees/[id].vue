@@ -1,7 +1,7 @@
 <template>
   <div class="p-6 max-w-7xl mx-auto" v-if="employee">
     
-    <button @click="$router.push('/employees/index')" class="mb-6 flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+    <button @click="$router.push('/employees')" class="mb-6 flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
       <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
       Quay lại danh sách
     </button>
@@ -11,7 +11,7 @@
       <div class="flex flex-col items-center min-w-[200px]">
         <div class="w-32 h-32 rounded-full bg-blue-50 dark:bg-gray-700 flex items-center justify-center text-5xl font-bold text-blue-600 dark:text-blue-400 shadow-inner mb-4 border-4 border-white dark:border-gray-600 ring-1 ring-gray-100 dark:ring-gray-800 overflow-hidden">
           <img v-if="employee.avatar" :src="employee.avatar || '/images/avatar.png'" class="w-full h-full object-cover" />
-          <span v-else>{{ employee.name.charAt(0) }}</span>
+          <span v-else>{{ employee.name ? employee.name.charAt(0) : '?' }}</span>
         </div>
         <h1 class="text-2xl font-bold text-gray-800 dark:text-white text-center">{{ employee.name }}</h1>
         <p class="text-blue-600 dark:text-blue-400 font-medium mt-1 text-center">{{ currentRole?.position || 'Chưa cập nhật' }}</p>
@@ -26,7 +26,7 @@
           
           <div class="flex flex-col"><span class="text-gray-500 dark:text-gray-400 mb-1">Mã nhân viên</span> <span class="font-medium text-gray-900 dark:text-gray-200">{{ employee.employeeCode }}</span></div>
           <div class="flex flex-col"><span class="text-gray-500 dark:text-gray-400 mb-1">Giới tính</span> <span class="font-medium text-gray-900 dark:text-gray-200">{{ employee.gender }}</span></div>
-          <div class="flex flex-col"><span class="text-gray-500 dark:text-gray-400 mb-1">Ngày sinh</span> <span class="font-medium text-gray-900 dark:text-gray-200">{{ formatDate(employee.dateOfBirth) }}</span></div>
+          <div class="flex flex-col"><span class="text-gray-500 dark:text-gray-400 mb-1">Ngày sinh</span> <span class="font-medium text-gray-900 dark:text-gray-200">{{ getNowString(employee.dateOfBirth) }}</span></div>
           <div class="flex flex-col"><span class="text-gray-500 dark:text-gray-400 mb-1">Phòng ban hiện tại</span> <span class="font-medium text-gray-900 dark:text-gray-200">{{ currentRole?.department || 'Chưa cập nhật' }}</span></div>
           <div class="flex flex-col"><span class="text-gray-500 dark:text-gray-400 mb-1">Số điện thoại</span> <span class="font-medium text-gray-900 dark:text-gray-200">{{ employee.phone }}</span></div>
           <div class="flex flex-col"><span class="text-gray-500 dark:text-gray-400 mb-1">Email công việc</span> <span class="font-medium text-gray-900 dark:text-gray-200">{{ employee.email }}</span></div>
@@ -50,7 +50,7 @@
         </div>
 
         <ul v-else class="relative border-l-2 border-blue-200 dark:border-blue-800 ml-3 space-y-8">
-          <li v-for="(item, index) in employee.history" :key="item.id || index" class="pl-6 relative">
+          <li v-for="(item, index) in employee.history" :key="item.id" class="pl-6 relative">
             
             <div 
               class="absolute -left-[9px] top-1 w-4 h-4 rounded-full border-4 border-white dark:border-gray-800 shadow-sm"
@@ -58,7 +58,7 @@
             ></div>
             
             <div class="text-sm font-semibold mb-1 inline-block px-2 py-0.5 rounded" :class="index === 0 ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'">
-              {{ formatDate(item.startDate) }} - {{ item.endDate ? formatDate(item.endDate) : 'Hiện tại' }}
+              {{ getNowString(item.startDate) }} - {{ item.endDate ? getNowString(item.endDate) : 'Hiện tại' }}
             </div>
             
             <h4 class="font-bold text-gray-800 dark:text-white text-lg mt-1">{{ item.position }}</h4>
@@ -83,7 +83,6 @@
         <table v-else class="w-full text-left text-sm border-collapse">
           <thead class="bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-b dark:border-gray-700">
             <tr>
-              <th class="p-4 font-medium">Loại đơn</th>
               <th class="p-4 font-medium">Thời gian nghỉ</th>
               <th class="p-4 font-medium text-right">Trạng thái</th>
             </tr>
@@ -91,12 +90,11 @@
           <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
             <tr v-for="leave in employeeLeaves" :key="leave.id" class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
               <td class="p-4">
-                <div class="font-medium text-gray-800 dark:text-gray-200">{{ leave.type }}</div>
-                <div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Nộp: {{ formatDate(leave.submitDate) }}</div>
+                <div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Nộp: {{ getNowString(leave.createAt) }}</div>
               </td>
               <td class="p-4 text-gray-600 dark:text-gray-300">
-                {{ formatDate(leave.startDate) }} <br/>
-                <span class="text-xs text-gray-400 dark:text-gray-500">đến</span> {{ formatDate(leave.endDate) }}
+                {{ getNowString(leave.fromDate) }} <br/>
+                <span class="text-xs text-gray-400 dark:text-gray-500">đến</span> {{ getNowString(leave.toDate) }}
               </td>
               <td class="p-4 text-right">
                 <span 
@@ -127,20 +125,23 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useEmployeeStore } from '@/stores/employeeStore' // Đảm bảo đường dẫn này đúng với dự án của bạn
+import { useEmployeeStore } from '@/stores/employeeStore' 
+import getNowString from '~/utils/formatDate'
+import { useLeaveRequestStore } from '@/stores/leaveRequestStore' 
 
 const route = useRoute()
 const router = useRouter()
 const employeeStore = useEmployeeStore()
+const leaveRequestStore = useLeaveRequestStore()
 
-// Lấy ID từ URL (chuyển sang dạng số để tìm kiếm cho chuẩn)
+// Lấy ID từ URL
 const employeeId = Number(route.params.id)
 
-// 1. Khai báo state
+// Khai báo state
 const employee = ref(null)
 const employeeLeaves = ref([])
 
-// 2. Computed trích xuất chức vụ/phòng ban hiện tại (nằm ở đầu mảng history)
+// Computed trích xuất chức vụ/phòng ban hiện tại
 const currentRole = computed(() => {
   if (employee.value?.history?.length > 0) {
     return employee.value.history[0]
@@ -148,28 +149,34 @@ const currentRole = computed(() => {
   return null
 })
 
-// 3. Nạp dữ liệu khi mở trang
+// Nạp dữ liệu khi mở trang
 onMounted(async () => {
-  // Đợi Store tải dữ liệu từ LocalStorage hoặc file JSON
-  await employeeStore.fetchEmployees()
+  // Trích xuất ID an toàn từ URL. 
+  // Ví dụ: URL là /[1] hoặc /1 thì đều lấy ra được số 1.
+  const rawId = String(route.params.id).replace(/\D/g, '') 
+  const employeeId = Number(rawId)
 
-  // Tìm nhân viên khớp với ID
+  // Gọi API/Local Storage để nạp dữ liệu vào Store
+  await employeeStore.fetchEmployees()
+  
+  if (leaveRequestStore.fetchLeaveRequests) {
+    await leaveRequestStore.fetchLeaveRequests()
+  }
   const foundEmployee = employeeStore.employees.find(emp => emp.id === employeeId)
 
   if (foundEmployee) {
+    // Gán dữ liệu vào biến employee.value
     employee.value = foundEmployee
+    
+    // Tìm các đơn từ của nhân viên này
+    if (leaveRequestStore.getAllRequestByEmpID) {
+      employeeLeaves.value = leaveRequestStore.getAllRequestByEmpID(String(employee.employeeCode)) || []
+    }
   } else {
-    alert('Không tìm thấy dữ liệu nhân viên này!')
-    router.push('/employees') // Đẩy về danh sách nếu gõ sai ID
+    // Nếu không tìm thấy ai có ID này
+    alert('Không tìm thấy dữ liệu nhân viên này! Vui lòng kiểm tra lại ID.')
+    router.push('/employees') // Đẩy về trang danh sách
   }
-
-  // TẠM THỜI: Giữ lại Mock Data Đơn từ vì chúng ta chưa xây dựng tính năng này
-  employeeLeaves.value = [
-    { id: 101, type: 'Nghỉ phép năm', submitDate: '2025-08-10', startDate: '2025-08-15', endDate: '2025-08-16', status: 'Đã duyệt' },
-    { id: 102, type: 'Nghỉ ốm', submitDate: '2025-02-05', startDate: '2025-02-05', endDate: '2025-02-07', status: 'Đã duyệt' },
-    { id: 103, type: 'Nghỉ việc riêng', submitDate: '2026-01-20', startDate: '2026-02-01', endDate: '2026-02-05', status: 'Chờ duyệt' }
-  ]
 })
-
 
 </script>

@@ -14,47 +14,27 @@ export const useDepartmentStore = defineStore('department', () => {
     }
   }
 
-  function normalizeDepartment(dep) {
-    return {
-      id: dep.id || '',
-      name: dep.name || '',
-      employeeID: dep.employeeID || '',
-      employeeName: dep.employeeName || '',
-      budget: dep.budget || 0,
-      totalEmployee: dep.totalEmployee || 0,
-      description: dep.description || '',
-      position: Array.isArray(dep.position) ? dep.position : []
-    }
-  }
-
-  async function fetchDepartments(forceReload = false) {
+  async function fetchDepartments() {
     isLoading.value = true
     try {
-      const storedData = process.client
-        ? localStorage.getItem('hrm_departments')
-        : null
-
-      if (!forceReload && storedData) {
-        const parsed = JSON.parse(storedData)
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          departments.value = parsed.map(normalizeDepartment)
-          return
-        }
+      // Thử lấy từ LocalStorage trước
+      const saved = process.client ? localStorage.getItem('hrm_departments') : null
+      if (saved && JSON.parse(saved).length > 0) {
+        departments.value = JSON.parse(saved)
+      } else {
+        const data = await $fetch('/data/employees.json')
+        departments.value = data
+        saveToLocal()
       }
-
-      const data = await $fetch('/data/departments.json')
-      departments.value = Array.isArray(data) ? data.map(normalizeDepartment) : []
-      saveToLocal()
     } catch (error) {
-      console.error('Lỗi khi tải dữ liệu phòng ban:', error)
-      departments.value = []
+      console.error("Lỗi tải dữ liệu:", error)
     } finally {
       isLoading.value = false
     }
   }
 
   // 2. Action: THÊM MỚI
-const addDepartment = async (newDep) => {
+  const addDepartment = async (newDep) => {
     const activityStore = useActivityStore()
     const dashboardStore = useDashboardStore()
 
@@ -83,15 +63,15 @@ const addDepartment = async (newDep) => {
 
     // Ghi nhận lịch sử hoạt động
     activityStore.logActivity('add', 'Thêm phòng ban mới', newDep.name || 'Phòng ban mới')
-    dashboardStore.addActivity({ 
-      type: 'add', 
-      title: `Thêm phòng ban mới: ${newDep.name || generateId}`, 
-      user: 'Admin HR' 
+    dashboardStore.addActivity({
+      type: 'add',
+      title: `Thêm phòng ban mới: ${newDep.name || generateId}`,
+      user: 'Admin HR'
     })
   }
-  
+
   // 3. Action: CẬP NHẬT (SỬA)
-  const updateDepartment = async(updatedDep) => {
+  const updateDepartment = async (updatedDep) => {
     const activityStore = useActivityStore()
     const dashboardStore = useDashboardStore()
 
@@ -100,8 +80,8 @@ const addDepartment = async (newDep) => {
     const index = departments.value.findIndex(d => d.id === updatedDep.id)
 
     if (index !== -1) {
-      const positionsArray = Array.isArray(updatedDep.position) 
-        ? updatedDep.position 
+      const positionsArray = Array.isArray(updatedDep.position)
+        ? updatedDep.position
         : departments.value[index].position || []
 
       departments.value[index] = {
@@ -109,13 +89,13 @@ const addDepartment = async (newDep) => {
         ...updatedDep,               // Ghi đè bằng toàn bộ thông tin mới từ form
         position: positionsArray     // Chốt lại mảng position an toàn
       }
-      saveToStorage() // Cập nhật lại LocalStorage
+      saveToLocal() // Cập nhật lại LocalStorage
 
       activityStore.logActivity('edit', 'Cập nhật phòng ban', updatedDep.name)
-      dashboardStore.addActivity({ 
-        type: 'update', 
-        title: `Cập nhật phòng ban: ${updatedDep.name}`, 
-        user: 'Admin HR' 
+      dashboardStore.addActivity({
+        type: 'update',
+        title: `Cập nhật phòng ban: ${updatedDep.name}`,
+        user: 'Admin HR'
       })
 
       return normalized
@@ -149,11 +129,11 @@ const addDepartment = async (newDep) => {
     })
   }
 
-  function getPositionById(id){
+  function getPositionById(id) {
     const dpm = departments.value.find(item => item.id === id)
     // Trả về mảng position nếu có, ngược lại trả về mảng rỗng
     if (dpm && dpm.position) {
-      return emp.position
+      return dpm.position
     }
     return []
   }

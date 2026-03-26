@@ -85,8 +85,6 @@ async function handleLogin() {
     userName
   )
 
-
-
   toast.success(result.message)
   await navigateTo('/')
 }
