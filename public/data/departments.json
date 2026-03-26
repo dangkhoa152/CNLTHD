@@ -1,9 +1,14 @@
 [
   {
     "id": "DEP01",
-    "name": "Phòng CNTT",
-    "totalEmployees": 180,
-    "positions": [
+    "name": "Phòng IT",
+    "employeeID": "EMP0001",
+    "employeeName": "Lê Anh Trang",
+    "budget": 250000000,
+    "totalEmployee": 176,
+    "description": "Quản lý hoạt động của phòng IT",
+    "position": [
+      "IT Manager",
       "Frontend Developer",
       "Backend Developer",
       "Fullstack Developer",
@@ -14,9 +19,30 @@
   },
   {
     "id": "DEP02",
+    "name": "Phòng Nhân sự",
+    "employeeID": "EMP0177",
+    "employeeName": "Bùi Đức Long",
+    "budget": 120000000,
+    "totalEmployee": 134,
+    "description": "Quản lý hoạt động của phòng Nhân sự",
+    "position": [
+      "HR Manager",
+      "Recruiter",
+      "Training Specialist",
+      "C&B Specialist",
+      "HR Executive"
+    ]
+  },
+  {
+    "id": "DEP03",
     "name": "Phòng Marketing",
-    "totalEmployees": 160,
-    "positions": [
+    "employeeID": "EMP0311",
+    "employeeName": "Bùi Văn Hạnh",
+    "budget": 180000000,
+    "totalEmployee": 168,
+    "description": "Quản lý hoạt động của phòng Marketing",
+    "position": [
+      "Marketing Manager",
       "Digital Marketer",
       "SEO Specialist",
       "Content Creator",
@@ -25,48 +51,51 @@
     ]
   },
   {
-    "id": "DEP03",
+    "id": "DEP04",
+    "name": "Phòng Kế toán",
+    "employeeID": "EMP0479",
+    "employeeName": "Lê Thị Bình",
+    "budget": 150000000,
+    "totalEmployee": 180,
+    "description": "Quản lý hoạt động của phòng Kế toán",
+    "position": [
+      "Chief Accountant",
+      "General Accountant",
+      "Tax Accountant",
+      "Internal Auditor",
+      "Accounting Assistant"
+    ]
+  },
+  {
+    "id": "DEP05",
     "name": "Phòng Kinh doanh",
-    "totalEmployees": 220,
-    "positions": [
-      "Sales Executive",
-      "Senior Sales Executive",
+    "employeeID": "EMP0659",
+    "employeeName": "Trần Hoàng Lam",
+    "budget": 300000000,
+    "totalEmployee": 169,
+    "description": "Quản lý hoạt động của phòng Kinh doanh",
+    "position": [
       "Sales Manager",
+      "Senior Sales Executive",
+      "Sales Executive",
       "Business Development Executive",
       "Key Account Executive"
     ]
   },
   {
-    "id": "DEP04",
+    "id": "DEP06",
     "name": "Phòng Chăm sóc khách hàng",
-    "totalEmployees": 170,
-    "positions": [
+    "employeeID": "EMP0828",
+    "employeeName": "Đỗ Văn Chi",
+    "budget": 140000000,
+    "totalEmployee": 173,
+    "description": "Quản lý hoạt động của phòng Chăm sóc khách hàng",
+    "position": [
+      "Customer Service Manager",
       "Customer Support Staff",
       "Call Center Agent",
       "Complaint Handler",
       "Customer Care Executive"
-    ]
-  },
-  {
-    "id": "DEP05",
-    "name": "Phòng Logistics",
-    "totalEmployees": 190,
-    "positions": [
-      "Warehouse Staff",
-      "Inventory Controller",
-      "Delivery Coordinator",
-      "Supply Chain Executive"
-    ]
-  },
-  {
-    "id": "DEP06",
-    "name": "Phòng Nhân sự",
-    "totalEmployees": 80,
-    "positions": [
-      "HR Executive",
-      "Recruiter",
-      "Training Specialist",
-      "C&B Specialist"
     ]
   }
 ]

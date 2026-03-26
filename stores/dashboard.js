@@ -1,3 +1,6 @@
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+
 export const useDashboardStore = defineStore('dashboard', () => {
   const employees = ref([])
   const departments = ref([])
@@ -30,6 +33,32 @@ export const useDashboardStore = defineStore('dashboard', () => {
     }
   }
 
+  function getCurrentHistory(emp) {
+    if (!emp?.history || !Array.isArray(emp.history) || emp.history.length === 0) {
+      return null
+    }
+
+    return emp.history.find(h => h.endDate === null) || emp.history[0]
+  }
+
+  function normalizeStatus(status) {
+    if (status === 'Nghỉ phép') return 'Tạm nghỉ'
+    if (status === 'Đã nghỉ việc') return 'Nghỉ việc'
+    return status
+  }
+
+  function normalizeEmployee(emp) {
+    const currentHistory = getCurrentHistory(emp)
+
+    return {
+      ...emp,
+      departmentId: emp.departmentId || currentHistory?.departmentId || '',
+      department: emp.department || currentHistory?.department || '',
+      position: emp.position || currentHistory?.position || '',
+      status: normalizeStatus(emp.status || '')
+    }
+  }
+
   async function fetchAll() {
     loading.value = true
 
@@ -40,9 +69,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
         $fetch('/data/leave-request.json')
       ])
 
-      employees.value = employeesData
-      departments.value = departmentsData
-      leaveRequests.value = leaveData
+      employees.value = Array.isArray(employeesData)
+        ? employeesData.map(normalizeEmployee)
+        : []
+
+      departments.value = Array.isArray(departmentsData) ? departmentsData : []
+      leaveRequests.value = Array.isArray(leaveData) ? leaveData : []
 
       if (process.client) {
         const saved = localStorage.getItem('hrm_activities')
@@ -55,6 +87,11 @@ export const useDashboardStore = defineStore('dashboard', () => {
           saveActivitiesToLocal()
         }
       }
+    } catch (error) {
+      console.error('Lỗi tải dashboard:', error)
+      employees.value = []
+      departments.value = []
+      leaveRequests.value = []
     } finally {
       loading.value = false
     }
@@ -116,12 +153,10 @@ export const useDashboardStore = defineStore('dashboard', () => {
     }
 
     employees.value.forEach(employee => {
-      if (employee.status === 'Đang làm việc') {
-        statusMap['Đang làm việc']++
-      } else if (employee.status === 'Nghỉ phép' || employee.status === 'Tạm nghỉ') {
-        statusMap['Tạm nghỉ']++
-      } else if (employee.status === 'Đã nghỉ việc' || employee.status === 'Nghỉ việc') {
-        statusMap['Nghỉ việc']++
+      const normalized = normalizeStatus(employee.status)
+
+      if (statusMap[normalized] !== undefined) {
+        statusMap[normalized]++
       }
     })
 
