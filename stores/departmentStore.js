@@ -40,47 +40,40 @@ export const useDepartmentStore = defineStore('department', () => {
   }
 
   // 2. Action: THÊM MỚI
-const addDepartment = async(newDep) => {
+const addDepartment = async (newDep) => {
     const activityStore = useActivityStore()
     const dashboardStore = useDashboardStore()
 
     await activityStore.fetchActivities()
     let generateId = 'DEP01' 
 
+    // Logic tạo ID tự động
     if (departments.value.length > 0) {
       const existingNumbers = departments.value.map(dep => {
         const match = dep.id.match(/\d+/)
         return match ? parseInt(match[0], 10) : 0
       })
-
       const maxNumber = Math.max(...existingNumbers)
-
       const nextNumber = maxNumber + 1
-
       generateId = 'DEP' + nextNumber.toString().padStart(2, '0')
     }
 
     const departmentToSave = {
-      ...newDep,
+      ...newDep, // (name, budget, description, v.v.)
       id: generateId,
-      employeeCount: 0,
-      manager: 'Chưa bổ nhiệm'
+      position: Array.isArray(newDep.position) ? newDep.position : []
     }
-
     departments.value.unshift(departmentToSave)
     saveToStorage()
 
-    activityStore.logActivity(
-      'add', 
-      'Thêm phòng ban mới', 
-      newDep.name
-    )
+    // Ghi nhận lịch sử hoạt động
+    activityStore.logActivity('add', 'Thêm phòng ban mới', newDep.name || 'Phòng ban mới')
     dashboardStore.addActivity({ 
       type: 'add', 
-      title: `Thêm phòng ban mới: ${newDep.name}`, 
+      title: `Thêm phòng ban mới: ${newDep.name || generateId}`, 
       user: 'Admin HR' 
     })
-}
+  }
   
   // 3. Action: CẬP NHẬT (SỬA)
   const updateDepartment = async(updatedDep) => {
@@ -90,15 +83,18 @@ const addDepartment = async(newDep) => {
     await activityStore.fetchActivities()
     const index = departments.value.findIndex(d => d.id === updatedDep.id)
     if (index !== -1) {
-      departments.value[index] = updatedDep
+      const positionsArray = Array.isArray(updatedDep.position) 
+        ? updatedDep.position 
+        : departments.value[index].position || []
+
+      departments.value[index] = {
+        ...departments.value[index], // Giữ lại những thông tin cũ (nếu UI không gửi lên)
+        ...updatedDep,               // Ghi đè bằng toàn bộ thông tin mới từ form
+        position: positionsArray     // Chốt lại mảng position an toàn
+      }
       saveToStorage() // Cập nhật lại LocalStorage
 
-      activityStore.logActivity(
-        'edit', 
-        'Cập nhật phòng ban', 
-        updatedDep.name 
-      )
-
+      activityStore.logActivity('edit', 'Cập nhật phòng ban', updatedDep.name)
       dashboardStore.addActivity({ 
         type: 'update', 
         title: `Cập nhật phòng ban: ${updatedDep.name}`, 
@@ -133,6 +129,14 @@ const addDepartment = async(newDep) => {
     })
   }
 
+  function getPositionById(id){
+    const dpm = departments.value.find(item => item.id === id)
+    // Trả về mảng position nếu có, ngược lại trả về mảng rỗng
+    if (dpm && dpm.position) {
+      return emp.position
+    }
+    return []
+  }
   // 5. Getters: LỌC TÌM KIẾM
   const filteredDepartments = computed(() => {
     if (!searchQuery.value) return departments.value
@@ -152,6 +156,7 @@ const addDepartment = async(newDep) => {
     filteredDepartments,
     addDepartment,
     updateDepartment,
-    deleteDepartment
+    deleteDepartment,
+    getPositionById
   }
 })
