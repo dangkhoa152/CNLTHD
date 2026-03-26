@@ -17,7 +17,6 @@
           <div class="w-full md:w-1/4 flex flex-col items-center">
             <div class="w-32 h-32 rounded-full border-4 border-gray-100 shadow-sm overflow-hidden mb-4 bg-gray-50 flex items-center justify-center">
               <img v-if="form.avatar" :src="form.avatar || '/public/images/avatar.png'" alt="avatar" class="w-full h-full object-cover" />
-              <!-- <svg v-else class="w-12 h-12 text-gray-300" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" /></svg> -->
               <img v-else src='/public/images/avatar.png' alt="avatar" class="w-full h-full object-cover" />
             </div>
             <button class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
@@ -34,21 +33,42 @@
                   <label class="block text-sm font-medium text-gray-700 mb-1">Mã NV <span class="text-red-500">*</span></label>
                   <input v-model="form.employeeCode" type="text" :disabled="isEdit" class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="VD: EMP0001" />
                 </div>
+                
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Ngày vào làm</label>
                   <input v-model="form.joinDate" type="date" class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none" />
                 </div>
+                
+                <!-- DROPDOWN PHÒNG BAN MỚI -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Phòng ban <span class="text-red-500">*</span></label>
-                  <select v-model="form.department" class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none">
+                  <select 
+                    v-model="form.department" 
+                    @change="handleDepartmentChange"
+                    class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
                     <option value="">Chọn phòng ban</option>
-                    <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
+                    <option v-for="d in departments" :key="d.id" :value="d.name">
+                      {{ d.name }}
+                    </option>
                   </select>
                 </div>
+                
+                <!-- DROPDOWN CHỨC VỤ ĐỘNG (Dựa vào phòng ban) -->
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Chức vụ <span class="text-red-500">*</span></label>
-                  <input v-model="form.position" type="text" class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="VD: Sales Executive" />
+                  <select 
+                    v-model="form.position" 
+                    :disabled="!form.department"
+                    class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-100 disabled:text-gray-400"
+                  >
+                    <option value="">Chọn chức vụ</option>
+                    <option v-for="pos in availablePositions" :key="pos" :value="pos">
+                      {{ pos }}
+                    </option>
+                  </select>
                 </div>
+                
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Trạng thái</label>
                   <select v-model="form.status" class="w-full border rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none">
@@ -118,20 +138,23 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { reactive, computed, watch } from 'vue'
 
-const props = defineProps<{
+const props = defineProps({
   isEdit: Boolean,
-  item?: any,
-  departments: string[] // Truyền dữ liệu nhân viên vào nếu là chế độ Sửa/Xem
-}>()
+  item: Object,
+  // Đã sửa thành mảng object để nhận toàn bộ thông tin phòng ban (bao gồm id, name, position)
+  departments: {
+    type: Array,
+    default: () => []
+  }
+})
 
 const emit = defineEmits(['close', 'create', 'update'])
-// Xác định đang ở chế độ sửa hay tạo
+
 const isEdit = computed(() => !!props.item)
 
-// Khởi tạo state cho form mặc định
 const form = reactive({
   employeeCode: '',
   name: '',
@@ -148,11 +171,17 @@ const form = reactive({
   avatar: ''
 })
 
-// Dùng watch + immediate để nạp dữ liệu khi mở Modal
+// === LOGIC NẠP DỮ LIỆU KHI MỞ FORM ===
 watch(() => props.item, (newVal) => {
   if (newVal) {
-    // Chế độ Sửa: Rải dữ liệu vào form
     Object.assign(form, newVal)
+    
+    // Móc dữ liệu phòng ban và chức vụ từ lịch sử (history)
+    if (newVal.history && newVal.history.length > 0) {
+      form.department = newVal.history[0].department || ''
+      form.departmentId = newVal.history[0].departmentId || ''
+      form.position = newVal.history[0].position || ''
+    }
   } else {
     // Chế độ Thêm mới: Reset form
     form.employeeCode = ''
@@ -166,38 +195,49 @@ watch(() => props.item, (newVal) => {
     form.department = ''
     form.position = ''
     form.status = 'Đang làm việc'
-    form.joinDate = new Date().toISOString().split('T')[0] // Mặc định ngày hôm nay
+    form.joinDate = new Date().toISOString().split('T')[0] 
     form.avatar = ''
   }
 }, { immediate: true })
 
+// === LOGIC LIÊN KẾT PHÒNG BAN VÀ CHỨC VỤ ===
+
+// Tính toán danh sách chức vụ dựa trên phòng ban đang chọn
+const availablePositions = computed(() => {
+  if (!form.department) return []
+  const selectedDeptObj = props.departments.find(d => d.name === form.department)
+  // Trả về mảng position của phòng ban đó, nếu không có thì trả mảng rỗng
+  return selectedDeptObj && Array.isArray(selectedDeptObj.position) ? selectedDeptObj.position : []
+})
+
+// 2. Xử lý khi người dùng đổi phòng ban khác
+function handleDepartmentChange() {
+  const selectedDeptObj = props.departments.find(d => d.name === form.department)
+  if (selectedDeptObj) {
+    form.departmentId = selectedDeptObj.id
+  } else {
+    form.departmentId = ''
+  }
+  // Reset chức vụ vì phòng mới có danh sách chức vụ mới
+  form.position = ''
+}
+
+// === LOGIC GỬI DỮ LIỆU ===
 function submit() {
-  // Validate sơ bộ (Bạn có thể làm kỹ hơn ở đây)
-  if (!form.employeeCode || !form.name || !form.email || !form.department) {
+  if (!form.employeeCode || !form.name || !form.email || !form.department || !form.position) {
     alert('Vui lòng điền đầy đủ các trường bắt buộc (*)')
     return
   }
-  // Nếu là tạo mới, tự động tạo ID và departmentId tương ứng (giả lập)
+
   if (!isEdit.value) {
-    // Giả lập map tên phòng ban ra mã phòng ban
-    const deptMap: Record<string, string> = {
-      'Phòng Kinh doanh': 'DEP05',
-      'Phòng IT': 'DEP01',
-      'Phòng Kế Toán': 'DEP04',
-      'Phòng Nhân sự': 'DEP02',
-      'Phòng Marketing': 'DEP03',
-      'Phòng Chăm sóc Khách hàng': 'DEP06'
-    }
-    form.departmentId = deptMap[form.department]
-    emit('create', {...form} )
-  } else{
-    emit('update',  { id: props.item.id, patch: {...form }})
+    emit('create', {...form})
+  } else {
+    emit('update', { id: props.item.id, patch: {...form} })
   }
 }
 </script>
 
 <style scoped>
-/* Thu gọn thanh cuộn cho đẹp */
 .custom-scrollbar::-webkit-scrollbar { width: 6px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
 .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
