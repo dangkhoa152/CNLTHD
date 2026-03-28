@@ -14,6 +14,47 @@ export const useDepartmentStore = defineStore('department', () => {
     }
   }
 
+  function syncEmployeeCounts(allEmployees) {
+    // 1. Đặt tất cả số lượng của các phòng ban về 0
+    departments.value.forEach(dep => {
+      dep.totalEmployee = 0
+    })
+
+    // 2. Chạy vòng lặp qua toàn bộ nhân viên
+    allEmployees.forEach(emp => {
+      // BƯỚC A: Tìm mã phòng ban (Hỗ trợ cả JSON cũ và mảng History mới)
+      let currentDeptId = null
+      let currentDeptName = null
+
+      if (emp.history && emp.history.length > 0) {
+        // Đọc theo chuẩn mới của bạn bạn
+        currentDeptId = emp.history[0].departmentId
+        currentDeptName = emp.history[0].department
+      } else {
+        // Đọc theo chuẩn file employees.json gốc
+        currentDeptId = emp.departmentId
+        currentDeptName = emp.department
+      }
+
+      // BƯỚC B: Tìm đúng phòng ban trong danh sách
+      // Ưu tiên 1: Tìm chính xác bằng ID (An toàn tuyệt đối)
+      let targetDept = departments.value.find(d => d.id === currentDeptId)
+      
+      // Ưu tiên 2: Nếu file JSON cũ không có ID, ráng mò bằng Tên phòng ban
+      if (!targetDept && currentDeptName) {
+        targetDept = departments.value.find(d => d.name === currentDeptName)
+      }
+
+      // BƯỚC C: Nếu tìm thấy phòng ban -> Cộng 1
+      if (targetDept) {
+        targetDept.totalEmployee += 1
+      }
+    })
+
+    // 3. Lưu kết quả mới nhất vào Local Storage
+    saveToLocal()
+  }
+
   async function fetchDepartments() {
     isLoading.value = true
     try {
@@ -22,7 +63,7 @@ export const useDepartmentStore = defineStore('department', () => {
       if (saved && JSON.parse(saved).length > 0) {
         departments.value = JSON.parse(saved)
       } else {
-        const data = await $fetch('/data/employees.json')
+        const data = await $fetch('/data/departments.json')
         departments.value = data
         saveToLocal()
       }
@@ -166,6 +207,7 @@ export const useDepartmentStore = defineStore('department', () => {
     addDepartment,
     updateDepartment,
     deleteDepartment,
-    getPositionById
+    getPositionById,
+    syncEmployeeCounts,
   }
 })
