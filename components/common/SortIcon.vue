@@ -9,22 +9,21 @@
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
     </svg>
 <!-- Mui ten 2 chieu: trang thai cho -->
-    <svg v-else class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg v-else class="w-3.5 h-3.5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
     </svg> 
     
   </span>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { computed } from 'vue'
 
-const props = defineProps<{
-  column: string              // Tên cột mà icon này đại diện (vd: 'name')
-  sortColumn: string          // Tên cột đang được hệ thống sắp xếp
-  sortOrder: 'asc' | 'desc'   // Chiều sắp xếp hiện tại
-}>()
+const props = defineProps({
+  column: String,
+  sortColumn: String,
+  sortOrder: String
+})
 
-// Biến computed kiểm tra xem Icon này có thuộc về cột đang được Click hay không
 const isActive = computed(() => props.column === props.sortColumn)
 </script>

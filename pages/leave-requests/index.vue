@@ -25,7 +25,7 @@
     </div>
     <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
       <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Đã từ chối</div>
-      <div class="text-2xl text-red-500 dark:text-red-300 font-bold">{{ countFilteredStatus("Đã từ chối") }}</div>
+      <div class="text-2xl text-red-500 dark:text-red-300 font-bold">{{ countFilteredStatus("Từ chối") }}</div>
     </div>
   </div>
 

@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, computed } from 'vue'
 import { useActivityStore } from '@/stores/activityStore'
-
+import getNowString from '~/utils/formatDate'
 const activityStore = useActivityStore()
 
 onMounted(() => {
@@ -87,7 +87,7 @@ const getTypeText = (type) => {
             class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
           >
             <td class="px-5 py-4 whitespace-nowrap text-base text-gray-700 dark:text-gray-300 font-mono">
-              {{ log.time }}
+              {{ getNowString(log.time) }}
             </td>
 
             <td class="px-5 py-4 whitespace-nowrap text-base font-semibold text-gray-900 dark:text-white">
