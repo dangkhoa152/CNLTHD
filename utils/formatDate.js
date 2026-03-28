@@ -1,15 +1,12 @@
-function getNowString(dateString) {
-    let date;
-    if (dateString === '') {
-        date = new Date()
-    } else {
-        date = new Date(dateString)
-    }
-    const yyyy = date.getFullYear()
-    const mm = String(date.getMonth() + 1).padStart(2, '0')
-    const dd = String(date.getDate()).padStart(2, '0')
-    const hh = String(date.getHours()).padStart(2, '0')
-    const mi = String(date.getMinutes()).padStart(2, '0')
-    return `${yyyy}-${mm}-${dd} ${hh}:${mi}`
+export default function getNowString() {
+  const now = new Date()
+  
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, '0') // Tháng trong JS bắt đầu từ 0 nên phải +1
+  const day = String(now.getDate()).padStart(2, '0')
+  
+  const hours = String(now.getHours()).padStart(2, '0')
+  const minutes = String(now.getMinutes()).padStart(2, '0')
+  
+  return `${year}-${month}-${day} ${hours}:${minutes}`
 }
-export default getNowString;
