@@ -166,11 +166,18 @@ function update(payload: any) {
 
 // Ghi log hoạt động khi cập nhật hồ sơ nhân viên
 function logUpdate(payload: any) {
+  const targetName = formItem.value?.name || payload.name || 'Hồ sơ nhân viên'
+  const userName = (auth.user as any)?.name || 'Admin HR'
+
   setTimeout(() => {
-    const targetName = formItem.value?.name || payload.name
-    const userName = (auth.user as any)?.name || 'Admin HR'
-    dashboard.addActivity({ type: 'update', title: `Cập nhật thông tin của ${targetName}`, user: userName })
-    activityStore.logActivity('edit', 'Cập nhật hồ sơ nhân viên', targetName)
+    dashboard.addActivity({ 
+      type: 'update', 
+      title: `Cập nhật thông tin của ${targetName}`, 
+      user: userName 
+    })
+    
+    activityStore.logActivity('edit', 'Cập nhật hồ sơ nhân viên', targetName, userName)
+    
     toast.info(`Cập nhật thành công`)
   }, 50)
 }

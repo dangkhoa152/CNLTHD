@@ -16,4 +16,3 @@ function getNowString(dateString) {
      return `${yyyy}-${mm}-${dd}`
     }
 }
-export default getNowString;
