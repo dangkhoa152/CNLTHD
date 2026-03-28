@@ -8,7 +8,7 @@ export const useEmployeeStore = defineStore('employees', () => {
   const query = ref({})
 
   const usedepartment = useDepartmentStore()
-  const departments = usedepartment.departments
+  const departments = computed(() => usedepartment.departments)
 
   const selectedDepartment = ref('')
 
@@ -131,7 +131,7 @@ export const useEmployeeStore = defineStore('employees', () => {
     if (currentDeptName) {
       const deptToUpdate = departments.value.find(dept => dept.name === currentDeptName)
       if (deptToUpdate) {
-        deptToUpdate.totalEmployees += 1
+        deptToUpdate.totalEmployee += 1
         usedepartment.saveToLocal()
       }
     }
@@ -180,13 +180,13 @@ export const useEmployeeStore = defineStore('employees', () => {
       if (newDept !== currentDept) {
         // Giảm 1 người ở phòng cũ
         const oldDeptObj = departments.value.find(d => d.name === currentDept)
-        if (oldDeptObj && oldDeptObj.totalEmployees > 0) {
-          oldDeptObj.totalEmployees -= 1
+        if (oldDeptObj && oldDeptObj.totalEmployee > 0) {
+          oldDeptObj.totalEmployee -= 1
         }
         // Tăng 1 người ở phòng mới
         const newDeptObj = departments.value.find(d => d.name === newDept)
         if (newDeptObj) {
-          newDeptObj.totalEmployees += 1
+          newDeptObj.totalEmployee += 1
         }
         usedepartment.saveToLocal() // Lưu lại store phòng ban
       }
@@ -211,8 +211,8 @@ export const useEmployeeStore = defineStore('employees', () => {
     // Cập nhật số lượng sang Store Phòng ban
     if (targetDeptName) {
       const deptToUpdate = departments.value.find(dept => dept.name === targetDeptName)
-      if (deptToUpdate && deptToUpdate.totalEmployees > 0) {
-        deptToUpdate.totalEmployees -= 1
+      if (deptToUpdate && deptToUpdate.totalEmployee > 0) {
+        deptToUpdate.totalEmployee -= 1
         usedepartment.saveToLocal()
       }
     }
@@ -231,28 +231,36 @@ export const useEmployeeStore = defineStore('employees', () => {
   }
 
   const sortedEmployees = computed(() => {
-    let result = searchEmployees.value;
-    if (!sortColumn.value) return result;
-    // Tiến hành sắp xếp
-    result.sort((a, b) => {
-      const getValue = (emp, col) => {
-        if (col === 'department' || col === 'position') {
-          return emp.history?.[0]?.[col] || ''
-        }
-        return emp[col] || ''
+  // Bước 1: Lấy kết quả ĐÃ LỌC từ searchEmployees
+  // Dùng toán tử spread [...] để tạo mảng mới, tránh làm hỏng mảng gốc
+  const result = [...searchEmployees.value];
+
+  // Bước 2: Nếu không có yêu cầu sắp xếp, trả về kết quả lọc luôn
+  if (!sortColumn.value) return result;
+
+  // Bước 3: Tiến hành sắp xếp trên mảng đã copy
+  result.sort((a, b) => {
+    const getValue = (emp, col) => {
+      if (col === 'department' || col === 'position') {
+        return emp.history?.[0]?.[col] || '';
       }
-      let valueA = getValue(a, sortColumn.value)
-      let valueB = getValue(b, sortColumn.value)
-      // Đưa về chữ thường hết để so sánh chuỗi (A và a phải bằng nhau)
-      if (typeof valueA === 'string') valueA = valueA.toLowerCase();
-      if (typeof valueB === 'string') valueB = valueB.toLowerCase();
-      // Thuật toán so sánh
-      if (valueA < valueB) return sortOrder.value === 'asc' ? -1 : 1;
-      if (valueA > valueB) return sortOrder.value === 'asc' ? 1 : -1;
-      return 0; // Bằng nhau
-    });
-    return result;
+      return emp[col] || '';
+    };
+
+    let valueA = getValue(a, sortColumn.value);
+    let valueB = getValue(b, sortColumn.value);
+
+    // Xử lý so sánh chuỗi không phân biệt hoa thường
+    if (typeof valueA === 'string') valueA = valueA.toLowerCase();
+    if (typeof valueB === 'string') valueB = valueB.toLowerCase();
+
+    if (valueA < valueB) return sortOrder.value === 'asc' ? -1 : 1;
+    if (valueA > valueB) return sortOrder.value === 'asc' ? 1 : -1;
+    return 0;
   });
+
+  return result;
+});
 
   // get employee by id
   function getEmployeeById(id) {

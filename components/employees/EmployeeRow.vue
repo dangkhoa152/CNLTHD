@@ -3,9 +3,9 @@
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.id }}</td>
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.employeeCode }}</td>
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.name }}</td>
-    <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.history[0].department }}</td>
+    <td class="px-4 py-2 text-center text-gray-900 dark:text-gray-100">{{ item.history[0].department }}</td>
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.history[0].position }}</td>
-    <td class="px-4 py-2">
+    <td class="px-4 py-2 text-center">
       <span :class="statusClass(item.status)" class="px-2 py-1 rounded text-sm text-center">{{ item.status }}</span>
     </td>
     <td class="px-4 py-2 text-center">

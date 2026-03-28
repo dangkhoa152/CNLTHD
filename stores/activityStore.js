@@ -54,7 +54,7 @@ export const useActivityStore = defineStore('activity', () => {
       title: title,
       user: user,
       target: target,
-      time: getNowString()
+      time: getNowString('')
       
     }
 
