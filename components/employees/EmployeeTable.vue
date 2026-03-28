@@ -16,14 +16,14 @@
               <SortIcon column="name" :sortColumn="sortColumn" :sortOrder="sortOrder || ''" />
             </div>
           </th>
-          <th class="px-4 py-2 transition-colors text-gray-700 dark:text-gray-200">Phòng ban</th>
+          <th class="px-4 py-2 text-center transition-colors text-gray-700 dark:text-gray-200">Phòng ban</th>
           <th @click="$emit('sort', 'position')" class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors text-gray-700 dark:text-gray-200">
             <div class="flex gap-1">
               Chức vụ
               <SortIcon column="position" :sortColumn="sortColumn" :sortOrder="sortOrder || ''" />
             </div>
           </th>
-          <th class="px-4 py-2 transition-colors text-gray-700 dark:text-gray-200">Trạng thái </th>
+          <th class="px-4 py-2 text-center transition-colors text-gray-700 dark:text-gray-200">Trạng thái </th>
           <th class="px-4 py-2 transition-colors text-gray-700 dark:text-gray-200">Hành động</th>
         </tr>
       </thead>
@@ -52,8 +52,8 @@ import { ref, computed } from 'vue'
 //  khi người dùng thực hiện các hành động như xem, duyệt hoặc từ chối đơn nghỉ phép.
 const props = defineProps({ 
   items: { type: Array, default: () => [] },
-  sortColumn: { type: String, default: '' }, // Đổi từ [String, Object] thành String để đồng bộ
-  sortOrder: { type: String, default: '' }    // Khai báo đúng chuẩn Vue Prop
+  sortColumn: { type: String, default: '' },
+  sortOrder: { type: String, default: '' }    
 })
 
 const emit = defineEmits(['view', 'edit', 'delete', 'sort'])

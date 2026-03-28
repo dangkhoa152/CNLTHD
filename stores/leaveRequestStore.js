@@ -153,8 +153,8 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     })
 
     function getAllRequestByEmpID(empID) {
-    return leaveRequests.value.filter(item => String(item.employeeCode) === String(empID));
-}
+        return leaveRequests.value.filter(item => String(item.employeeCode) === String(empID))
+    }
 
     const total = computed(() => leaveRequests.value.length)
 

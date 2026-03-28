@@ -10,7 +10,12 @@
         <tr>
           <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200"><input type="checkbox" :checked="allSelected" @change="toggleAll($event.target.checked)" /></th>
           <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">ID</th>
-          <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Người xin</th>
+          <th @click="$emit('sort', 'employeeName')" class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors">
+            <div class="flex gap-1">
+              Người xin
+              <SortIcon column="employeeName" :sortColumn="sortColumn" :sortOrder="sortOrder || ''"/>
+            </div>
+          </th>
           <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Mã nhân viên</th>
           <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Phòng ban</th>
           <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Ngày</th>
@@ -42,7 +47,6 @@
 <script setup>
 import LeaveRequestRow from './LeaveRequestRow.vue'
 //Khởi tạo props để nhận dữ liệu từ component cha và định nghĩa các sự kiện để giao tiếp với component cha
-//  khi người dùng thực hiện các hành động như xem, duyệt hoặc từ chối đơn nghỉ phép.
 const props = defineProps({ items: { type: Array, default: () => [] } })
 const emit = defineEmits(['view','edit','delete','bulk-approve','bulk-reject','selection-changed'])
 

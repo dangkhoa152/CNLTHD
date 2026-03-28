@@ -22,7 +22,7 @@ export const useDepartmentStore = defineStore('department', () => {
       if (saved && JSON.parse(saved).length > 0) {
         departments.value = JSON.parse(saved)
       } else {
-        const data = await $fetch('/data/employees.json')
+        const data = await $fetch('/data/departments.json')
         departments.value = data
         saveToLocal()
       }

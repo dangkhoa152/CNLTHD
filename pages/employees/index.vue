@@ -36,10 +36,12 @@
 
   <EmployeeTable 
     :items="paginatedList" 
+    :sortColumn="employeeStore.sortColumn"
+    :sortOrder="employeeStore.sortOrder"
     @view="open" 
     @edit="openEdit"
     @delete="handleDeleteClick"
-    @sort="handleSort" 
+    @sort="employeeStore.setSort" 
     />
 
   <Pagination :current-page="currentPage" :total-pages="totalPages" :visible-pages="visiblePages" @prev="prevPage"
@@ -96,7 +98,7 @@ onMounted(async () => {
 
 // Lay danh sach phong ban
 // filtered list lấy trực tiếp từ store (unwrap value để reactive đúng)
-const filtered = computed(() => employeeStore.searchEmployees)
+const filtered = computed(() => employeeStore.sortedEmployees)
 
 // Khai báo pagination dựa trên filtered
 const {
@@ -129,6 +131,8 @@ function handleResetFilters() {
   employeeStore.clearFilter()
   employeeStore.selectedDepartment = ''
   router.replace({ query: {} })
+  employeeStore.sortColumn = ''
+  employeeStore.sortOrder =''
 }
 // sự kiện mở modal xem chi tiết
 function open(item: any) {

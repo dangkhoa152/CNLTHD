@@ -83,6 +83,7 @@
         <table v-else class="w-full text-left text-sm border-collapse">
           <thead class="bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-b dark:border-gray-700">
             <tr>
+              <th class="p-4 font-medium text-left">Ngày nộp </th>
               <th class="p-4 font-medium">Thời gian nghỉ</th>
               <th class="p-4 font-medium text-right">Trạng thái</th>
             </tr>
@@ -90,10 +91,10 @@
           <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
             <tr v-for="leave in employeeLeaves" :key="leave.id" class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
               <td class="p-4">
-                <div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Nộp: {{ getNowString(leave.createAt) }}</div>
+                <div class="text-xs text-gray-900 dark:text-gray-300 mt-0.5">{{ getNowString(leave.createdAt) }}</div>
               </td>
               <td class="p-4 text-gray-600 dark:text-gray-300">
-                {{ getNowString(leave.fromDate) }} <br/>
+                {{ getNowString(leave.fromDate) }}
                 <span class="text-xs text-gray-400 dark:text-gray-500">đến</span> {{ getNowString(leave.toDate) }}
               </td>
               <td class="p-4 text-right">
@@ -134,48 +135,40 @@ const router = useRouter()
 const employeeStore = useEmployeeStore()
 const leaveRequestStore = useLeaveRequestStore()
 
-// Lấy ID từ URL
-const employeeId = Number(route.params.id)
-
 // Khai báo state
 const employee = ref(null)
-const employeeLeaves = ref([])
+
+const employeeLeaves = computed(() => {
+  if (!employee.value) return []
+  // Lấy data trực tiếp từ store để đảm bảo tính phản xạ
+  return leaveRequestStore.leaveRequests.filter(item => 
+    String(item.employeeCode) === String(employee.value.employeeCode)
+  )
+})
 
 // Computed trích xuất chức vụ/phòng ban hiện tại
 const currentRole = computed(() => {
-  if (employee.value?.history?.length > 0) {
-    return employee.value.history[0]
-  }
-  return null
+  return employee.value?.history?.[0] || null
 })
 
-// Nạp dữ liệu khi mở trang
+// Nạp dữ liệu khi mở tranga
 onMounted(async () => {
-  // Trích xuất ID an toàn từ URL. 
-  // Ví dụ: URL là /[1] hoặc /1 thì đều lấy ra được số 1.
   const rawId = String(route.params.id).replace(/\D/g, '') 
   const employeeId = Number(rawId)
 
   // Gọi API/Local Storage để nạp dữ liệu vào Store
-  await employeeStore.fetchEmployees()
+  await Promise.all([
+    employeeStore.fetchEmployees(),
+    leaveRequestStore.fetchLeaveRequests()
+  ])
   
-  if (leaveRequestStore.fetchLeaveRequests) {
-    await leaveRequestStore.fetchLeaveRequests()
-  }
   const foundEmployee = employeeStore.employees.find(emp => emp.id === employeeId)
-
+  
   if (foundEmployee) {
-    // Gán dữ liệu vào biến employee.value
     employee.value = foundEmployee
-    
-    // Tìm các đơn từ của nhân viên này
-    if (leaveRequestStore.getAllRequestByEmpID) {
-      employeeLeaves.value = leaveRequestStore.getAllRequestByEmpID(String(employee.employeeCode)) || []
-    }
   } else {
-    // Nếu không tìm thấy ai có ID này
-    alert('Không tìm thấy dữ liệu nhân viên này! Vui lòng kiểm tra lại ID.')
-    router.push('/employees') // Đẩy về trang danh sách
+    alert('Không tìm thấy dữ liệu nhân viên!')
+    router.push('/employees')
   }
 })
 

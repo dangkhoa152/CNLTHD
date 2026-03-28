@@ -8,7 +8,7 @@ const departmentStore = useDepartmentStore()
 const router = useRouter()
 
 onMounted(() => {
-  departmentStore.fetchDepartments(true)
+  departmentStore.fetchDepartments()
 })
 
 const formatCurrency = (value) => {
