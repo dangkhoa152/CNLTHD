@@ -6,18 +6,18 @@ export const useEmployeeStore = defineStore('employees', () => {
   const employees = ref([])
   const isLoading = ref(false)
   const query = ref({})
-
-  const usedepartment = useDepartmentStore()
-  const departments = computed(() => usedepartment.departments)
-
   const selectedDepartment = ref('')
-
   const sortColumn = ref('')
   const sortOrder = ref('asc')
+
   // Lưu data vào LocalStorage
   function saveToLocal() {
     if (process.client) {
       localStorage.setItem('hrm_employees', JSON.stringify(employees.value))
+      
+      // 👉 GỌI STORE PHÒNG BAN TẠI ĐÂY (An toàn, không bị lỗi Circular Dependency)
+      const deptStore = useDepartmentStore()
+      deptStore.syncEmployeeCounts(employees.value)
     }
   }
   // fetch data
@@ -126,15 +126,6 @@ export const useEmployeeStore = defineStore('employees', () => {
     }
 
     employees.value.unshift(item)
-    // Update quantity for department store
-    const currentDeptName = item.history[0]?.department
-    if (currentDeptName) {
-      const deptToUpdate = departments.value.find(dept => dept.name === currentDeptName)
-      if (deptToUpdate) {
-        deptToUpdate.totalEmployee += 1
-        usedepartment.saveToLocal()
-      }
-    }
 
     saveToLocal()
     return item
@@ -175,21 +166,6 @@ export const useEmployeeStore = defineStore('employees', () => {
 
       // Thêm chức vụ mới lên vị trí đầu tiên của mảng history
       emp.history.unshift(newHistoryRecord)
-
-      // BƯỚC C: Cập nhật số lượng nhân sự của các phòng ban (Nếu chuyển phòng)
-      if (newDept !== currentDept) {
-        // Giảm 1 người ở phòng cũ
-        const oldDeptObj = departments.value.find(d => d.name === currentDept)
-        if (oldDeptObj && oldDeptObj.totalEmployee > 0) {
-          oldDeptObj.totalEmployee -= 1
-        }
-        // Tăng 1 người ở phòng mới
-        const newDeptObj = departments.value.find(d => d.name === newDept)
-        if (newDeptObj) {
-          newDeptObj.totalEmployee += 1
-        }
-        usedepartment.saveToLocal() // Lưu lại store phòng ban
-      }
     }
     // Cập nhật các thông tin cơ bản khác (Tên, SĐT, Email...)
     const { department, position, departmentId, history, ...basicInfoPatch } = patch
@@ -208,16 +184,8 @@ export const useEmployeeStore = defineStore('employees', () => {
 
     employees.value = employees.value.filter(emp => emp.id !== id)
 
-    // Cập nhật số lượng sang Store Phòng ban
-    if (targetDeptName) {
-      const deptToUpdate = departments.value.find(dept => dept.name === targetDeptName)
-      if (deptToUpdate && deptToUpdate.totalEmployee > 0) {
-        deptToUpdate.totalEmployee -= 1
-        usedepartment.saveToLocal()
-      }
-    }
-
-
+=======
+>>>>>>> ea7474fbf7b3d26e3ffde5b87a66253818069fcd
     saveToLocal()
   }
 

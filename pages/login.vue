@@ -72,18 +72,19 @@ async function handleLogin() {
     return
   }
 
+  const userName = auth.user?.name || 'Admin HR'
+
+  await activityStore.fetchActivities()
+
+  // 1. Lưu vào Widget Dashboard
   dashboard.addActivity({
     type: 'login',
     title: 'Đăng nhập hệ thống',
     user: userName
   })
 
-  activityStore.logActivity(
-    'login', 
-    'Đăng nhập hệ thống', 
-    'Hệ thống', 
-    userName
-  )
+  // 2. Lưu vào Lịch sử hoạt động tổng (Activity Store)
+  activityStore.logActivity('login', 'Đăng nhập hệ thống', 'Hệ thống', userName)
 
   toast.success(result.message)
   await navigateTo('/')
