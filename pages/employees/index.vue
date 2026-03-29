@@ -15,23 +15,10 @@
     @reset="handleResetFilters" />
 
   <div class="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
-      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Tổng nhân viên</div>
-      <div class="text-2xl text-blue-500 dark:text-blue-300 font-bold">{{ filtered.length }}</div>
-    </div>
-    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
-      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Đang làm việc</div>
-      <div class="text-2xl text-green-500 dark:text-green-300 font-bold">{{ countFilteredStatus("Đang làm việc") }}
-      </div>
-    </div>
-    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
-      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Nghỉ phép</div>
-      <div class="text-2xl text-yellow-500 dark:text-yellow-300 font-bold">{{ countFilteredStatus("Nghỉ phép") }}</div>
-    </div>
-    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
-      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Nghỉ việc</div>
-      <div class="text-2xl text-red-500 dark:text-red-300 font-bold">{{ countFilteredStatus("Đã nghỉ việc") }}</div>
-    </div>
+    <StatCard title="Tổng nhân viên" :value="filtered.length" :subtitle="subTitle" :color="'blue'"/> 
+    <StatCard title="Đang làm việc" :value="countFilteredStatus('Đang làm việc')" :subtitle="''" :color="'green'"/>
+    <StatCard title="Đã nghỉ việc" :value="countFilteredStatus('Đã nghỉ việc')" :subtitle="''" :color="'red'"/>
+    <StatCard title="Nghỉ phép" :value="countFilteredStatus('Nghỉ phép')" :subtitle="''" :color="'yellow'"/>
   </div>
 
   <EmployeeTable 
@@ -66,6 +53,7 @@ import Pagination from '~/components/common/Pagination.vue'
 import EmployeeForm from '~/components/employees/EmployeeForm.vue'
 import ConfirmModal from '~/components/common/ConfirmModal.vue'
 import { useEmployeeStore } from '~/stores/employeeStore'
+import StatCard from '~/components/dashboard/StatCard.vue'
 const router = useRouter()
 const route = useRoute()
 const dashboard = useDashboardStore()
@@ -79,6 +67,7 @@ const formVisible = ref(false)
 const isEdit = ref(false)
 const formItem = ref(null as any | null)
 const isConfirmOpen = ref(false)
+const subTitle = ref('')
 
 // Tải dữ liệu nhân viên khi component được mounted
 onMounted(async () => {
@@ -111,14 +100,10 @@ const {
   visiblePages
 } = usePagination(filtered, 12)
 
-// sorting
-function handleSort(column: string) {
-  employeeStore.setSort(column)
-}
-
 // Cập nhật filter trong store khi filter component thay đổi
 function onFilter(payload: any) {
   employeeStore.setFilter(payload)
+  subTitle.value = payload.department ? `của ${payload.department}` : 'của tất cả phòng ban'
 }
 
 // Hàm đếm số lượng đơn theo trạng thái
@@ -127,7 +112,6 @@ function countFilteredStatus(s: string) {
 }
 //
 function handleResetFilters() {
-  // 1. Xóa dữ liệu lọc trong Store (Bảng sẽ tự động hiển thị lại toàn bộ)
   employeeStore.clearFilter()
   employeeStore.selectedDepartment = ''
   router.replace({ query: {} })
@@ -159,8 +143,8 @@ function update(payload: any) {
     if (!payload || !payload.id) return
     employeeStore.updateEmployee(payload.id, payload.patch || {})
     selected.value = null;
-    logUpdate(payload)
     closeForm()
+    logUpdate(payload)
   }
 }
 
@@ -186,9 +170,9 @@ function create(payload: any) {
   if (formVisible.value) {
     if (!payload) return
     employeeStore.addEmployee(payload)
-    logCreate(payload)
     closeForm()
-  }
+    logCreate(payload)
+  }   
 }
 // Đóng form tạo/sửa thông tin nhân viên
 function closeForm() {
@@ -210,12 +194,6 @@ function handleDeleteClick(item: any) {
   formItem.value = item;
 }
 
-// function deleteEmp(item: any){
-//   if (!item || !item.id) return
-//   employeeStore.deleteEmployee(item.id)
-//   logDelete()
-// }
-// Ghi log hoạt động khi xóa nhân viên (chuyển trạng thái = nghỉ việc)
 function logDelete() {
   setTimeout(() => {
     const targetName = formItem.value?.name || "Một nhân viên"

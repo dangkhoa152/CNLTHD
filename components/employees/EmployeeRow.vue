@@ -21,7 +21,7 @@
 const props = defineProps({ item: { type: Object, required: true }})
 function statusClass(s) {
   if (s === 'Đang làm việc') return 'text-green-700 dark:text-green-300'
-  if (s === 'Nghỉ việc') return 'text-red-700 dark:text-red-300'
+  if (s === 'Đã nghỉ việc') return 'text-red-700 dark:text-red-300'
   return 'text-yellow-700 dark:text-yellow-300'
 }
 </script>

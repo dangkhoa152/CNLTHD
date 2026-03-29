@@ -4,12 +4,11 @@
       <input type="checkbox" :checked="selected" @change="$emit('toggle-select', item.id, $event.target.checked)" />
     </td>
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.id }}</td>
-    <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.employeeName }}</td>
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.employeeCode }}</td>
+    <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.employeeName }}</td>
     <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.department }}</td>
-    <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.fromDate }} → {{ item.toDate }}</td>
-    <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.days }}</td>
-    <td class="px-4 py-2 truncate max-w-xs text-gray-900 dark:text-gray-100">{{ item.reason }}</td>
+    <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.fromDate }}</td>
+    <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ item.toDate }}</td>
     <td class="px-4 py-2">
       <span :class="statusClass(item.status)" class="px-2 py-1 rounded text-sm text-center">{{ item.status }}</span>
     </td>
@@ -26,7 +25,7 @@
 const props = defineProps({ item: { type: Object, required: true }, selected: { type: Boolean, default: false } })
 function statusClass(s) {
   if (s === 'Đã duyệt') return 'text-green-700 dark:text-green-300'
-  if (s === 'Đã từ chối') return 'text-red-700 dark:text-red-300'
+  if (s === 'Từ chối') return 'text-red-700 dark:text-red-300'
   return 'text-yellow-700 dark:text-yellow-300'
 }
 </script>

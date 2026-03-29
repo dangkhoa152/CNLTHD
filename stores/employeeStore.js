@@ -14,8 +14,6 @@ export const useEmployeeStore = defineStore('employees', () => {
   function saveToLocal() {
     if (process.client) {
       localStorage.setItem('hrm_employees', JSON.stringify(employees.value))
-      
-      // 👉 GỌI STORE PHÒNG BAN TẠI ĐÂY (An toàn, không bị lỗi Circular Dependency)
       const deptStore = useDepartmentStore()
       deptStore.syncEmployeeCounts(employees.value)
     }
@@ -178,14 +176,8 @@ export const useEmployeeStore = defineStore('employees', () => {
   function deleteEmployee(id) {
     const empToDelete = employees.value.find(emp => emp.id === id)
     if (!empToDelete) return
-
-    // Móc tên phòng ban từ history ra để trừ số lượng
-    const targetDeptName = empToDelete.history?.[0]?.department
-
     employees.value = employees.value.filter(emp => emp.id !== id)
 
-=======
->>>>>>> ea7474fbf7b3d26e3ffde5b87a66253818069fcd
     saveToLocal()
   }
 
@@ -199,42 +191,41 @@ export const useEmployeeStore = defineStore('employees', () => {
   }
 
   const sortedEmployees = computed(() => {
-  // Bước 1: Lấy kết quả ĐÃ LỌC từ searchEmployees
-  // Dùng toán tử spread [...] để tạo mảng mới, tránh làm hỏng mảng gốc
-  const result = [...searchEmployees.value];
+    // Bước 1: Lấy kết quả ĐÃ LỌC từ searchEmployees
+    const result = [...searchEmployees.value];
 
-  // Bước 2: Nếu không có yêu cầu sắp xếp, trả về kết quả lọc luôn
-  if (!sortColumn.value) return result;
+    // Bước 2: Nếu không có yêu cầu sắp xếp, trả về kết quả lọc luôn
+    if (!sortColumn.value) return result;
 
-  // Bước 3: Tiến hành sắp xếp trên mảng đã copy
-  result.sort((a, b) => {
-    const getValue = (emp, col) => {
-      if (col === 'department' || col === 'position') {
-        return emp.history?.[0]?.[col] || '';
-      }
-      return emp[col] || '';
-    };
+    // Bước 3: Tiến hành sắp xếp trên mảng đã copy
+    result.sort((a, b) => {
+      const getValue = (emp, col) => {
+        if (col === 'department' || col === 'position') {
+          return emp.history?.[0]?.[col] || '';
+        }
+        return emp[col] || '';
+      };
 
-    let valueA = getValue(a, sortColumn.value);
-    let valueB = getValue(b, sortColumn.value);
+      let valueA = getValue(a, sortColumn.value);
+      let valueB = getValue(b, sortColumn.value);
 
-    // Xử lý so sánh chuỗi không phân biệt hoa thường
-    if (typeof valueA === 'string') valueA = valueA.toLowerCase();
-    if (typeof valueB === 'string') valueB = valueB.toLowerCase();
+      // Xử lý so sánh chuỗi không phân biệt hoa thường
+      if (typeof valueA === 'string') valueA = valueA.toLowerCase();
+      if (typeof valueB === 'string') valueB = valueB.toLowerCase();
 
-    if (valueA < valueB) return sortOrder.value === 'asc' ? -1 : 1;
-    if (valueA > valueB) return sortOrder.value === 'asc' ? 1 : -1;
-    return 0;
+      if (valueA < valueB) return sortOrder.value === 'asc' ? -1 : 1;
+      if (valueA > valueB) return sortOrder.value === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    return result;
   });
-
-  return result;
-});
 
   // get employee by id
   function getEmployeeById(id) {
     const numericId = Number(id)
     return employees.value.filter(emp => emp.id === numericId)
-  } 
+  }
   // Trả ra các biến và hàm để Component sử dụng
   return {
     employees,

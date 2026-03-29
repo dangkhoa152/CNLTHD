@@ -8,28 +8,26 @@
     </div>
   </div>
 
-  <LeaveRequestFilter :departments="departments" @filter-changed="onFilter" />
+  <LeaveRequestFilter :departments="departments" @filter-changed="onFilter" @reset="handleResetFilters" />
 
   <div class="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
-      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Tổng đơn</div>
-      <div class="text-2xl text-blue-500 dark:text-blue-300 font-bold">{{ filtered.length }}</div>
-    </div>
-    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
-      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Chờ duyệt</div>
-      <div class="text-2xl text-yellow-500 dark:text-yellow-300 font-bold">{{ countFilteredStatus("Chờ duyệt") }}</div>
-    </div>
-    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
-      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Đã duyệt</div>
-      <div class="text-2xl text-green-500 dark:text-green-300 font-bold">{{ countFilteredStatus("Đã duyệt") }}</div>
-    </div>
-    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow-sm">
-      <div class="text-sm text-gray-500 dark:text-gray-300 font-bold">Đã từ chối</div>
-      <div class="text-2xl text-red-500 dark:text-red-300 font-bold">{{ countFilteredStatus("Từ chối") }}</div>
-    </div>
+    <StatCard title="Tổng đơn" :value="filtered.length" :subtitle="''" :color="'blue'"/>
+    <StatCard title="Chờ duyệt" :value="countFilteredStatus('Chờ duyệt')" :subtitle="''" :color="'yellow'"/>
+    <StatCard title="Đã duyệt" :value="countFilteredStatus('Đã duyệt')" :subtitle="''" :color="'green'"/>
+    <StatCard title="Từ chối" :value="countFilteredStatus('Từ chối')" :subtitle="''" :color="'red'"/>
   </div>
 
-  <LeaveRequestTable :items="paginatedList" @view="open" @edit="openEdit" @delete="handleDeleteClick" @bulk-approve="handleBulkApprove" @bulk-reject="handleBulkReject" />
+  <LeaveRequestTable 
+    :items="paginatedList" 
+    :sortColumn="leaveStore.sortColumn"
+    :sortOrder="leaveStore.sortOrder"
+    @view="open" 
+    @edit="openEdit" 
+    @delete="handleDeleteClick" 
+    @bulk-approve="handleBulkApprove" 
+    @bulk-reject="handleBulkReject" 
+    @sort="leaveStore.setSort"
+  />
 
   <Pagination 
       :current-page="currentPage"
@@ -67,6 +65,7 @@ import LeaveRequestForm from '~/components/leaveRequests/LeaveRequestForm.vue'
 import { useLeaveRequestStore } from '~/stores/leaveRequestStore'
 import ConfirmModal from '~/components/common/ConfirmModal.vue'
 import Pagination from '~/components/common/Pagination.vue'
+import StatCard from '~/components/dashboard/StatCard.vue'
 // import { useActivityStore } from '~/stores/activityStore'
 
 const dashboard = useDashboardStore()
@@ -88,10 +87,9 @@ const departments = computed(() => {
 })
 
 // filtered list lấy trực tiếp từ store (unwrap value để reactive đúng)
-const filtered = computed(() => leaveStore.searchLeaveRequest)
-// Lấy danh sách đơn nghỉ phép đã được duyệt để truyền vào component lịch
-const approvedLeaves = computed(() => leaveStore.leaveRequests.filter((i: any) => i.status === 'Đã duyệt'))
-// Khai báo pagination dựa trên filtered
+const filtered = computed(() => leaveStore.sortedLeaveRequests)
+
+// Khai báo pagination
 const {
   currentPage,
   totalPages,
@@ -113,6 +111,13 @@ onMounted(async () => {
 function onFilter(payload: any) {
   leaveStore.setFilter(payload)
 }
+
+function handleResetFilters() {
+  leaveStore.clearFilter()
+  leaveStore.sortColumn = ''
+  leaveStore.sortOrder =''
+}
+
 // Hàm đếm số lượng đơn theo trạng thái
 function countFilteredStatus(s: string) {
   return filtered.value.filter((i: any) => i.status === s).length
@@ -178,6 +183,16 @@ function create(payload: any) {
   formVisible.value = false
   toast.success('Tạo đơn thành công!')
   closeForm()
+  logCreate()
+}
+
+function logCreate(){
+  setTimeout(() => {
+    const targetName = formItem.value?.employeeName || 'một nhân viên'
+    const userName = (auth.user as any)?.name || 'Admin HR'
+    dashboard.addActivity({ type: 'add', title: `Tạo đơn nghỉ phép cho ${targetName}`, user: userName })
+    activityStore.logActivity('add', 'Tạo đơn xin nghỉ', targetName)
+  }, 50)
 }
 // Đóng form tạo/sửa đơn nghỉ phép
 function closeForm() {

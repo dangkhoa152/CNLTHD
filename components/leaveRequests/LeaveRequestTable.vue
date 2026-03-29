@@ -10,17 +10,26 @@
         <tr>
           <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200"><input type="checkbox" :checked="allSelected" @change="toggleAll($event.target.checked)" /></th>
           <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">ID</th>
-          <th @click="$emit('sort', 'employeeName')" class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors">
+          <th @click="$emit('sort', 'employeeCode')" class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors">
             <div class="flex gap-1">
-              Người xin
-              <SortIcon column="employeeName" :sortColumn="sortColumn" :sortOrder="sortOrder || ''"/>
+              Mã nhân viên
+              <SortIcon column="employeeCode" :sortColumn="sortColumn" :sortOrder="sortOrder || ''"/>
             </div>
           </th>
-          <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Mã nhân viên</th>
+          <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Tên nhân viên</th>
           <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Phòng ban</th>
-          <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Ngày</th>
-          <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Số ngày</th>
-          <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Lý do</th>
+          <th @click="$emit('sort', 'fromDate')" class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors">
+            <div class="flex gap-1">
+              Ngày bắt dầu
+              <SortIcon column="fromDate" :sortColumn="sortColumn" :sortOrder="sortOrder || ''"/>
+            </div>
+          </th>
+          <th @click="$emit('sort', 'toDate')" class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors">
+            <div class="flex gap-1">
+              Ngày kết thúc
+              <SortIcon column="toDate" :sortColumn="sortColumn" :sortOrder="sortOrder || ''"/>
+            </div>
+          </th>
           <th class="text-left px-4 py-2 text-gray-700 dark:text-gray-200">Trạng thái</th>
           <th class="px-4 py-2 text-gray-700 dark:text-gray-200">Hành động</th>
         </tr>
@@ -37,7 +46,7 @@
           @toggle-select="toggleSelect"
         />
         <tr v-if="items.length===0">
-          <td class="px-4 py-6 text-center" colspan="9">Không có dữ liệu</td>
+          <td class="px-4 py-6 text-center" colspan="8">Không có dữ liệu</td>
         </tr>
       </tbody>
     </table>
@@ -46,9 +55,14 @@
 
 <script setup>
 import LeaveRequestRow from './LeaveRequestRow.vue'
+import SortIcon from '../common/SortIcon.vue'
 //Khởi tạo props để nhận dữ liệu từ component cha và định nghĩa các sự kiện để giao tiếp với component cha
-const props = defineProps({ items: { type: Array, default: () => [] } })
-const emit = defineEmits(['view','edit','delete','bulk-approve','bulk-reject','selection-changed'])
+const props = defineProps({ 
+  items: { type: Array, default: () => [] }, 
+  sortColumn: { type: String, default: '' },
+  sortOrder: { type: String, default: '' }
+})
+const emit = defineEmits(['view','edit','delete','bulk-approve','bulk-reject','selection-changed', 'sort'])
 
 import { ref, computed } from 'vue'
 
