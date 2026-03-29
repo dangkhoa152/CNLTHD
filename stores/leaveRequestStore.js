@@ -3,10 +3,8 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     const leaveRequests = ref([])
     const loading = ref(false)
     const query = ref({})
-
-    const dashboard = useDashboardStore()
-    const auth = useAuthStore()
-    const activityStore = useActivityStore()
+    const sortColumn = ref('')
+    const sortOrder = ref('asc')
 
     function saveToLocal() {
         if (process.client) {
@@ -64,9 +62,6 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
             // Thêm vào đầu danh sách
             leaveRequests.value.unshift(item)
             saveToLocal()
-            const userName = auth.user.name || 'Admin HR';
-            dashboard.addActivity({ type: 'add', title: `Tạo đơn nghỉ phép cho ${payload.employeeName}`, user: userName })
-            activityStore.logActivity('add', 'Tạo đơn xin nghỉ', payload.employeeName)
             return item
         }
         catch (error) {
@@ -156,7 +151,52 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         return leaveRequests.value.filter(item => String(item.employeeCode) === String(empID))
     }
 
-    const total = computed(() => leaveRequests.value.length)
+    function setSort(column) {
+        if (sortColumn.value === column) {
+            sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
+        } else {
+            sortColumn.value = column
+            sortOrder.value = 'asc'
+        }
+    }
+
+    const sortedLeaveRequests = computed(() => {
+        const result = [...searchLeaveRequest.value];
+        if (!sortColumn.value) return result;
+
+        return result.sort((a, b) => {
+            let valA, valB;
+            switch (sortColumn.value) {
+                case 'employeeCode':
+                    valA = a.employeeCode || '';
+                    valB = b.employeeCode || '';
+                    break;
+                case 'fromDate':
+                    // Chuyển string ngày tháng về số (Timestamp) để so sánh chính xác
+                    valA = a.fromDate ? new Date(a.fromDate).getTime() : 0;
+                    valB = b.fromDate ? new Date(b.fromDate).getTime() : 0;
+                    break;
+                case 'toDate':
+                    valA = a.toDate ? new Date(a.toDate).getTime() : 0;
+                    valB = b.toDate ? new Date(b.toDate).getTime() : 0;
+                    break;
+                default:
+                    return 0;
+            }
+            if (typeof valA === 'string' && typeof valB === 'string') {
+                valA = valA.toLowerCase();
+                valB = valB.toLowerCase();
+            } else {
+                valA = new String(valA);
+                valB = new String(valB);
+            }
+
+            if (valA < valB) return sortOrder.value === 'asc' ? -1 : 1;
+            if (valA > valB) return sortOrder.value === 'asc' ? 1 : -1;
+            return 0;
+        });
+    });
+
 
     return {
         leaveRequests,
@@ -164,6 +204,8 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         loadDataFromLocal,
         searchLeaveRequest,
         query,
+        sortColumn,
+        sortOrder,
         setFilter,
         clearFilter,
         fetchLeaveRequests,
@@ -174,7 +216,8 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         approveLeaveRequest,
         rejectLeaveRequest,
         bulkUpdateStatus,
-        total,
-        getAllRequestByEmpID
+        getAllRequestByEmpID,
+        setSort,
+        sortedLeaveRequests
     }
 })

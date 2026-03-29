@@ -23,7 +23,7 @@
         <option value="">Tất cả trạng thái</option>
         <option value="Chờ duyệt">Chờ duyệt</option>
         <option value="Đã duyệt">Đã duyệt</option>
-        <option value="Đã từ chối">Đã từ chối</option>
+        <option value="Từ chối">Đã từ chối</option>
       </select>
     </div>
     <!-- Dropdown phòng ban -->
@@ -54,7 +54,7 @@
     const props = defineProps({
         departments: { type: Array, default: () => [] }
     })
-    const emit = defineEmits(['filter-changed'])
+    const emit = defineEmits(['filter-changed', 'reset'])
 
     const query = ref('')
     const status = ref('')
@@ -69,6 +69,7 @@
         status.value = ''
         department.value = ''
         emitFilter()
+        emit('reset')
     }
 </script>
 

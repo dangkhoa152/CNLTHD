@@ -4,7 +4,7 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6 z-10">
       <div class="flex items-start justify-between mb-4">
         <div>
-          <h3 class="text-lg font-semibold text-blue-900 dark:text-white">Chi tiết đơn {{ item.id }}</h3>
+          <h3 class="text-lg font-semibold text-blue-900 dark:text-white">Chi tiết đơn nghỉ phép: {{ item.id }}</h3>
           <div class="text-sm text-gray-500 dark:text-gray-400">{{ item.employeeName }} — {{ item.employeeCode }}</div>
         </div>
         <div class="flex items-center gap-3">
@@ -119,7 +119,7 @@
     function badgeClass(s){
       if(!s) return 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
       if(s==='Đã duyệt') return 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200'
-      if(s==='Đã từ chối') return 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
+      if(s==='Từ chối') return 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200'
       return 'bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200'
     }
 </script>

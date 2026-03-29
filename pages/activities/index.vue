@@ -114,7 +114,7 @@ const getTypeText = (type) => {
         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
           <tr v-for="log in sortedActivities" :key="log.id" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
             <td class="px-5 py-4 whitespace-nowrap text-base text-gray-700 dark:text-gray-300 font-mono">
-              {{ getNowString(log.time) }}
+              {{ log.time }}
             </td>
             <td class="px-5 py-4 whitespace-nowrap text-base font-semibold text-gray-900 dark:text-white">
               {{ log.user }}

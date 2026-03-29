@@ -40,7 +40,7 @@
     <!-- Nút xóa bộ lọc -->
     <div>
       <button 
-        @click="$emit('reset')" 
+        @click="resetFilters" 
         class="bg-red-100 dark:bg-red-900 
       text-red-700 dark:text-red-200 px-4 py-2 rounded"
       >
@@ -64,6 +64,14 @@
     // Hàm gửi sự kiện khi có thay đổi trong bộ lọc
     function emitFilter() {
         emit('filter-changed', { query: query.value, status: status.value, department: department.value })
+    }
+
+    function resetFilters() {
+      query.value = ''
+      status.value = ''
+      department.value = ''
+      emitFilter()
+      emit('reset')
     }
 
 </script>
