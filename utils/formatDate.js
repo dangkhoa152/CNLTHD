@@ -1,10 +1,6 @@
 function getNowString(dateString) {
     let date;
-    if (dateString === '') {
-        date = new Date()
-    } else {
-        date = new Date(dateString)
-    }
+    date = dateString === '' ? new Date() : new Date(dateString)
     const yyyy = date.getFullYear()
     const mm = String(date.getMonth() + 1).padStart(2, '0')
     const dd = String(date.getDate()).padStart(2, '0')
@@ -16,3 +12,4 @@ function getNowString(dateString) {
      return `${yyyy}-${mm}-${dd}`
     }
 }
+export default getNowString;

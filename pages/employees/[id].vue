@@ -83,8 +83,9 @@
         <table v-else class="w-full text-left text-sm border-collapse">
           <thead class="bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-b dark:border-gray-700">
             <tr>
-              <th class="p-4 font-medium text-left">Ngày nộp </th>
-              <th class="p-4 font-medium">Thời gian nghỉ</th>
+              <th class="p-4 font-medium text-left">Ngày gửi</th>
+              <th class="p-4 font-medium">Thời gian</th>
+              <th class="p-4 font-medium">Lý do</th>
               <th class="p-4 font-medium text-right">Trạng thái</th>
             </tr>
           </thead>
@@ -95,7 +96,11 @@
               </td>
               <td class="p-4 text-gray-600 dark:text-gray-300">
                 {{ getNowString(leave.fromDate) }}
-                <span class="text-xs text-gray-400 dark:text-gray-500">đến</span> {{ getNowString(leave.toDate) }}
+                <span class="text-xs text-gray-400 dark:text-gray-500"> đến </span> 
+                {{ getNowString(leave.toDate) }}
+              </td>
+              <td class="p-4 text-gray-600 dark:text-gray-300">
+                {{ leave.reason }}  
               </td>
               <td class="p-4 text-right">
                 <span 
