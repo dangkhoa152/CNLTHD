@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import getNowString from '~/utils/formatDate'
-
+import { ref, computed } from 'vue'
+import { useDepartmentStore } from './departmentStore'
 
 export const useEmployeeStore = defineStore('employees', () => {
   const employees = ref([])
