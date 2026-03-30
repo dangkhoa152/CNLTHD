@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 import getNowString from '~/utils/formatDate'
 export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     const leaveRequests = ref([])
@@ -98,7 +100,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     function rejectLeaveRequest(id, reason = '', approver = '') {
         const it = leaveRequests.value.find(i => i.id === id)
         if (it) {
-            it.status = 'Đã từ chối'
+            it.status = 'Từ chối'
             it.rejectedBy = approver
             it.rejectedAt = getNowString('')
             if (reason) it.rejectionReason = reason
@@ -114,7 +116,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
                 if (status === 'Đã duyệt') {
                     it.approvedBy = by
                     it.approvedAt = getNowString('')
-                } else if (status === 'Đã từ chối') {
+                } else if (status === 'Từ chối') {
                     it.rejectedBy = by
                     it.rejectedAt = getNowString('')
                 }
