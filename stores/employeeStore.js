@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
-import getNowString from '~/utils/formatDate'
 import { ref, computed } from 'vue'
+import getNowString from '~/utils/formatDate'
 import { useDepartmentStore } from './departmentStore'
+import { loadOrFetchArray, saveLocalStorageJSON } from '~/utils/persistence'
+import { toggleSortColumn } from '~/utils/dataHelpers'
 
 export const useEmployeeStore = defineStore('employees', () => {
   const employees = ref([])
@@ -14,7 +16,7 @@ export const useEmployeeStore = defineStore('employees', () => {
   // Lưu data vào LocalStorage
   function saveToLocal() {
     if (process.client) {
-      localStorage.setItem('hrm_employees', JSON.stringify(employees.value))
+      saveLocalStorageJSON('hrm_employees', employees.value)
       const deptStore = useDepartmentStore()
       deptStore.syncEmployeeCounts(employees.value)
     }
@@ -23,19 +25,16 @@ export const useEmployeeStore = defineStore('employees', () => {
   async function fetchEmployees(forceRefresh = false) {
     isLoading.value = true
     try {
-      const saved = process.client ? localStorage.getItem('hrm_employees') : null
-
-      if (!forceRefresh && saved) {
-        const parsed = JSON.parse(saved)
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          employees.value = parsed
-          return
-        }
+      employees.value = await loadOrFetchArray(
+        'hrm_employees',
+        '/data/employees.json',
+        [],
+        forceRefresh
+      )
+      if (process.client) {
+        const deptStore = useDepartmentStore()
+        deptStore.syncEmployeeCounts(employees.value)
       }
-
-      const data = await $fetch('/data/employees.json')
-      employees.value = Array.isArray(data) ? data : []
-      saveToLocal()
     } catch (error) {
       console.error('Lỗi tải dữ liệu:', error)
     } finally {
@@ -46,9 +45,12 @@ export const useEmployeeStore = defineStore('employees', () => {
   async function resetEmployeesFromSeed() {
     isLoading.value = true
     try {
-      const data = await $fetch('/data/employees.json')
-      employees.value = Array.isArray(data) ? data : []
-      saveToLocal()
+      employees.value = await loadOrFetchArray(
+        'hrm_employees',
+        '/data/employees.json',
+        [],
+        true
+      )
     } catch (error) {
       console.error('Lỗi reset dữ liệu:', error)
     } finally {
@@ -177,18 +179,22 @@ export const useEmployeeStore = defineStore('employees', () => {
   function deleteEmployee(id) {
     const empToDelete = employees.value.find(emp => emp.id === id)
     if (!empToDelete) return
+
+    if (empToDelete.status === 'Đã nghỉ việc' && Array.isArray(empToDelete.history) && empToDelete.history.length > 0) {
+      const activeHistory = empToDelete.history.find(record => record.endDate === null) || empToDelete.history[0]
+      if (activeHistory && !activeHistory.endDate) {
+        activeHistory.endDate = getNowString('')
+      }
+    }
+
     employees.value = employees.value.filter(emp => emp.id !== id)
 
     saveToLocal()
   }
 
   function setSort(column) {
-    if (sortColumn.value === column) {
-      sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
-    } else {
-      sortColumn.value = column
-      sortOrder.value = 'asc'
-    }
+    sortOrder.value = toggleSortColumn(sortColumn.value, sortOrder.value, column)
+    sortColumn.value = column
   }
 
   const sortedEmployees = computed(() => {
@@ -225,9 +231,9 @@ export const useEmployeeStore = defineStore('employees', () => {
   // get employee by id
   function getEmployeeById(id) {
     const numericId = Number(id)
-    return employees.value.filter(emp => emp.id === numericId)
+    return employees.value.find(emp => emp.id === numericId) || null
   }
-  // Trả ra các biến và hàm để Component sử dụng
+
   return {
     employees,
     isLoading,

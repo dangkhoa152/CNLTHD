@@ -54,16 +54,16 @@ const getTypeText = (type) => {
 
 <template>
   <div class="p-6">
-    <div class="mb-6">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+    <div class="mb-6 rounded-[1.75rem] border border-gray-200 bg-white px-6 py-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+      <h2 class="text-3xl font-bold text-slate-900 dark:text-white">
         Nhật ký hoạt động hệ thống
       </h2>
-      <p class="text-gray-600 dark:text-gray-400 mt-1">
-        Theo dõi toàn bộ thao tác của quản trị viên và người dùng.
+      <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+        Theo dõi toàn bộ thao tác của quản trị viên và người dùng với bộ lọc nhanh và bảng hoạt động dễ đọc.
       </p>
     </div>
 
-    <div class="flex flex-col sm:flex-row gap-4 mb-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+    <div class="flex flex-col gap-4 mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
       
       <div class="flex flex-col">
         <label class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Lọc theo ngày</label>
@@ -99,7 +99,7 @@ const getTypeText = (type) => {
         </button>
       </div>
     </div>
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-100 dark:border-gray-700">
+    <div class="bg-white dark:bg-slate-950 rounded-[1.5rem] shadow-sm overflow-hidden border border-gray-200 dark:border-slate-800">
       <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead class="bg-gray-50 dark:bg-gray-900">
           <tr>

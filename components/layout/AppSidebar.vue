@@ -25,11 +25,12 @@
     </div>
 
     <nav class="p-4 space-y-2">
+      <div class="px-4 pb-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400 dark:text-slate-500">Điều hướng</div>
       <NuxtLink
         to="/"
         class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
-        :class="route.path === '/'
-          ? 'bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-sm'
+        :class="route.path === '/' || route.path === '/dashboard'
+          ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
         @click="$emit('close')"
       >
@@ -40,8 +41,8 @@
       <NuxtLink
         to="/employees"
         class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
-        :class="route.path === '/employees'
-          ? 'bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-sm'
+        :class="route.path === '/employees' || route.path.startsWith('/employees/')
+          ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
         @click="$emit('close')"
       >
@@ -52,8 +53,8 @@
       <NuxtLink
         to="/departments"
         class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
-        :class="route.path === '/departments'
-          ? 'bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-sm'
+        :class="route.path === '/departments' || route.path.startsWith('/departments/')
+          ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
         @click="$emit('close')"
       >
@@ -64,8 +65,8 @@
       <NuxtLink
         to="/leave-requests"
         class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
-        :class="route.path === '/leave-requests'
-          ? 'bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-sm'
+        :class="route.path === '/leave-requests' || route.path.startsWith('/leave-requests/')
+          ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
         @click="$emit('close')"
       >
@@ -76,8 +77,8 @@
       <NuxtLink
         to="/activities"
         class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
-        :class="route.path === '/activities'
-          ? 'bg-blue-50 text-blue-600 dark:bg-gray-800 dark:text-blue-400 shadow-sm'
+        :class="route.path === '/activities' || route.path.startsWith('/activities/')
+          ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
         @click="$emit('close')"
       >

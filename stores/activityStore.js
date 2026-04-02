@@ -1,38 +1,32 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import getNowString from '~/utils/formatDate'
+import { loadLocalStorageJSON, loadOrFetchArray, saveLocalStorageJSON } from '~/utils/persistence'
 
 export const useActivityStore = defineStore('activity', () => {
   const activities = ref([])
   const isLoading = ref(false)
 
   function saveToLocal() {
-    if (process.client) {
-      localStorage.setItem('hr_activities', JSON.stringify(activities.value))
-    }
+    saveLocalStorageJSON('hr_activities', activities.value)
   }
 
   function loadFromLocal() {
-    if (process.client) {
-      const saved = localStorage.getItem('hr_activities')
-      if (saved) activities.value = JSON.parse(saved)
+    const saved = loadLocalStorageJSON('hr_activities', [])
+    if (Array.isArray(saved) && saved.length > 0) {
+      activities.value = saved
     }
   }
 
-  // Hàm load dữ liệu ban đầu (gọi từ file json của nhóm nếu localStorage trống)
   const fetchActivities = async () => {
     isLoading.value = true
     try {
-      // Thử lấy từ LocalStorage trước
-      const saved = process.client ? localStorage.getItem('hr_activities') : null
-      if (saved && JSON.parse(saved).length > 0) {
-        // Nếu có dữ liệu cũ trong máy thì dùng luôn
-        activities.value = JSON.parse(saved)
-      } else {
-        const data = await $fetch('/data/activities.json')
-        activities.value = data
-        saveToLocal()
-      }
+      activities.value = await loadOrFetchArray(
+        'hr_activities',
+        '/data/activities.json',
+        [],
+        false
+      )
     } catch (error) {
       console.error("Lỗi tải dữ liệu:", error)
     } finally {
@@ -42,6 +36,10 @@ export const useActivityStore = defineStore('activity', () => {
 
   // Hàm ghi nhận hoạt động mới (Khớp 100% với JSON của bạn)
   const logActivity = (type, title, target, user = 'Admin HR') => {
+    if (activities.value.length === 0) {
+      loadFromLocal()
+    }
+
     // Tự động tăng ID (Tìm id lớn nhất hiện tại rồi + 1)
     const nextId = activities.value.length > 0
       ? Math.max(...activities.value.map(a => a.id)) + 1
@@ -60,7 +58,7 @@ export const useActivityStore = defineStore('activity', () => {
 
     // 4. Đẩy lên đầu mảng và lưu localStorage
     activities.value.unshift(newLog)
-    localStorage.setItem('hr_activities', JSON.stringify(activities.value))
+    saveToLocal()
   }
 
   return { activities, fetchActivities, logActivity }

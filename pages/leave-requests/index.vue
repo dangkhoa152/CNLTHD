@@ -1,10 +1,17 @@
 <template>
 
-  <div class="flex items-center justify-between mb-4">
-    <h1 class="text-2xl font-bold mb-4">Quản lý đơn xin nghỉ phép</h1>
-    <div class="flex items-center gap-2">
-      <button @click="toggleCalendar" class="bg-gray-200 dark:bg-gray-700 px-3 py-2 rounded">Xem lịch nghỉ</button>
-      <button @click="openCreate" class="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded">Thêm đơn</button>
+  <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-4">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Quản lý đơn xin nghỉ phép</h1>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Theo dõi, duyệt và quản lý toàn bộ đơn nghỉ phép của nhân sự.</p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <button @click="toggleCalendar" class="rounded-full border border-slate-300 px-4 py-2 text-sm text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+        Xem lịch nghỉ
+      </button>
+      <button @click="openCreate" class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+        Thêm đơn
+      </button>
     </div>
   </div>
 
@@ -46,7 +53,7 @@
     <ConfirmModal 
       :isOpen="isConfirmOpen"
       title="Xóa đơn từ"
-      message="Bạn có chắc chắn muốn xóa đơn từ này? Dữ liệu sẽ không thể khôi phục."
+      :message="`Bạn có chắc chắn muốn xóa đơn từ của nhân viên ${formItem?.employeeName || 'nhân viên này'}? Dữ liệu sẽ không thể khôi phục.`"
       confirmText="Xác nhận"
       type="danger"
       @cancel="isConfirmOpen = false"
@@ -55,7 +62,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted, computed } from 'vue'
 import {toast} from 'vue3-toastify'
 import LeaveRequestFilter from '~/components/leaveRequests/LeaveRequestFilter.vue'
@@ -74,16 +81,16 @@ const activityStore = useActivityStore()
 // store-based state
 const leaveStore = useLeaveRequestStore()
 // sử dụng filter từ store: chỉ cần thay đổi filter ở component là store tự lọc
-const selected = ref(null as any | null)
+const selected = ref(null)
 const formVisible = ref(false)
-const formItem = ref(null as any | null)
+const formItem = ref(null)
 const isConfirmOpen = ref(false)
 const router = useRouter()
 // Hàm chuyển sang trang lịch nghỉ phép
 function toggleCalendar() { router.push('/leave-requests/calendar') }
 
 const departments = computed(() => {
-  return Array.from(new Set(leaveStore.leaveRequests.map((i: any) => i.department))).sort()
+  return Array.from(new Set(leaveStore.leaveRequests.map(i => i.department))).sort()
 })
 
 // filtered list lấy trực tiếp từ store (unwrap value để reactive đúng)
@@ -108,7 +115,7 @@ onMounted(async () => {
   }
 })
 // Cập nhật filter trong store khi filter component thay đổi
-function onFilter(payload: any) {
+function onFilter(payload) {
   leaveStore.setFilter(payload)
 }
 
@@ -119,11 +126,11 @@ function handleResetFilters() {
 }
 
 // Hàm đếm số lượng đơn theo trạng thái
-function countFilteredStatus(s: string) {
-  return filtered.value.filter((i: any) => i.status === s).length
+function countFilteredStatus(s) {
+  return filtered.value.filter(i => i.status === s).length
 }
 // sự kiện mở modal xem chi tiết
-function open(item: any) {
+function open(item) {
   selected.value = item
 }
 // Mở form tạo mới đơn nghỉ phép
@@ -132,32 +139,32 @@ function openCreate() {
   formVisible.value = true
 }
 // Mở form chỉnh sửa đơn nghỉ phép
-function openEdit(item: any) {
+function openEdit(item) {
   formItem.value = item
   formVisible.value = true
 }
 // Duyệt đơn
-function approve(item: any) {
+function approve(item) {
   leaveStore.approveLeaveRequest(item.id)
   selected.value = null
 
-  const userName = (auth.user as any)?.name || 'Admin HR'
+  const userName = auth.user?.name || 'Admin HR'
   dashboard.addActivity({ type: 'approve', title: `Duyệt đơn nghỉ phép của ${item.employeeName}`, user: userName })
   activityStore.logActivity('edit', 'Duyệt đơn nghỉ phép', item.employeeName)
   toast.success('Đã duyệt đơn!')
 }
 // Từ chối đơn
-function reject(item: any) {
+function reject(item) {
   leaveStore.rejectLeaveRequest(item.id)
   selected.value = null
 
-  const userName = (auth.user as any)?.name || 'Admin HR'
+  const userName = auth.user?.name || 'Admin HR'
   dashboard.addActivity({ type: 'reject', title: `Từ chối đơn nghỉ phép của ${item.employeeName}`, user: userName })
   activityStore.logActivity('edit', 'Từ chối đơn nghỉ phép', item.employeeName)
   toast.warning('Đã từ chối đơn!')
 }
 // Xác nhận trước khi xóa đơn nghỉ phép
-function handleDeleteClick(item: any) {
+function handleDeleteClick(item) {
   isConfirmOpen.value = true;
   formItem.value = item;
 }
@@ -169,7 +176,7 @@ function executeDelete() {
   logDelete()
 }
 // Gửi yêu cầu Cập nhật đơn nghỉ phép sau khi chỉnh sửa từ form modal
-function update(payload: any) {
+function update(payload) {
   if (!payload || !payload.id) return
   leaveStore.updateLeaveRequest(payload.id, payload.patch || {})
   selected.value = null
@@ -177,7 +184,7 @@ function update(payload: any) {
   closeForm()
 }
 // Gửi yêu cầu tạo đơn nghỉ phép mới từ form modal
-function create(payload: any) {
+function create(payload) {
   if (!payload) return
   leaveStore.addLeaveRequest(payload)
   formVisible.value = false
@@ -189,7 +196,7 @@ function create(payload: any) {
 function logCreate(){
   setTimeout(() => {
     const targetName = formItem.value?.employeeName || 'một nhân viên'
-    const userName = (auth.user as any)?.name || 'Admin HR'
+    const userName = auth.user?.name || 'Admin HR'
     dashboard.addActivity({ type: 'add', title: `Tạo đơn nghỉ phép cho ${targetName}`, user: userName })
     activityStore.logActivity('add', 'Tạo đơn xin nghỉ', targetName)
   }, 50)
@@ -203,7 +210,7 @@ function closeForm() {
 function logUpdate() {
   setTimeout(() => {
     const targetName = formItem.value?.employeeName || 'một nhân viên'
-    const userName = (auth.user as any)?.name || 'Admin HR' 
+    const userName = auth.user?.name || 'Admin HR' 
     dashboard.addActivity({ type: 'update', title: `Sửa đơn nghỉ phép của ${targetName}`, user: userName })
     activityStore.logActivity('edit', 'Cập nhật đơn nghỉ phép', targetName)
     toast.info(`Cập nhật thành công`)
@@ -213,17 +220,17 @@ function logUpdate() {
 function logDelete() {
   setTimeout(() => {
     const targetName = formItem.value?.employeeName || 'một nhân viên'
-    const userName = (auth.user as any)?.name || 'Admin HR'
+    const userName = auth.user?.name || 'Admin HR'
     dashboard.addActivity({ type: 'delete', title: `Đã xóa đơn nghỉ phép của ${targetName}`, user: userName })
     activityStore.logActivity('delete', 'Xóa đơn nghỉ phép', targetName)
     toast.info(`Xóa thành công`)
   }, 50)
 }
 // ghi log hoạt động khi duyệt hoặc từ chối hàng loạt đơn nghỉ phép
-function logBulkAction(action: string, count: number) {
+function logBulkAction(action, count) {
   setTimeout(() => {
     const titleText = action === 'approve' ? 'Duyệt' : 'Từ chối'
-    const userName = (auth.user as any)?.name || 'Admin HR'
+    const userName = auth.user?.name || 'Admin HR'
 
     dashboard.addActivity({ type: action, title: `${titleText} ${count} đơn nghỉ phép`, user: userName })
     activityStore.logActivity('edit', `${titleText} hàng loạt`, `${count} đơn từ`)
@@ -232,15 +239,15 @@ function logBulkAction(action: string, count: number) {
   }, 50)
 }
 // Xử lý duyệt hàng loạt
-function handleBulkApprove(ids: number[]) {
+function handleBulkApprove(ids) {
   if (!ids || ids.length === 0) return
-  leaveStore.bulkUpdateStatus(ids, 'Đã duyệt', (auth.user as any)?.name || '')
+  leaveStore.bulkUpdateStatus(ids, 'Đã duyệt', auth.user?.name || '')
   logBulkAction('approve', ids.length)
 }
 // Xử lý từ chối hàng loạt
-function handleBulkReject(ids: number[]) {
+function handleBulkReject(ids) {
   if (!ids || ids.length === 0) return
-  leaveStore.bulkUpdateStatus(ids, 'Đã từ chối', (auth.user as any)?.name || '')
+  leaveStore.bulkUpdateStatus(ids, 'Đã từ chối', auth.user?.name || '')
   logBulkAction('reject', ids.length)
 }
 </script>
