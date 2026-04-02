@@ -1,10 +1,9 @@
 <template>
-  <div class="flex justify-center mt-4 gap-2 items-center">
-    
+  <div class="flex flex-wrap items-center justify-center gap-2 mt-4">
     <button
       @click="$emit('prev')"
       :disabled="currentPage === 1"
-      class="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+      class="rounded-full border px-4 py-2 text-sm transition disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800"
     >
       ←
     </button>
@@ -15,9 +14,9 @@
       @click="typeof page === 'number' && $emit('go-to', page)"
       :disabled="page === '...'"
       :class="[
-        'px-3 py-1 border rounded transition-colors',
-        page === currentPage ? 'bg-blue-500 text-white border-blue-500' : 'hover:bg-gray-50',
-        page === '...' ? 'cursor-default border-none bg-transparent hover:bg-transparent' : ''
+        'rounded-full px-4 py-2 text-sm transition',
+        page === currentPage ? 'bg-blue-600 text-white shadow' : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800',
+        page === '...' ? 'cursor-default border-none bg-transparent text-slate-400 hover:bg-transparent' : ''
       ]"
     >
       {{ page }}
@@ -26,11 +25,10 @@
     <button
       @click="$emit('next')"
       :disabled="currentPage >= totalPages || totalPages === 0"
-      class="px-3 py-1 border rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+      class="rounded-full border px-4 py-2 text-sm transition disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800"
     >
       →
     </button>
-
   </div>
 </template>
 

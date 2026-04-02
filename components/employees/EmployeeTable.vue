@@ -1,30 +1,30 @@
 <template>
-  <div class="bg-white dark:bg-gray-800 rounded shadow-sm overflow-x-auto">
-    <table class="min-w-full divide-y">
-      <thead class="bg-gray-50 dark:bg-gray-700">
+  <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
+    <table class="min-w-full divide-y border-separate border-spacing-y-2">
+      <thead class="bg-gray-50 dark:bg-gray-700 sticky top-0 z-10">
         <tr>
-          <th class="px-4 py-2 transition-colors text-gray-700 dark:text-gray-200">ID</th>
-          <th @click="$emit('sort', 'employeeCode')" class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors">
-            <div class="flex gap-1">
+          <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">ID</th>
+          <th @click="$emit('sort', 'employeeCode')" class="px-4 py-3 cursor-pointer text-left text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            <div class="flex items-center gap-1">
               Mã nhân viên
               <SortIcon column="employeeCode" :sortColumn="sortColumn" :sortOrder="sortOrder || ''"/>
             </div>
           </th>
-          <th @click="$emit('sort', 'name')" class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors text-gray-700 dark:text-gray-200">
-            <div class="flex gap-1">
+          <th @click="$emit('sort', 'name')" class="px-4 py-3 cursor-pointer text-left text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            <div class="flex items-center gap-1">
               Tên nhân viên
               <SortIcon column="name" :sortColumn="sortColumn" :sortOrder="sortOrder || ''" />
             </div>
           </th>
-          <th class="px-4 py-2 text-center transition-colors text-gray-700 dark:text-gray-200">Phòng ban</th>
-          <th @click="$emit('sort', 'position')" class="px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors text-gray-700 dark:text-gray-200">
-            <div class="flex gap-1">
+          <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Phòng ban</th>
+          <th @click="$emit('sort', 'position')" class="px-4 py-3 cursor-pointer text-left text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            <div class="flex items-center gap-1">
               Chức vụ
               <SortIcon column="position" :sortColumn="sortColumn" :sortOrder="sortOrder || ''" />
             </div>
           </th>
-          <th class="px-4 py-2 text-center transition-colors text-gray-700 dark:text-gray-200">Trạng thái </th>
-          <th class="px-4 py-2 transition-colors text-gray-700 dark:text-gray-200">Hành động</th>
+          <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Trạng thái</th>
+          <th class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Hành động</th>
         </tr>
       </thead>
 

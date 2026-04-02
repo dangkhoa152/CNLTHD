@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useActivityStore } from './activityStore'
 import { useDashboardStore } from './dashboard'
+import { loadOrFetchArray, saveLocalStorageJSON } from '~/utils/persistence'
+import { generateNextPrefixedId } from '~/utils/dataHelpers'
 
 export const useDepartmentStore = defineStore('department', () => {
   const departments = ref([])
@@ -9,9 +11,7 @@ export const useDepartmentStore = defineStore('department', () => {
   const isLoading = ref(false)
 
   function saveToLocal() {
-    if (process.client) {
-      localStorage.setItem('hrm_departments', JSON.stringify(departments.value))
-    }
+    saveLocalStorageJSON('hrm_departments', departments.value)
   }
 
   function syncEmployeeCounts(allEmployees) {
@@ -58,15 +58,12 @@ export const useDepartmentStore = defineStore('department', () => {
   async function fetchDepartments() {
     isLoading.value = true
     try {
-      // Thử lấy từ LocalStorage trước
-      const saved = process.client ? localStorage.getItem('hrm_departments') : null
-      if (saved && JSON.parse(saved).length > 0) {
-        departments.value = JSON.parse(saved)
-      } else {
-        const data = await $fetch('/data/departments.json')
-        departments.value = data
-        saveToLocal()
-      }
+      departments.value = await loadOrFetchArray(
+        'hrm_departments',
+        '/data/departments.json',
+        [],
+        false
+      )
     } catch (error) {
       console.error("Lỗi tải dữ liệu:", error)
     } finally {
@@ -79,9 +76,7 @@ export const useDepartmentStore = defineStore('department', () => {
     const activityStore = useActivityStore()
     const dashboardStore = useDashboardStore()
 
-    await activityStore.fetchActivities()
-
-    let generateId = 'DEP01'
+    let generateId = generateNextPrefixedId(departments.value, 'DEP', 2)
 
     // Logic tạo ID tự động
     if (departments.value.length > 0) {
@@ -116,8 +111,6 @@ export const useDepartmentStore = defineStore('department', () => {
     const activityStore = useActivityStore()
     const dashboardStore = useDashboardStore()
 
-    await activityStore.fetchActivities()
-
     const index = departments.value.findIndex(d => d.id === updatedDep.id)
 
     if (index !== -1) {
@@ -126,11 +119,11 @@ export const useDepartmentStore = defineStore('department', () => {
         : departments.value[index].position || []
 
       departments.value[index] = {
-        ...departments.value[index], // Giữ lại những thông tin cũ (nếu UI không gửi lên)
-        ...updatedDep,               // Ghi đè bằng toàn bộ thông tin mới từ form
-        position: positionsArray     // Chốt lại mảng position an toàn
+        ...departments.value[index],
+        ...updatedDep,
+        position: positionsArray
       }
-      saveToLocal() // Cập nhật lại LocalStorage
+      saveToLocal()
 
       activityStore.logActivity('edit', 'Cập nhật phòng ban', updatedDep.name)
       dashboardStore.addActivity({
@@ -139,7 +132,7 @@ export const useDepartmentStore = defineStore('department', () => {
         user: 'Admin HR'
       })
 
-      return normalized
+      return departments.value[index]
     }
 
     return null

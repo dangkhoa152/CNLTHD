@@ -1,10 +1,14 @@
 <template>
 
-  <div class="flex items-center justify-between mb-4">
-    <h1 class="text-2xl font-bold mb-4">Quản lý nhân viên</h1>
+  <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-4">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Quản lý nhân viên</h1>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Xem, lọc và quản lý toàn bộ nhân viên trong công ty.</p>
+    </div>
     <div class="flex items-center gap-2">
-      <button @click="openCreate" class="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded">Thêm nhân
-        viên</button>
+      <button @click="openCreate" class="inline-flex items-center justify-center rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+        Thêm nhân viên
+      </button>
     </div>
   </div>
 
@@ -44,7 +48,7 @@
   </div>
 
 </template>
-<script lang="ts" setup>
+<script setup>
 import { ref, onMounted, computed } from 'vue'
 import { toast } from 'vue3-toastify'
 import EmployeeFilter from '~/components/employees/EmployeeFilter.vue'
@@ -62,10 +66,10 @@ const activityStore = useActivityStore()
 const employeeStore = useEmployeeStore()
 const departmentStore = useDepartmentStore()
 // sử dụng filter từ store: chỉ cần thay đổi filter ở component là store tự lọc
-const selected = ref(null as any | null)
+const selected = ref(null)
 const formVisible = ref(false)
 const isEdit = ref(false)
-const formItem = ref(null as any | null)
+const formItem = ref(null)
 const isConfirmOpen = ref(false)
 const subTitle = ref('')
 
@@ -76,7 +80,7 @@ onMounted(async () => {
     await departmentStore.fetchDepartments()
     if (route.query.department) {
       // Nạp giá trị từ URL vào Store
-      employeeStore.selectedDepartment = route.query.department as string
+      employeeStore.selectedDepartment = route.query.department
     } else {
       employeeStore.selectedDepartment = ''
     }
@@ -101,14 +105,14 @@ const {
 } = usePagination(filtered, 12)
 
 // Cập nhật filter trong store khi filter component thay đổi
-function onFilter(payload: any) {
+function onFilter(payload) {
   employeeStore.setFilter(payload)
   subTitle.value = payload.department ? `của ${payload.department}` : 'của tất cả phòng ban'
 }
 
 // Hàm đếm số lượng đơn theo trạng thái
-function countFilteredStatus(s: string) {
-  return filtered.value.filter((i: any) => i.status === s).length
+function countFilteredStatus(s) {
+  return filtered.value.filter(i => i.status === s).length
 }
 //
 function handleResetFilters() {
@@ -119,7 +123,7 @@ function handleResetFilters() {
   employeeStore.sortOrder =''
 }
 // sự kiện mở modal xem chi tiết
-function open(item: any) {
+function open(item) {
   selected.value = item
   router.push(`/employees/[${item.id}]`)
 }
@@ -131,14 +135,14 @@ function openCreate() {
   isEdit.value = false
 }
 // Mở form chỉnh sửa nhân viên
-function openEdit(item: any) {
+function openEdit(item) {
   formItem.value = item
   formVisible.value = true
   isEdit.value = true
 }
 
 // Hàm sửa thông tin nhân viên
-function update(payload: any) {
+function update(payload) {
   if (formVisible.value) {
     if (!payload || !payload.id) return
     employeeStore.updateEmployee(payload.id, payload.patch || {})
@@ -149,9 +153,9 @@ function update(payload: any) {
 }
 
 // Ghi log hoạt động khi cập nhật hồ sơ nhân viên
-function logUpdate(payload: any) {
+function logUpdate(payload) {
   const targetName = formItem.value?.name || payload.name || 'Hồ sơ nhân viên'
-  const userName = (auth.user as any)?.name || 'Admin HR'
+  const userName = auth.user?.name || 'Admin HR'
 
   setTimeout(() => {
     dashboard.addActivity({ 
@@ -166,7 +170,7 @@ function logUpdate(payload: any) {
   }, 50)
 }
 
-function create(payload: any) {
+function create(payload) {
   if (formVisible.value) {
     if (!payload) return
     employeeStore.addEmployee(payload)
@@ -180,16 +184,16 @@ function closeForm() {
   formItem.value = null
 }
 // Ghi log hoạt động khi tạo nhân viên
-function logCreate(payload: any) {
+function logCreate(payload) {
   setTimeout(() => {
-    const userName = (auth.user as any)?.name || 'Admin HR'
+    const userName = auth.user?.name || 'Admin HR'
     dashboard.addActivity({ type: 'add', title: `Tạo nhân viên mới : ${payload.name}`, user: userName })
     activityStore.logActivity('add', 'Tạo hồ sơ nhân viên', payload.name)
     toast.success('Tạo thành công!')
   }, 50)
 }
 
-function handleDeleteClick(item: any) {
+function handleDeleteClick(item) {
   isConfirmOpen.value = true
   formItem.value = item;
 }
@@ -197,7 +201,7 @@ function handleDeleteClick(item: any) {
 function logDelete() {
   setTimeout(() => {
     const targetName = formItem.value?.name || "Một nhân viên"
-    const userName = (auth.user as any)?.name || 'Admin HR'
+    const userName = (auth.user)?.name || 'Admin HR'
 
     dashboard.addActivity({ type: 'delete', title: `Hồ sơ nhân viên ${targetName} đã xóa`, user: userName })
     activityStore.logActivity('delete', 'Xóa hồ sơ nhân viên', targetName)
