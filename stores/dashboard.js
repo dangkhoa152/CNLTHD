@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import getNowString from '~/utils/formatDate'
+import { loadLocalStorageJSON, saveLocalStorageJSON } from '~/utils/persistence'
 
 export const useDashboardStore = defineStore('dashboard', () => {
   const employees = ref([])
@@ -8,28 +10,14 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const activities = ref([])
   const loading = ref(false)
 
-  function getNowString() {
-    const now = new Date()
-    const yyyy = now.getFullYear()
-    const mm = String(now.getMonth() + 1).padStart(2, '0')
-    const dd = String(now.getDate()).padStart(2, '0')
-    const hh = String(now.getHours()).padStart(2, '0')
-    const mi = String(now.getMinutes()).padStart(2, '0')
-    return `${yyyy}-${mm}-${dd} ${hh}:${mi}`
-  }
-
   function saveActivitiesToLocal() {
-    if (process.client) {
-      localStorage.setItem('hrm_activities', JSON.stringify(activities.value))
-    }
+    saveLocalStorageJSON('hrm_activities', activities.value)
   }
 
   function loadActivitiesFromLocal() {
-    if (process.client) {
-      const saved = localStorage.getItem('hrm_activities')
-      if (saved) {
-        activities.value = JSON.parse(saved)
-      }
+    const saved = loadLocalStorageJSON('hrm_activities', [])
+    if (Array.isArray(saved) && saved.length > 0) {
+      activities.value = saved
     }
   }
 
@@ -77,10 +65,10 @@ export const useDashboardStore = defineStore('dashboard', () => {
       leaveRequests.value = Array.isArray(leaveData) ? leaveData : []
 
       if (process.client) {
-        const saved = localStorage.getItem('hrm_activities')
+        const saved = loadLocalStorageJSON('hrm_activities', [])
 
-        if (saved) {
-          activities.value = JSON.parse(saved)
+        if (Array.isArray(saved) && saved.length > 0) {
+          activities.value = saved
         } else {
           const activitiesData = await $fetch('/data/activities.json')
           activities.value = activitiesData

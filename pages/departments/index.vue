@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDepartmentStore } from '@/stores/departmentStore'
 import DepartmentModal from '@/components/departments/DepartmentModal.vue'
+import StatCard from '@/components/dashboard/StatCard.vue'
 
 const departmentStore = useDepartmentStore()
 const router = useRouter()
@@ -25,6 +26,10 @@ const viewEmployees = (department) => {
 const isModalOpen = ref(false)
 const selectedDept = ref(null)
 const availableEmployees = ref([])
+
+const totalDepartments = computed(() => departmentStore.departments.length)
+const totalBudget = computed(() => departmentStore.departments.reduce((sum, dep) => sum + Number(dep.budget || 0), 0))
+const totalEmployees = computed(() => departmentStore.departments.reduce((sum, dep) => sum + Number(dep.totalEmployee || 0), 0))
 
 const isEmployeeInDepartment = (emp, deptId) => {
   if (emp.departmentId === deptId) return true
@@ -93,19 +98,21 @@ const confirmDelete = async (dep) => {
 
 <template>
   <div class="p-6">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Danh sách phòng ban</h2>
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-6">
+      <div>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Danh sách phòng ban</h2>
+        <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Quản lý cơ cấu phòng ban, ngân sách và trưởng phòng một cách trực quan.</p>
+      </div>
 
-      <div class="relative">
-        <input
-          v-model="departmentStore.searchQuery"
-          type="text"
-          placeholder="Tìm tên, mã, trưởng phòng..."
-          class="pl-10 pr-4 py-2.5 text-base border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white min-w-[300px]"
-        />
-        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div class="flex-1 sm:flex-none">
+          <input
+            v-model="departmentStore.searchQuery"
+            type="text"
+            placeholder="Tìm tên, mã, trưởng phòng..."
+            class="w-full sm:w-64 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-2.5 text-base text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          />
+        </div>
 
         <button
           @click="openCreateModal"
@@ -115,6 +122,12 @@ const confirmDelete = async (dep) => {
           Thêm Mới
         </button>
       </div>
+    </div>
+
+    <div class="grid gap-4 mb-6 md:grid-cols-3">
+      <StatCard title="Tổng phòng ban" :value="totalDepartments" subtitle="Số lượng phòng ban hiện có" color="blue" />
+      <StatCard title="Tổng ngân sách" :value="formatCurrency(totalBudget)" subtitle="Ngân sách phân bổ cho phòng ban" color="green" />
+      <StatCard title="Tổng nhân sự" :value="totalEmployees" subtitle="Tổng số nhân sự trong hệ thống" color="yellow" />
     </div>
 
     <div v-if="departmentStore.isLoading" class="text-center py-10">

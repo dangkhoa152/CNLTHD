@@ -1,31 +1,38 @@
 <template>
   <div class="space-y-6">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
         Tổng quan hệ thống
       </h1>
-      <p class="mt-2 text-gray-500 dark:text-gray-400">
-        Theo dõi nhanh tình hình nhân sự của hệ thống
+      <p class="mt-2 text-slate-500 dark:text-slate-400">
+        Theo dõi nhanh tình hình nhân sự của hệ thống.
       </p>
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+        <p class="text-sm text-slate-500 dark:text-slate-400">Bảng điều khiển tổng quan cung cấp số liệu và biểu đồ quan trọng.</p>
+        <div class="flex flex-wrap gap-2">
+          <NuxtLink to="/employees" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
+            👥 Nhân viên
+          </NuxtLink>
+          <NuxtLink to="/departments" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
+            🏢 Phòng ban
+          </NuxtLink>
+          <NuxtLink to="/leave-requests" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
+            📝 Nghỉ phép
+          </NuxtLink>
+        </div>
+      </div>
     </div>
 
     <!-- Hàng 1 -->
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-      <div
+    <div class="my-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <StatCard
         v-for="card in statCards"
         :key="card.title"
-        class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900"
-      >
-        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
-          {{ card.title }}
-        </p>
-        <h2 class="mt-3 text-3xl font-bold text-gray-900 dark:text-white">
-          {{ card.value }}
-        </h2>
-        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-          {{ card.subtitle }}
-        </p>
-      </div>
+        :title="card.title"
+        :value="card.value"
+        :subtitle="card.subtitle"
+        :color="card.color"
+      />
     </div>
 
     <!-- Hàng 2 -->
@@ -36,9 +43,7 @@
           <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
             Quy mô nhân sự theo phòng ban
           </h2>
-          <span class="text-sm text-gray-500 dark:text-gray-400">
-            Bar chart
-          </span>
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">Số lượng theo phòng ban</span>
         </div>
 
         <div class="h-[340px]">
@@ -54,9 +59,7 @@
           <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
             Trạng thái duyệt đơn
           </h2>
-          <span class="text-sm text-gray-500 dark:text-gray-400">
-            Pie chart
-          </span>
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">Tỷ lệ trạng thái nghỉ phép</span>
         </div>
 
         <div class="h-[340px]">
@@ -162,11 +165,11 @@
 import { storeToRefs } from 'pinia'
 import { Bar, Pie, Radar } from 'vue-chartjs'
 import { Chart as ChartJS, registerables } from 'chart.js'
-
 import { useEmployeeStore } from '~/stores/employeeStore'
 import { useDepartmentStore } from '~/stores/departmentStore'
 import { useLeaveRequestStore } from '~/stores/leaveRequestStore'
 import { useActivityStore } from '~/stores/activityStore'
+import StatCard from '@/components/dashboard/StatCard.vue'
 
 ChartJS.register(...registerables)
 
@@ -280,7 +283,7 @@ const isDateInRange = (target, start, end) => {
 
 const toNumber = (value) => {
   if (typeof value === 'number') return value
-  const cleaned = String(value ?? '0').replace(/[^\d.-]/g, '')
+  const cleaned = String(value ?? '0').replace(/[^//d.-]/g, '')
   return Number(cleaned || 0)
 }
 
@@ -356,22 +359,26 @@ const statCards = computed(() => [
   {
     title: 'Tổng nhân viên',
     value: totalEmployees.value.toLocaleString('vi-VN'),
-    subtitle: 'Từ employee store'
+    subtitle: '+5 nhân viên so với tháng trước',
+    color: 'blue'
   },
   {
     title: 'Tổng ngân sách',
     value: formatCurrency(totalBudget.value),
-    subtitle: 'Tổng budget từ department store'
+    subtitle: 'Tăng 10% so với tháng trước',
+    color: 'green'
   },
   {
     title: 'Tổng đơn chờ duyệt',
     value: pendingRequestsToday.value.toLocaleString('vi-VN'),
-    subtitle: `Trong ngày ${todayYMD.value}`
+    subtitle: `Trong ngày ${todayYMD.value}`,
+    color: 'yellow'
   },
   {
     title: 'Số nhân viên đang nghỉ phép',
     value: employeesOnLeaveToday.value.toLocaleString('vi-VN'),
-    subtitle: 'Đơn đã duyệt và còn hiệu lực hôm nay'
+    subtitle: 'Đơn đã duyệt và còn hiệu lực hôm nay',
+    color: 'red'
   }
 ])
 

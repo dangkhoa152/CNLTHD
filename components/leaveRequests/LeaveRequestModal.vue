@@ -1,17 +1,20 @@
 <template>
-    <div v-if="item" class="fixed inset-0 z-50 flex items-center justify-center">
-    <div class="absolute inset-0 bg-black opacity-40" @click="$emit('close')"></div>
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl p-6 z-10">
-      <div class="flex items-start justify-between mb-4">
-        <div>
-          <h3 class="text-lg font-semibold text-blue-900 dark:text-white">Chi tiết đơn nghỉ phép: {{ item.id }}</h3>
-          <div class="text-sm text-gray-500 dark:text-gray-400">{{ item.employeeName }} — {{ item.employeeCode }}</div>
+    <div v-if="item" class="fixed inset-0 z-50 flex items-center justify-center px-4 py-8">
+      <div class="absolute inset-0 bg-slate-950/40 backdrop-blur-sm" @click="$emit('close')"></div>
+      <div class="relative z-10 w-full max-w-3xl overflow-hidden rounded-[1.75rem] bg-white dark:bg-slate-950 shadow-2xl">
+        <div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-[0.28em] text-blue-600 dark:text-blue-400">Đơn nghỉ phép</p>
+            <h3 class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">Chi tiết đơn #{{ item.id }}</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">{{ item.employeeName }} — {{ item.employeeCode }}</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span :class="badgeClass(item.status)" class="inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold">{{ item.status }}</span>
+            <button @click="$emit('close')" aria-label="Đóng" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:text-white transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
         </div>
-        <div class="flex items-center gap-3">
-          <span :class="badgeClass(item.status)" class="px-3 py-1 rounded-full text-sm font-medium">{{ item.status }}</span>
-          <button @click="$emit('close')" aria-label="Close" class="w-8 h-8 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300">×</button>
-        </div>
-      </div>
 
       <div class="grid grid-cols-1 gap-3">
         <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">

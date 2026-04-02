@@ -1,46 +1,48 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import getNowString from '~/utils/formatDate'
+import { loadLocalStorageJSON, loadOrFetchArray, saveLocalStorageJSON } from '~/utils/persistence'
+import { sortArrayByValue, toggleSortColumn } from '~/utils/dataHelpers'
+
 export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     const leaveRequests = ref([])
     const loading = ref(false)
     const query = ref({})
     const sortColumn = ref('')
     const sortOrder = ref('asc')
+    const employeeStore = useEmployeeStore()
 
+    // Lưu data vào LocalStorage
     function saveToLocal() {
-        if (process.client) {
-            localStorage.setItem('hrm_leaveRequests', JSON.stringify(leaveRequests.value))
-        }
+        saveLocalStorageJSON('hrm_leaveRequests', leaveRequests.value)
     }
 
+    // Load data từ LocalStorage (nếu có) khi khởi tạo store
     function loadDataFromLocal() {
-        if (process.client) {
-            const data = localStorage.getItem('hrm_leaveRequests')
-            leaveRequests.value = JSON.parse(data)
-            return leaveRequests;
+        const data = loadLocalStorageJSON('hrm_leaveRequests', [])
+        if (Array.isArray(data)) {
+            leaveRequests.value = data
         }
-        return null;
+        return leaveRequests
     }
-    // lấy data từ file JSON 
+
+    // Fetch data từ file JSON (có cache vào localStorage)
     async function fetchLeaveRequests() {
         loading.value = true
         try {
-            // Thử lấy từ LocalStorage trước
-            const saved = process.client ? localStorage.getItem('hrm_leaveRequests') : null
-            if (saved && JSON.parse(saved).length > 0) {
-                leaveRequests.value = JSON.parse(saved)
-            } else {
-                const data = await $fetch('/data/leave-request.json')
-                leaveRequests.value = data
-                saveToLocal()
-            }
+            leaveRequests.value = await loadOrFetchArray(
+                'hrm_leaveRequests',
+                '/data/leave-request.json',
+                [],
+                false
+            )
         } catch (error) {
             console.error("Lỗi tải dữ liệu:", error)
         } finally {
             loading.value = false
         }
     }
+
     // Thêm mới đơn nghỉ phép
     function addLeaveRequest(payload) {
         try {
@@ -81,32 +83,37 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         }
         return null
     }
+
     // Xóa đơn nghỉ phép
     function deleteLeaveRequest(id) {
         leaveRequests.value = leaveRequests.value.filter(i => i.id !== id)
         saveToLocal()
     }
+
     // Duyệt đơn nghỉ phép
-    function approveLeaveRequest(id, approver = '') {
+    function approveLeaveRequest(id) {
         const it = leaveRequests.value.find(i => i.id === id)
         if (it) {
             it.status = 'Đã duyệt'
-            it.approvedBy = approver
-            it.approvedAt = getNowString('')
+            const emp = employeeStore.employees.find(emp => String(emp.employeeCode) === String(it.employeeCode))
+            if(emp) {
+                emp.status = 'Nghỉ phép'
+                employeeStore.saveToLocal()
+            }
+
             saveToLocal()
         }
     }
+
     // Từ chối đơn nghỉ phép
-    function rejectLeaveRequest(id, reason = '', approver = '') {
+    function rejectLeaveRequest(id) {
         const it = leaveRequests.value.find(i => i.id === id)
         if (it) {
             it.status = 'Từ chối'
-            it.rejectedBy = approver
-            it.rejectedAt = getNowString('')
-            if (reason) it.rejectionReason = reason
             saveToLocal()
         }
     }
+
     // Cập nhật trạng thái hàng loạt (duyệt hoặc từ chối nhiều đơn cùng lúc)
     function bulkUpdateStatus(ids = [], status = '', by = '') {
         ids.forEach(id => {
@@ -124,6 +131,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         })
         saveToLocal()
     }
+
     // Cập nhật filter/query để lọc danh sách từ components
     function setFilter(payload) {
         if (payload === undefined || payload === null) {
@@ -133,9 +141,11 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         query.value = { ...query.value, ...payload }
     }
 
+    // Xóa filter 
     function clearFilter() {
         query.value = {}
     }
+
     // Tìm kiếm và lọc đơn nghỉ phép dựa trên query
     const searchLeaveRequest = computed(() => {
         return leaveRequests.value.filter(i => {
@@ -153,50 +163,29 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         return leaveRequests.value.filter(item => String(item.employeeCode) === String(empID))
     }
 
+    // Thiết lập sắp xếp khi người dùng click vào header cột
     function setSort(column) {
-        if (sortColumn.value === column) {
-            sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
-        } else {
-            sortColumn.value = column
-            sortOrder.value = 'asc'
-        }
+        sortOrder.value = toggleSortColumn(sortColumn.value, sortOrder.value, column)
+        sortColumn.value = column
     }
 
+    // Kết quả sau khi đã được lọc và sắp xếp
     const sortedLeaveRequests = computed(() => {
-        const result = [...searchLeaveRequest.value];
-        if (!sortColumn.value) return result;
+        const result = [...searchLeaveRequest.value]
+        if (!sortColumn.value) return result
 
-        return result.sort((a, b) => {
-            let valA, valB;
+        const getValue = (item) => {
             switch (sortColumn.value) {
-                case 'employeeCode':
-                    valA = a.employeeCode || '';
-                    valB = b.employeeCode || '';
-                    break;
                 case 'fromDate':
-                    // Chuyển string ngày tháng về số (Timestamp) để so sánh chính xác
-                    valA = a.fromDate ? new Date(a.fromDate).getTime() : 0;
-                    valB = b.fromDate ? new Date(b.fromDate).getTime() : 0;
-                    break;
+                    return item.fromDate ? new Date(item.fromDate).getTime() : 0
                 case 'toDate':
-                    valA = a.toDate ? new Date(a.toDate).getTime() : 0;
-                    valB = b.toDate ? new Date(b.toDate).getTime() : 0;
-                    break;
+                    return item.toDate ? new Date(item.toDate).getTime() : 0
                 default:
-                    return 0;
+                    return item[sortColumn.value] || ''
             }
-            if (typeof valA === 'string' && typeof valB === 'string') {
-                valA = valA.toLowerCase();
-                valB = valB.toLowerCase();
-            } else {
-                valA = new String(valA);
-                valB = new String(valB);
-            }
+        }
 
-            if (valA < valB) return sortOrder.value === 'asc' ? -1 : 1;
-            if (valA > valB) return sortOrder.value === 'asc' ? 1 : -1;
-            return 0;
-        });
+        return sortArrayByValue(result, sortColumn.value, sortOrder.value, getValue)
     });
 
 
