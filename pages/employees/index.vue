@@ -102,7 +102,7 @@ const {
   prevPage,
   goToPage,
   visiblePages
-} = usePagination(filtered, 12)
+} = usePagination(filtered, 10)
 
 // Cập nhật filter trong store khi filter component thay đổi
 function onFilter(payload) {
