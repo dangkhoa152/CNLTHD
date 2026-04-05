@@ -8,7 +8,6 @@
         </span>
         <input
           v-model="query"
-          @input="emitFilter"
           type="text"
           placeholder="Tên, mã nhân viên..."
           class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-10 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:ring-blue-500"
@@ -48,7 +47,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useDebounce } from '~/composables/useDebounce'
 //Định nghĩa props và định nghĩa các biến trạng thái cho bộ lọc
 const props = defineProps({
   departments: { type: Array, default: () => [] }
@@ -58,6 +58,15 @@ const departmentURL = defineModel('department', { type: String, default: '' })
 const query = ref('')
 const status = ref('')
 const department = ref('')
+
+// Debounce search query để tránh lọc quá nhiều lần
+const debouncedQuery = useDebounce(query, 300)
+
+// Xem thay đổi của debounced query và select filters
+watch([debouncedQuery, status, department], () => {
+  emitFilter()
+})
+
 // Hàm gửi sự kiện khi có thay đổi trong bộ lọc
 function emitFilter() {
   emit('filter-changed', { query: query.value, status: status.value, department: department.value })

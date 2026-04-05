@@ -1,14 +1,11 @@
 <template>
   <div :class="[
-    'rounded-[1.5rem] border p-5 shadow-sm hover:shadow-md transition duration-300 min-h-[132px]',
+    'rounded-[1.5rem] border p-5 shadow-sm hover:shadow-md transition duration-300 min-h-[112px]',
     'bg-white dark:bg-slate-950',
-    'border-gray-200 dark:border-slate-800'
-  ]">
+    'border-gray-200 dark:border-slate-800']">
     <p class="text-sm font-semibold text-slate-500 dark:text-slate-400 tracking-[0.03em]">{{ title }}</p>
-    <h3 :class="['mt-3 text-3xl font-bold', colorClass]">
-      {{ value }}
-    </h3>
-    <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">{{ subtitle }}</p>
+    <h3 :class="['mt-2 text-3xl font-bold', colorClass]">{{ value }}</h3>
+    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">{{ subtitle }}</p>
   </div>
 </template>
 
@@ -33,6 +30,5 @@ const colorMap = {
   red: 'text-red-600 dark:text-red-400',
   yellow: 'text-yellow-600 dark:text-yellow-400',
 }
-
 const colorClass = computed(() => colorMap[props.color] || colorMap.default)
 </script>

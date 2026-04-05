@@ -7,8 +7,8 @@
     <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ item.employeeCode }}</td>
     <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ item.employeeName }}</td>
     <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ item.department }}</td>
-    <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ item.fromDate }}</td>
-    <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ item.toDate }}</td>
+    <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ getNowString(item.createdAt) }}</td>
+    <td class="px-4 py-3 text-gray-900 dark:text-gray-100">{{ item.reason }}</td>
     <td class="px-4 py-3">
       <span :class="statusClass(item.status)" class="inline-flex items-center justify-center rounded-full px-3 py-1 text-sm font-semibold">{{ item.status }}</span>
     </td>
@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+import getNowString from '@/utils/formatDate'
 // Khai báo props để lấy danh sách đơn nghỉ phép
 const props = defineProps({ item: { type: Object, required: true }, selected: { type: Boolean, default: false } })
 function statusClass(s) {
