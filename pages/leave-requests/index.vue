@@ -28,11 +28,12 @@
     :items="paginatedList" 
     :sortColumn="leaveStore.sortColumn"
     :sortOrder="leaveStore.sortOrder"
+    :reset-selection-counter="resetSelectionCounter"
     @view="open" 
     @edit="openEdit" 
     @delete="handleDeleteClick" 
-    @bulk-approve="handleBulkApprove" 
-    @bulk-reject="handleBulkReject" 
+    @bulk-approve="prepareBulkApprove" 
+    @bulk-reject="prepareBulkReject" 
     @sort="leaveStore.setSort"
   />
 
@@ -58,6 +59,17 @@
       type="danger"
       @cancel="isConfirmOpen = false"
       @confirm="executeDelete"
+    />
+
+    <ConfirmModal
+      :isOpen="bulkConfirmOpen"
+      title="Xác nhận thao tác hàng loạt"
+      :message="bulkAction === 'approve' ? `Bạn có chắc chắn muốn duyệt ${bulkActionIds.length} đơn nghỉ phép đã chọn?` : `Bạn có chắc chắn muốn từ chối ${bulkActionIds.length} đơn nghỉ phép đã chọn?`"
+      confirmText="Xác nhận"
+      cancelText="Hủy"
+      type="warning"
+      @cancel="cancelBulkAction"
+      @confirm="confirmBulkAction"
     />
   </div>
 </template>
@@ -85,7 +97,12 @@ const selected = ref(null)
 const formVisible = ref(false)
 const formItem = ref(null)
 const isConfirmOpen = ref(false)
+const bulkConfirmOpen = ref(false)
+const bulkAction = ref('')
+const bulkActionIds = ref([])
+const resetSelectionCounter = ref(0)
 const router = useRouter()
+
 // Hàm chuyển sang trang lịch nghỉ phép
 function toggleCalendar() { router.push('/leave-requests/calendar') }
 
@@ -239,6 +256,41 @@ function logBulkAction(action, count) {
   }, 50)
 }
 // Xử lý duyệt hàng loạt
+function prepareBulkApprove(ids) {
+  if (!ids || ids.length === 0) return
+  bulkAction.value = 'approve'
+  bulkActionIds.value = ids
+  bulkConfirmOpen.value = true
+}
+
+function prepareBulkReject(ids) {
+  if (!ids || ids.length === 0) return
+  bulkAction.value = 'reject'
+  bulkActionIds.value = ids
+  bulkConfirmOpen.value = true
+}
+
+function confirmBulkAction() {
+  if (!bulkActionIds.value.length) return
+
+  if (bulkAction.value === 'approve') {
+    handleBulkApprove(bulkActionIds.value)
+  } else if (bulkAction.value === 'reject') {
+    handleBulkReject(bulkActionIds.value)
+  }
+
+  bulkConfirmOpen.value = false
+  bulkActionIds.value = []
+  bulkAction.value = ''
+  resetSelectionCounter.value += 1
+}
+
+function cancelBulkAction() {
+  bulkConfirmOpen.value = false
+  bulkActionIds.value = []
+  bulkAction.value = ''
+}
+
 function handleBulkApprove(ids) {
   if (!ids || ids.length === 0) return
   leaveStore.bulkUpdateStatus(ids, 'Đã duyệt', auth.user?.name || '')

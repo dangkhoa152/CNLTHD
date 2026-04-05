@@ -2,6 +2,8 @@
 import { ref, onMounted, computed } from 'vue'
 import { useActivityStore } from '@/stores/activityStore'
 import getNowString from '~/utils/formatDate'
+import Pagination from '~/components/common/Pagination.vue'
+
 const activityStore = useActivityStore()
 
 // 1. Tạo 2 biến lưu trạng thái của bộ lọc
@@ -28,6 +30,16 @@ const sortedActivities = computed(() => {
 
   return result
 })
+
+const {
+  currentPage,
+  totalPages,
+  paginatedList,
+  nextPage,
+  prevPage,
+  goToPage,
+  visiblePages
+} = usePagination(sortedActivities, 10)
 
 const getTypeBadgeStyle = (type) => {
   switch (type) {
@@ -65,7 +77,7 @@ const getTypeText = (type) => {
 
     <div class="flex flex-col gap-4 mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
       
-      <div class="flex flex-col">
+      <div class="max-w-80 flex flex-col">
         <label class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Lọc theo ngày</label>
         <input
           v-model="filterDate"
@@ -74,7 +86,7 @@ const getTypeText = (type) => {
         />
       </div>
 
-      <div class="flex flex-col">
+      <div class="max-w-80 flex flex-col">
         <label class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Loại thao tác</label>
         <select
           v-model="filterType"
@@ -112,7 +124,7 @@ const getTypeText = (type) => {
         </thead>
 
         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
-          <tr v-for="log in sortedActivities" :key="log.id" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+          <tr v-for="log in paginatedList" :key="log.id" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
             <td class="px-5 py-4 whitespace-nowrap text-base text-gray-700 dark:text-gray-300 font-mono">
               {{ log.time }}
             </td>
@@ -143,5 +155,14 @@ const getTypeText = (type) => {
         </tbody>
       </table>
     </div>
+
+    <Pagination
+      :current-page="currentPage"
+      :total-pages="totalPages"
+      :visible-pages="visiblePages"
+      @prev="prevPage"
+      @next="nextPage"
+      @go-to="goToPage"
+    />
   </div>
 </template>

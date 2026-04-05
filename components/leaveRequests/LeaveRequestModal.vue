@@ -16,33 +16,33 @@
           </div>
         </div>
 
-      <div class="grid grid-cols-1 gap-3">
+      <div class="p-6 grid grid-cols-1 gap-3">
         <dl class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded">
+          <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 rounded">
             <dt class="text-xs text-gray-500">Phòng ban</dt>
             <dd class="mt-1 font-medium">{{ item.department || '-' }}</dd>
           </div>
-          <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded">
+          <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 rounded">
             <dt class="text-xs text-gray-500">Khoảng</dt>
             <dd class="mt-1 font-medium">{{ fmtDate(item.fromDate) }} → {{ fmtDate(item.toDate) }}</dd>
           </div>
-          <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded">
+          <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 rounded">
             <dt class="text-xs text-gray-500">Số ngày</dt>
             <dd class="mt-1 font-medium">{{ item.days }}</dd>
           </div>
-          <div class="p-3 bg-gray-50 dark:bg-gray-900 rounded">
+          <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 rounded">
             <dt class="text-xs text-gray-500">Ngày tạo</dt>
             <dd class="mt-1 font-medium">{{ fmtDate(item.createdAt) }}</dd>
           </div>
         </dl>
 
-        <div class="mt-3 p-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded">
+        <div class="p-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl">
           <dt class="text-xs text-gray-500">Lý do</dt>
           <dd class="mt-2 text-sm text-gray-700 dark:text-gray-200">{{ item.reason || '-' }}</dd>
         </div>
       </div>
 
-      <div class="mt-6 flex justify-end gap-2">
+      <div class="px-6 pb-6 flex justify-end gap-3">
         <button v-if="item.status==='Chờ duyệt' && !editing" @click="$emit('approve', item)" class="bg-green-600 dark:bg-green-700 text-white px-4 py-2 rounded">Duyệt</button>
         <button v-if="item.status==='Chờ duyệt' && !editing" @click="$emit('reject', item)" class="bg-red-600 dark:bg-red-700 text-white px-4 py-2 rounded">Từ chối</button>
         <button v-if="!editing" @click="$emit('close')" class="bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 rounded">Đóng</button>
