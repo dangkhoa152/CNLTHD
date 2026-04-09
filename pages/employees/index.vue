@@ -57,7 +57,7 @@ import Pagination from '~/components/common/Pagination.vue'
 import EmployeeForm from '~/components/employees/EmployeeForm.vue'
 import ConfirmModal from '~/components/common/ConfirmModal.vue'
 import { useEmployeeStore } from '~/stores/employeeStore'
-import StatCard from '~/components/dashboard/StatCard.vue'
+import StatCard from '~/components/common/StatCard.vue'
 const router = useRouter()
 const route = useRoute()
 const dashboard = useDashboardStore()

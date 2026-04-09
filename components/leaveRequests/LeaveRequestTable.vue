@@ -15,14 +15,19 @@
       <thead class="bg-gray-50 dark:bg-gray-700 sticky top-0 z-10">
         <tr>
           <th class="w-16 text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300"><input type="checkbox" :checked="allSelected" @change="toggleAll($event.target.checked)" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" /></th>
-          <th class="w-16 text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">ID</th>
+          <th @click="$emit('sort', 'id')" class="w-12 px-4 py-3 cursor-pointer text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+            <div class="flex items-center gap-1">
+              ID
+              <SortIcon column="id" :sortColumn="sortColumn" :sortOrder="sortOrder || ''"/>
+            </div>
+          </th>
           <th @click="$emit('sort', 'employeeCode')" class="w-28 px-4 py-3 cursor-pointer text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
             <div class="flex items-center gap-1">
               Mã nhân viên
               <SortIcon column="employeeCode" :sortColumn="sortColumn" :sortOrder="sortOrder || ''"/>
             </div>
           </th>
-          <th @click="$emit('sort', 'employeeName')" class="w-40 text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+          <th @click="$emit('sort', 'employeeName')" class="w-40 text-left px-4 py-3 cursor-pointer text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">
              <div class="flex items-center gap-1">
               Tên nhân viên
               <SortIcon column="employeeName" :sortColumn="sortColumn" :sortOrder="sortOrder || ''"/>

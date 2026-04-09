@@ -15,9 +15,18 @@
       </div>
     </div>
 
-    <div class="min-w-[180px]">
+    <div class="min-w-[140px] flex-1 md:flex-none">
+      <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Ngày gửi</label>
+      <input 
+        v-model="createdAt" 
+        type="date"
+        class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+      />
+    </div>    
+
+    <div class="min-w-[140px]">
       <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Trạng thái</label>
-      <select v-model="status" @change="emitFilter"
+      <select v-model="status"
         class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:ring-blue-500">
         <option value="">Tất cả trạng thái</option>
         <option value="Chờ duyệt">Chờ duyệt</option>
@@ -26,9 +35,9 @@
       </select>
     </div>
 
-    <div class="min-w-[180px]">
+    <div class="min-w-[140px]">
       <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Phòng ban</label>
-      <select v-model="department" @change="emitFilter"
+      <select v-model="department"
         class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:ring-blue-500">
         <option value="">Tất cả phòng ban</option>
         <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
@@ -46,7 +55,6 @@
 <script setup>
     import { ref, watch } from 'vue'
     import { useDebounce } from '~/composables/useDebounce'
-    // Lấy danh sách phòng ban từ props và định nghĩa các biến trạng thái cho bộ lọc
     const props = defineProps({
         departments: { type: Array, default: () => [] }
     })
@@ -55,25 +63,23 @@
     const query = ref('')
     const status = ref('')
     const department = ref('')
+    const createdAt = ref('')
     
-    // Debounce search query để tránh lọc quá nhiều lần
     const debouncedQuery = useDebounce(query, 300)
-    
-    // Xem thay đổi của các filter và emit khi có thay đổi
-    watch([debouncedQuery, status, department], () => {
+ 
+    watch([debouncedQuery, status, department, createdAt], () => {
         emitFilter()
     })
     
-    // Hàm gửi sự kiện khi có thay đổi trong bộ lọc
     function emitFilter() {
-        emit('filter-changed', { query: query.value, status: status.value, department: department.value })
+        emit('filter-changed', { query: query.value, status: status.value, department: department.value, craetedAt: createdAt.value})
     }
 
     function clear() {
         query.value = ''
         status.value = ''
         department.value = ''
-        emitFilter()
+        createdAt.value = ''
         emit('reset')
     }
 </script>

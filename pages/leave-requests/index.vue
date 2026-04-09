@@ -84,7 +84,7 @@ import LeaveRequestForm from '~/components/leaveRequests/LeaveRequestForm.vue'
 import { useLeaveRequestStore } from '~/stores/leaveRequestStore'
 import ConfirmModal from '~/components/common/ConfirmModal.vue'
 import Pagination from '~/components/common/Pagination.vue'
-import StatCard from '~/components/dashboard/StatCard.vue'
+import StatCard from '~/components/common/StatCard.vue'
 // import { useActivityStore } from '~/stores/activityStore'
 
 const dashboard = useDashboardStore()
@@ -123,7 +123,7 @@ const {
   goToPage,
   visiblePages
 } = usePagination(filtered, 10)
-// Tải dữ liệu đơn nghỉ phép khi component được mounted
+
 onMounted(async () => {
   try {
     await leaveStore.fetchLeaveRequests()
@@ -157,28 +157,39 @@ function openCreate() {
 }
 // Mở form chỉnh sửa đơn nghỉ phép
 function openEdit(item) {
+  if(item.status !== 'Chờ duyệt') {
+    setTimeout(() => {
+      toast.warning(`Không thể chỉnh sửa đơn ${item.status}`)
+    }, 50)
+    return
+  }
   formItem.value = item
   formVisible.value = true
 }
 // Duyệt đơn
 function approve(item) {
-  leaveStore.approveLeaveRequest(item.id)
+  const userName = auth.user?.name || 'Admin HR'
+  leaveStore.approveLeaveRequest(item.id, userName)
+  setTimeout(() => {
+    dashboard.addActivity({ type: 'approve', title: `Duyệt đơn nghỉ phép của ${item.employeeName}`, user: userName })
+    activityStore.logActivity('edit', 'Duyệt đơn nghỉ phép', item.employeeName)
+    toast.success('Đã duyệt đơn!')
+  }, 50)
   selected.value = null
 
-  const userName = auth.user?.name || 'Admin HR'
-  dashboard.addActivity({ type: 'approve', title: `Duyệt đơn nghỉ phép của ${item.employeeName}`, user: userName })
-  activityStore.logActivity('edit', 'Duyệt đơn nghỉ phép', item.employeeName)
-  toast.success('Đã duyệt đơn!')
 }
 // Từ chối đơn
 function reject(item) {
-  leaveStore.rejectLeaveRequest(item.id)
-  selected.value = null
+  leaveStore.rejectLeaveRequest(item.id, auth.user?.name || 'Admin HR', item.rejectionReason || '')
 
   const userName = auth.user?.name || 'Admin HR'
-  dashboard.addActivity({ type: 'reject', title: `Từ chối đơn nghỉ phép của ${item.employeeName}`, user: userName })
-  activityStore.logActivity('edit', 'Từ chối đơn nghỉ phép', item.employeeName)
-  toast.warning('Đã từ chối đơn!')
+  setTimeout(() => {
+    dashboard.addActivity({ type: 'reject', title: `Từ chối đơn nghỉ phép của ${item.employeeName}`, user: userName })
+    activityStore.logActivity('edit', 'Từ chối đơn nghỉ phép', item.employeeName)
+    toast.warning('Đã từ chối đơn!')
+  }, 50)
+  selected.value = null
+
 }
 // Xác nhận trước khi xóa đơn nghỉ phép
 function handleDeleteClick(item) {
@@ -290,16 +301,16 @@ function cancelBulkAction() {
   bulkActionIds.value = []
   bulkAction.value = ''
 }
-
+// Xử lý duyệt hàng loạt
 function handleBulkApprove(ids) {
   if (!ids || ids.length === 0) return
-  leaveStore.bulkUpdateStatus(ids, 'Đã duyệt', auth.user?.name || '')
+  leaveStore.bulkUpdateStatus(ids, 'Đã duyệt', auth.user?.name || 'Admin HR')
   logBulkAction('approve', ids.length)
 }
 // Xử lý từ chối hàng loạt
 function handleBulkReject(ids) {
   if (!ids || ids.length === 0) return
-  leaveStore.bulkUpdateStatus(ids, 'Đã từ chối', auth.user?.name || '')
+  leaveStore.bulkUpdateStatus(ids, 'Đã từ chối', auth.user?.name || 'Admin HR')
   logBulkAction('reject', ids.length)
 }
 </script>
