@@ -3,6 +3,8 @@ import { ref, onMounted, computed } from 'vue'
 import { useActivityStore } from '@/stores/activityStore'
 import getNowString from '~/utils/formatDate'
 import Pagination from '~/components/common/Pagination.vue'
+import FormInput from '@/components/common/FormInput.vue'
+import FormSelect from '@/components/common/FormSelect.vue'
 
 const activityStore = useActivityStore()
 
@@ -67,9 +69,7 @@ const getTypeText = (type) => {
 <template>
   <div class="p-6">
     <div class="mb-6 rounded-[1.75rem] border border-gray-200 bg-white px-6 py-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-      <h2 class="text-3xl font-bold text-slate-900 dark:text-white">
-        Nhật ký hoạt động hệ thống
-      </h2>
+      <h2 class="text-3xl font-bold text-slate-900 dark:text-white">Nhật ký hoạt động hệ thống</h2>
       <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
         Theo dõi toàn bộ thao tác của quản trị viên và người dùng với bộ lọc nhanh và bảng hoạt động dễ đọc.
       </p>
@@ -77,31 +77,30 @@ const getTypeText = (type) => {
 
     <div class="flex flex-col gap-4 mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
       
-      <div class="max-w-80 flex flex-col">
-        <label class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Lọc theo ngày</label>
-        <input
-          v-model="filterDate"
-          type="date"
-          class="border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+      <div class="w-full sm:w-64">
+        <FormInput 
+          v-model="filterDate" 
+          type="date" 
+          label="Lọc theo ngày" 
         />
       </div>
 
-      <div class="max-w-80 flex flex-col">
-        <label class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Loại thao tác</label>
-        <select
-          v-model="filterType"
-          class="border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none min-w-[200px]"
-        >
-          <option value="">-- Tất cả thao tác --</option>
-          <option value="add">Thêm mới</option>
-          <option value="edit">Cập nhật</option>
-          <option value="delete">Xóa</option>
-          <option value="login">Đăng nhập</option>
-          <option value="theme">Đổi giao diện</option>
-        </select>
+      <div class="w-full sm:w-64">
+        <FormSelect 
+          v-model="filterType" 
+          label="Loại thao tác" 
+          placeholder="-- Tất cả thao tác --"
+          :options="[
+            { value: 'add', label: 'Thêm mới' },
+            { value: 'edit', label: 'Cập nhật' },
+            { value: 'delete', label: 'Xóa' },
+            { value: 'login', label: 'Đăng nhập' },
+            { value: 'theme', label: 'Đổi giao diện' }
+          ]"
+        />
       </div>
 
-      <div class="flex items-end">
+      <div class="flex items-end pb-1">
         <button
           v-if="filterDate || filterType"
           @click="filterDate = ''; filterType = ''"
@@ -112,48 +111,50 @@ const getTypeText = (type) => {
       </div>
     </div>
     <div class="bg-white dark:bg-slate-950 rounded-[1.5rem] shadow-sm overflow-hidden border border-gray-200 dark:border-slate-800">
-      <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-        <thead class="bg-gray-50 dark:bg-gray-900">
-          <tr>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Thời gian</th>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Người dùng</th>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Loại thao tác</th>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Hành động</th>
-            <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Đối tượng tác động</th>
-          </tr>
-        </thead>
+      <div class="overflow-x-auto w-full">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead class="bg-gray-50 dark:bg-gray-900">
+            <tr>
+              <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Thời gian</th>
+              <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Người dùng</th>
+              <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Loại thao tác</th>
+              <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Hành động</th>
+              <th class="px-5 py-4 text-left text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">Đối tượng tác động</th>
+            </tr>
+          </thead>
 
-        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
-          <tr v-for="log in paginatedList" :key="log.id" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-            <td class="px-5 py-4 whitespace-nowrap text-base text-gray-700 dark:text-gray-300 font-mono">
-              {{ log.time }}
-            </td>
-            <td class="px-5 py-4 whitespace-nowrap text-base font-semibold text-gray-900 dark:text-white">
-              {{ log.user }}
-            </td>
-            <td class="px-5 py-4 whitespace-nowrap text-base">
-              <span :class="`px-3 py-1 inline-flex text-xs font-bold rounded-full ${getTypeBadgeStyle(log.type)}`">
-                {{ getTypeText(log.type) }}
-              </span>
-            </td>
-            <td class="px-5 py-4 text-base text-gray-800 dark:text-gray-200">
-              {{ log.title }}
-            </td>
-            <td class="px-5 py-4 text-base font-bold text-gray-900 dark:text-white">
-              {{ log.target || '-' }}
-            </td>
-          </tr>
+          <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700">
+            <tr v-for="log in paginatedList" :key="log.id" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+              <td class="px-5 py-4 whitespace-nowrap text-base text-gray-700 dark:text-gray-300 font-mono">
+                {{ log.time }}
+              </td>
+              <td class="px-5 py-4 whitespace-nowrap text-base font-semibold text-gray-900 dark:text-white">
+                {{ log.user }}
+              </td>
+              <td class="px-5 py-4 whitespace-nowrap text-base">
+                <span :class="`px-3 py-1 inline-flex text-xs font-bold rounded-full ${getTypeBadgeStyle(log.type)}`">
+                  {{ getTypeText(log.type) }}
+                </span>
+              </td>
+              <td class="px-5 py-4 whitespace-nowrap text-base text-gray-800 dark:text-gray-200">
+                {{ log.title }}
+              </td>
+              <td class="px-5 py-4 whitespace-nowrap text-base font-bold text-gray-900 dark:text-white">
+                {{ log.target || '-' }}
+              </td>
+            </tr>
 
-          <tr v-if="sortedActivities.length === 0">
-            <td colspan="5" class="px-6 py-12 text-center text-lg text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50">
-              <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Không tìm thấy hoạt động nào phù hợp với bộ lọc.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <tr v-if="sortedActivities.length === 0">
+              <td colspan="5" class="px-6 py-12 text-center text-lg text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50">
+                <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Không tìm thấy hoạt động nào phù hợp với bộ lọc.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> 
     </div>
 
     <Pagination
