@@ -3,6 +3,8 @@ import { ref, onMounted, computed } from 'vue'
 import { useActivityStore } from '@/stores/activityStore'
 import getNowString from '~/utils/formatDate'
 import Pagination from '~/components/common/Pagination.vue'
+import FormInput from '@/components/common/FormInput.vue'
+import FormSelect from '@/components/common/FormSelect.vue'
 
 const activityStore = useActivityStore()
 
@@ -67,9 +69,7 @@ const getTypeText = (type) => {
 <template>
   <div class="p-6">
     <div class="mb-6 rounded-[1.75rem] border border-gray-200 bg-white px-6 py-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-      <h2 class="text-3xl font-bold text-slate-900 dark:text-white">
-        Nhật ký hoạt động hệ thống
-      </h2>
+      <h2 class="text-3xl font-bold text-slate-900 dark:text-white">Nhật ký hoạt động hệ thống</h2>
       <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
         Theo dõi toàn bộ thao tác của quản trị viên và người dùng với bộ lọc nhanh và bảng hoạt động dễ đọc.
       </p>
@@ -77,31 +77,30 @@ const getTypeText = (type) => {
 
     <div class="flex flex-col gap-4 mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
       
-      <div class="max-w-80 flex flex-col">
-        <label class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Lọc theo ngày</label>
-        <input
-          v-model="filterDate"
-          type="date"
-          class="border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+      <div class="w-full sm:w-64">
+        <FormInput 
+          v-model="filterDate" 
+          type="date" 
+          label="Lọc theo ngày" 
         />
       </div>
 
-      <div class="max-w-80 flex flex-col">
-        <label class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Loại thao tác</label>
-        <select
-          v-model="filterType"
-          class="border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none min-w-[200px]"
-        >
-          <option value="">-- Tất cả thao tác --</option>
-          <option value="add">Thêm mới</option>
-          <option value="edit">Cập nhật</option>
-          <option value="delete">Xóa</option>
-          <option value="login">Đăng nhập</option>
-          <option value="theme">Đổi giao diện</option>
-        </select>
+      <div class="w-full sm:w-64">
+        <FormSelect 
+          v-model="filterType" 
+          label="Loại thao tác" 
+          placeholder="-- Tất cả thao tác --"
+          :options="[
+            { value: 'add', label: 'Thêm mới' },
+            { value: 'edit', label: 'Cập nhật' },
+            { value: 'delete', label: 'Xóa' },
+            { value: 'login', label: 'Đăng nhập' },
+            { value: 'theme', label: 'Đổi giao diện' }
+          ]"
+        />
       </div>
 
-      <div class="flex items-end">
+      <div class="flex items-end pb-1">
         <button
           v-if="filterDate || filterType"
           @click="filterDate = ''; filterType = ''"

@@ -90,7 +90,7 @@ export const useDepartmentStore = defineStore('department', () => {
     }
 
     const departmentToSave = {
-      ...newDep, // (name, budget, description, v.v.)
+      ...newDep, 
       id: generateId,
       position: Array.isArray(newDep.position) ? newDep.position : []
     }
