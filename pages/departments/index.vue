@@ -2,10 +2,14 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDepartmentStore } from '@/stores/departmentStore'
+import { useEmployeeStore } from '@/stores/employeeStore'
 import DepartmentModal from '@/components/departments/DepartmentModal.vue'
 import StatCard from '@/components/dashboard/StatCard.vue'
+import ConfirmModal from '@/components/common/ConfirmModal.vue'
+import FormInput from '@/components/common/FormInput.vue'
 
 const departmentStore = useDepartmentStore()
+const employeeStore = useEmployeeStore()
 const router = useRouter()
 
 onMounted(() => {
@@ -26,6 +30,10 @@ const viewEmployees = (department) => {
 const isModalOpen = ref(false)
 const selectedDept = ref(null)
 const availableEmployees = ref([])
+
+const isConfirmModalOpen = ref(false)
+const deptToDelete = ref(null)
+const idToDelete = ref(null)
 
 const totalDepartments = computed(() => departmentStore.departments.length)
 const totalBudget = computed(() => departmentStore.departments.reduce((sum, dep) => sum + Number(dep.budget || 0), 0))
@@ -74,24 +82,43 @@ const handleSaveDepartment = (formData) => {
 
 const confirmDelete = async (dep) => {
   try {
-    const allEmployees = await $fetch('/data/employees.json')
+    if (employeeStore.employees.length === 0) {
+      await employeeStore.fetchEmployees()
+    }
+    
+    const allEmployees = employeeStore.employees
+
     const employeesInDept = allEmployees.filter(emp => {
-      const currentDeptId = emp.history?.[0]?.departmentId
+      const currentDeptId = emp.history?.[0]?.departmentId || emp.departmentId
       return currentDeptId === dep.id
     })
+    
     if (employeesInDept.length > 0) {
-      alert(`KHÔNG THỂ XÓA!\n[${dep.name}] đang có ${employeesInDept.length} nhân sự.\nVui lòng chuyển các nhân sự này sang phòng khác trước khi xóa.`)
+      alert(`⚠️ KHÔNG THỂ XÓA!\n\nPhòng [${dep.name}] đang có ${employeesInDept.length} nhân sự.\nVui lòng chuyển họ sang phòng khác trước khi xóa.`)
       return
     }
 
-    const isConfirmed = confirm(`Bạn có chắc chắn muốn xóa phòng ban: ${dep.name}?\nHành động này không thể hoàn tác!`)
+    deptToDelete.value = dep
+    idToDelete.value = dep.id
+    isConfirmModalOpen.value = true
 
-    if (isConfirmed) {
-      departmentStore.deleteDepartment(dep.id)
-      alert(`Đã xóa thành công phòng ban: ${dep.name}`)
-    }
   } catch (error) {
-    console.error('Lỗi khi kiểm tra dữ liệu xóa:', error)
+    alert('Có lỗi xảy ra khi kiểm tra dữ liệu: ' + error.message)
+    console.error(error)
+  }
+}
+
+const executeDelete = () => {
+  if (idToDelete.value) {
+    const name = deptToDelete.value?.name || 'Phòng ban'
+    
+    departmentStore.deleteDepartment(idToDelete.value)
+    
+    alert(`Đã xóa thành công phòng ban: ${name}`)
+    
+    isConfirmModalOpen.value = false
+    deptToDelete.value = null
+    idToDelete.value = null
   }
 }
 </script>
@@ -106,11 +133,9 @@ const confirmDelete = async (dep) => {
 
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div class="flex-1 sm:flex-none">
-          <input
-            v-model="departmentStore.searchQuery"
-            type="text"
-            placeholder="Tìm tên, mã, trưởng phòng..."
-            class="w-full sm:w-64 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-2.5 text-base text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          <FormInput 
+            v-model="departmentStore.searchQuery" 
+            placeholder="Tìm tên, mã, trưởng phòng..." 
           />
         </div>
 
@@ -196,6 +221,16 @@ const confirmDelete = async (dep) => {
       :employees-list="availableEmployees"
       @close="isModalOpen = false"
       @save="handleSaveDepartment"
+    />
+
+    <ConfirmModal
+      :is-open="isConfirmModalOpen"
+      title="Cảnh báo xóa phòng ban"
+      :message="`Bạn có chắc chắn muốn xóa phòng ban [${deptToDelete?.name}]? Hành động này sẽ không thể hoàn tác.`"
+      type="danger"
+      confirm-text="Xóa phòng ban"
+      @confirm="executeDelete"
+      @cancel="isConfirmModalOpen = false"
     />
   </div>
 </template>

@@ -1,5 +1,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
+import FormInput from '@/components/common/FormInput.vue'
+import FormTextarea from '@/components/common/FormTextarea.vue'
 
 const props = defineProps({
   isOpen: Boolean,
@@ -80,6 +82,16 @@ const removePosition = (index) => {
 // ==========================================
 
 const handleSave = () => {
+  if (!formData.value.name || formData.value.name.trim() === '') {
+    alert('Lỗi: Tên phòng ban không được để trống!')
+    return 
+  }
+
+  if (formData.value.budget < 0) {
+    alert('Lỗi: Ngân sách không được là số âm!')
+    return
+  }
+
   emit('save', formData.value)
 }
 </script>
@@ -102,17 +114,17 @@ const handleSave = () => {
       </div>
 
       <div class="space-y-4 overflow-y-auto pr-2 flex-1 custom-scrollbar">
-        <div>
-          <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Tên phòng ban</label>
-          <input v-model="formData.name" type="text"
-            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-        </div>
+        <FormInput 
+          v-model="formData.name" 
+          label="Tên phòng ban" 
+          required 
+        />
 
-        <div>
-          <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Ngân sách (VNĐ)</label>
-          <input v-model="formData.budget" type="number"
-            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
-        </div>
+        <FormInput 
+          v-model="formData.budget" 
+          type="number" 
+          label="Ngân sách (VNĐ)" 
+        />
 
         <div v-if="isEditMode" class="relative">
           <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Trưởng phòng</label>
@@ -153,9 +165,13 @@ const handleSave = () => {
           <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Các Vị trí / Chức danh</label>
 
           <div class="flex gap-2 mb-3">
-            <input v-model="newPositionInput" @keyup.enter="addPosition" type="text"
-              placeholder="VD: Trưởng nhóm, Nhân viên..."
-              class="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white text-sm" />
+            <div class="flex-1">
+              <FormInput 
+                v-model="newPositionInput" 
+                placeholder="VD: Trưởng nhóm, Nhân viên..." 
+                @keyup.enter="addPosition" 
+              />
+            </div>
             <button @click="addPosition" type="button"
               class="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-semibold text-sm transition-colors whitespace-nowrap">
               Thêm
@@ -175,11 +191,11 @@ const handleSave = () => {
           </div>
         </div>
 
-        <div>
-          <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Mô tả</label>
-          <textarea v-model="formData.description" rows="3"
-            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
-        </div>
+        <FormTextarea 
+          v-model="formData.description" 
+          label="Mô tả phòng ban" 
+          rows="3" 
+        />
       </div>
       <!-- FOOTER FORM -->
       <div class="mt-6 flex justify-end gap-3 pt-4 border-t dark:border-gray-700">
