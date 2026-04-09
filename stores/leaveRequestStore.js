@@ -153,26 +153,39 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         query.value = {}
     }
 
+    function getStandardDateString(dateInput) {
+        if (!dateInput) return '';
+        const d = new Date(dateInput);
+        
+        // Nếu ngày bị lỗi (Invalid Date), trả về rỗng
+        if (isNaN(d.getTime())) return ''; 
+        
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        
+        return `${yyyy}-${mm}-${dd}`; // Luôn trả ra đúng chuẩn YYYY-MM-DD
+    }
     // Tìm kiếm và lọc đơn nghỉ phép dựa trên query
     const searchLeaveRequest = computed(() => {
-    return leaveRequests.value.filter(i => {
-        if (query.value.status && i.status !== query.value.status) return false;
-        if (query.value.department && i.department !== query.value.department) return false;
-
-        if (query.value.createdAt) {
-            const itemDateObj = new Date(i.createdAt);
-            const itemDateStr = getNowString(itemDateObj);
-            if (itemDateStr !== getNowString(query.value.createdAt)) return false;
-        }
-        const q = (query.value.query || '').toLowerCase().trim();
-        if (q) {
-            return [i.employeeName, i.employeeCode, i.reason].join(' ').toLowerCase().includes(q);
-        }
-
-        // Đạt mọi điều kiện
-        return true;
+        return leaveRequests.value.filter(i => {
+            if (query.value.status && i.status !== query.value.status) return false;
+            if (query.value.department && i.department !== query.value.department) return false;
+            console.log('Comparing dates:', i.createdAt, query.value.createdAt)
+            if (query.value.createdAt) {
+                const itemDateStr = getStandardDateString(i.createdAt);
+                const filterDateStr = getStandardDateString(query.value.createdAt);
+                if(itemDateStr !== filterDateStr) return false;
+                
+            }
+            const q = (query.value.query || '').toLowerCase().trim();
+            if (q) {
+                return [i.employeeName, i.employeeCode, i.reason].join(' ').toLowerCase().includes(q);
+            }
+            return true;
+        });
     });
-});
+
     function getAllRequestByEmpID(empID) {
         return leaveRequests.value.filter(item => String(item.employeeCode) === String(empID))
     }
