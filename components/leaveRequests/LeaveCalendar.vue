@@ -114,7 +114,7 @@ const props = defineProps({
 })
 
 const view = ref('month')
-const cursor = ref(new Date())
+const cursor = ref(new Date()) // State để theo dõi tháng/tuần hiện tại đang hiển thị
 const searchQuery = ref('') // State cho bộ lọc
 const weekDays = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN']
 
@@ -137,9 +137,9 @@ const isToday = (date) => {
 }
 
 const isSameMonth = (date) => date.getMonth() === cursor.value.getMonth()
-
-function startOfMonth(d) { return new Date(d.getFullYear(), d.getMonth(), 1) }
-function endOfMonth(d) { return new Date(d.getFullYear(), d.getMonth() + 1, 0) }
+// Các hàm tính toán ngày tháng
+function startOfMonth(d) { return new Date(d.getFullYear(), d.getMonth(), 1) } // Lấy đầu tháng của ngày d
+function endOfMonth(d) { return new Date(d.getFullYear(), d.getMonth() + 1, 0) } // Lấy cuối tháng của ngày d
 function startOfWeek(d) {
   const day = d.getDay() || 7
   const diff = day - 1
@@ -156,7 +156,7 @@ const title = computed(() => {
   const end = new Date(start); end.setDate(start.getDate() + 6)
   return `T${start.getMonth()+1} ${start.getDate()} - ${end.getDate()}`
 })
-
+// Tạo mảng ngày cho chế độ xem tháng
 const monthGrid = computed(() => {
   const start = startOfWeek(startOfMonth(cursor.value))
   const end = endOfMonth(cursor.value)
@@ -169,7 +169,7 @@ const monthGrid = computed(() => {
   }
   return days
 })
-
+// Tạo mảng ngày cho chế độ xem tuần
 const weekGrid = computed(() => {
   const start = startOfWeek(cursor.value)
   return Array.from({ length: 7 }, (_, i) => {
@@ -178,7 +178,7 @@ const weekGrid = computed(() => {
     return d
   })
 })
-
+// Kiểm tra nhân viên có được nghỉ vào ngày d hay không
 function eventsForDate(d) {
   return filteredEvents.value.filter(ev => {
     if (!ev.fromDate) return false

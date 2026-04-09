@@ -32,13 +32,13 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // 1. Khai báo các Props để nhận dữ liệu từ Component Cha
-defineProps<{
-  currentPage: number
-  totalPages: number
-  visiblePages: (number | string)[]
-}>()
+const props = defineProps({
+  currentPage: Number,
+  totalPages: Number,
+  visiblePages: Array
+})
 
 // 2. Khai báo các Emits để báo cáo hành động click chuột lên Component Cha
 defineEmits(['prev', 'next', 'go-to'])

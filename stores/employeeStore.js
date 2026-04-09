@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import getNowString from '~/utils/formatDate'
 import { useDepartmentStore } from './departmentStore'
-import { loadOrFetchArray, saveLocalStorageJSON } from '~/utils/persistence'
+import { loadOrFetchArray, saveLocalStorageJSON, loadLocalStorageJSON } from '~/utils/persistence'
 import { toggleSortColumn } from '~/utils/dataHelpers'
 
 export const useEmployeeStore = defineStore('employees', () => {
@@ -21,6 +21,17 @@ export const useEmployeeStore = defineStore('employees', () => {
       deptStore.syncEmployeeCounts(employees.value)
     }
   }
+
+  function loadDataFromLocal() {
+    if (process.client) {
+      const data = loadLocalStorageJSON('hrm_employees')
+      if (Array.isArray(data)) {
+        employees.value = data 
+      }
+    }
+  }
+
+
   // fetch data
   async function fetchEmployees(forceRefresh = false) {
     isLoading.value = true
@@ -250,6 +261,7 @@ export const useEmployeeStore = defineStore('employees', () => {
     updateEmployee,
     addEmployee,
     deleteEmployee,
-    getEmployeeById
+    getEmployeeById,
+    loadDataFromLocal
   }
 })
