@@ -72,7 +72,7 @@
     })
     
     function emitFilter() {
-        emit('filter-changed', { query: query.value, status: status.value, department: department.value, craetedAt: createdAt.value})
+        emit('filter-changed', { query: query.value, status: status.value, department: department.value, createdAt: createdAt.value})
     }
 
     function clear() {

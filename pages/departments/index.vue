@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { useDepartmentStore } from '@/stores/departmentStore'
 import { useEmployeeStore } from '@/stores/employeeStore'
 import DepartmentModal from '@/components/departments/DepartmentModal.vue'
-import StatCard from '@/components/dashboard/StatCard.vue'
+import StatCard from '@/components/common/StatCard.vue'
 import ConfirmModal from '@/components/common/ConfirmModal.vue'
 import FormInput from '@/components/common/FormInput.vue'
 
