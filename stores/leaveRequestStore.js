@@ -17,7 +17,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         saveLocalStorageJSON('hrm_leaveRequests', leaveRequests.value)
     }
 
-    // Load data từ LocalStorage (nếu có) khi khởi tạo store
+    // Load data từ LocalStorage (nếu có) 
     function loadDataFromLocal() {
         const data = loadLocalStorageJSON('hrm_leaveRequests', [])
         if (Array.isArray(data)) {
@@ -61,6 +61,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
                 reason: payload.reason || '',
                 status: payload.status || 'Chờ duyệt',
                 createdAt: getNowString(''),
+                updatedAt: getNowString(''),
                 ...payload
             }
             // Thêm vào đầu danh sách
@@ -91,10 +92,12 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     }
 
     // Duyệt đơn nghỉ phép
-    function approveLeaveRequest(id) {
+    function approveLeaveRequest(id, approverName) {
         const it = leaveRequests.value.find(i => i.id === id)
         if (it) {
             it.status = 'Đã duyệt'
+            it.approver = approverName
+            it.updatedAt = getNowString('')
             const emp = employeeStore.employees.find(emp => String(emp.employeeCode) === String(it.employeeCode))
             if(emp) {
                 emp.status = 'Nghỉ phép'
@@ -106,26 +109,30 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     }
 
     // Từ chối đơn nghỉ phép
-    function rejectLeaveRequest(id) {
+    function rejectLeaveRequest(id, approverName, rejectReason) {
         const it = leaveRequests.value.find(i => i.id === id)
         if (it) {
             it.status = 'Từ chối'
+            it.approver = approverName
+            it.rejectionReason = rejectReason || ''
+            it.updatedAt = getNowString('')
             saveToLocal()
         }
     }
 
     // Cập nhật trạng thái hàng loạt (duyệt hoặc từ chối nhiều đơn cùng lúc)
-    function bulkUpdateStatus(ids = [], status = '', by = '') {
+    function bulkUpdateStatus(ids = [], status, by, rejectReason) {
         ids.forEach(id => {
             const it = leaveRequests.value.find(i => i.id === id)
             if (it) {
                 it.status = status
                 if (status === 'Đã duyệt') {
-                    it.approvedBy = by
-                    it.approvedAt = getNowString('')
+                    it.approver = by
+                    it.updatedAt = getNowString('')
                 } else if (status === 'Từ chối') {
-                    it.rejectedBy = by
-                    it.rejectedAt = getNowString('')
+                    it.approver = by
+                    it.updatedAt = getNowString('')
+                    it.rejectionReason = rejectReason || 'Không đủ nhân sự thay thế'
                 }
             }
         })
@@ -148,17 +155,24 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
 
     // Tìm kiếm và lọc đơn nghỉ phép dựa trên query
     const searchLeaveRequest = computed(() => {
-        return leaveRequests.value.filter(i => {
-            const q = (query.value.query || '').toLowerCase()
-            if (query.value.status && i.status !== query.value.status) return false
-            if (query.value.department && i.department !== query.value.department) return false
-            if (q) {
-                return [i.employeeName, i.employeeCode, i.reason].join(' ').toLowerCase().includes(q)
-            }
-            return true
-        })
-    })
+    return leaveRequests.value.filter(i => {
+        if (query.value.status && i.status !== query.value.status) return false;
+        if (query.value.department && i.department !== query.value.department) return false;
 
+        if (query.value.createdAt) {
+            const itemDateObj = new Date(i.createdAt);
+            const itemDateStr = getNowString(itemDateObj);
+            if (itemDateStr !== getNowString(query.value.createdAt)) return false;
+        }
+        const q = (query.value.query || '').toLowerCase().trim();
+        if (q) {
+            return [i.employeeName, i.employeeCode, i.reason].join(' ').toLowerCase().includes(q);
+        }
+
+        // Đạt mọi điều kiện
+        return true;
+    });
+});
     function getAllRequestByEmpID(empID) {
         return leaveRequests.value.filter(item => String(item.employeeCode) === String(empID))
     }

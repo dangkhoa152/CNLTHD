@@ -20,17 +20,17 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="md:col-span-2">
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Người xin <span class="text-sm text-red-600">*</span></label>
-          <div class="mt-1 flex gap-2 relative">
-            <input v-model="form.employeeName" @input="onNameInput" :disabled="isEdit" type="text" placeholder="Họ và tên" class="flex-1 rounded-md 
+          <div class="mt-1 flex gap-2 relative">        
+            <input v-model="form.employeeCode"  @input="onNameInput" :disabled="isEdit" type="text" placeholder="Mã nhân viên" class="w-36 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
-            <input v-model="form.employeeCode"  :disabled="isEdit" type="text" placeholder="Mã nhân viên" class="w-36 rounded-md 
+            <input v-model="form.employeeName"  :disabled="isEdit" type="text" placeholder="Họ và tên" class="flex-1 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
             <input v-model="form.department" :disabled="isEdit" type="text" placeholder="Phòng ban" class="w-48 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
           </div>
           <div v-if="showSuggestions && suggestions.length" class="absolute bg-white dark:bg-gray-800 border w-full max-w-2xl mt-1 rounded shadow z-20">
             <ul>
-              <li v-for="s in suggestions" :key="s.employeeCode" @click="pickSuggestion(s)" class="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{{ s.name }} — {{ s.employeeCode }} — {{ s.history[0].department }}</li>
+              <li v-for="s in suggestions" :key="s.employeeCode" @click="pickSuggestion(s)" class="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{{ s.employeeCode }} — {{ s.name }} — {{ s.history[0].department }}</li>
             </ul>
           </div>
           <div class="mt-1">
@@ -59,15 +59,6 @@
           border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2"></textarea>
         </div>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Trạng thái</label>
-          <select v-model="form.status" class="mt-1 block w-full rounded-md border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2">
-            <option>Chờ duyệt</option>
-            <option>Đã duyệt</option>
-            <option>Đã từ chối</option>
-          </select>
-        </div>
-
       </div>
 
       <div class="mt-6 flex justify-end gap-2">
@@ -78,12 +69,14 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { reactive, watch, computed, ref, onMounted } from 'vue'
+import { useEmployeeStore } from '@/stores/employeeStore' // Đảm bảo bạn đã import store này nếu chưa có ở file thực tế
 
 const props = defineProps({ item: { type: Object, default: null } })
 const emit = defineEmits(['close','create','update'])
-// Khởi tạo form với giá trị mặc định
+const empStore = useEmployeeStore()
+
 const form = reactive({
   employeeName: '',
   employeeCode: '',
@@ -91,30 +84,34 @@ const form = reactive({
   fromDate: '',
   toDate: '',
   days: 1,
-  reason: '',
-  status: 'Chờ duyệt'
+  reason: ''
 })
 
-// Inline validation errors
 const errors = reactive({ employeeName: '', employeeCode: '', fromDate: '', toDate: '' })
 
 // Danh sách nhân viên để gợi ý khi nhập tên
-const employees = ref<any[]>([])
+const employees = ref([])
 const query = ref('')
+
 const suggestions = computed(() => {
   const q = query.value.trim().toLowerCase()
   if (!q) return []
-  return employees.value.filter(e => (e.name || e.employeeCode || e.employeeName || '').toString().toLowerCase().includes(q)).slice(0,8)
+  return employees.value.filter(e => 
+    (e.employeeCode || e.name || e.employeeName || '').toString().toLowerCase().includes(q)
+  ).slice(0, 8)
 })
+
 const showSuggestions = ref(false)
 
 onMounted(async () => {
   try {
-    employees.value = await $fetch('/data/employees.json')
+    empStore.loadDataFromLocal()
+    employees.value = empStore.employees
   } catch (e) {
     employees.value = []
   }
-})
+}) 
+
 // Theo dõi thay đổi của props.item để cập nhật form khi chỉnh sửa hoặc reset khi tạo mới
 watch(() => props.item, (v) => {
   if (v) {
@@ -125,7 +122,6 @@ watch(() => props.item, (v) => {
     form.toDate = v.toDate || ''
     form.days = v.days || 1
     form.reason = v.reason || ''
-    form.status = v.status || 'Chờ duyệt'
   } else {
     form.employeeName = ''
     form.employeeCode = ''
@@ -134,20 +130,34 @@ watch(() => props.item, (v) => {
     form.toDate = ''
     form.days = 1
     form.reason = ''
-    form.status = 'Chờ duyệt'
   }
-}, { immediate: true })// Thêm immediate: true để chạy ngay khi component được tạo
-// Xác định xem đang ở chế độ chỉnh sửa hay tạo mới
+}, { immediate: true })
+
 const isEdit = computed(() => !!props.item)
-// Tính số ngày từ fromDate và toDate (bao gồm cả hai đầu)
-function computeDays(from: string, to: string) {
+
+function computeDays(from, to) {
   if (!from || !to) return 1
-  const f = new Date(from)
-  const t = new Date(to)
-  // Đặt giờ về giữa trưa để tránh lỗi do múi giờ khi tính toán
-  f.setHours(12,0,0,0); t.setHours(12,0,0,0)
-  const diff = Math.round((t.getTime() - f.getTime()) / (24 * 3600 * 1000))
-  return diff >= 0 ? diff + 1 : 1
+  const startDate = new Date(from)
+  const endDate = new Date(to)
+  startDate.setHours(12, 0, 0, 0)
+  endDate.setHours(12, 0, 0, 0)
+
+  if (endDate < startDate) return 1
+
+  let workingDaysCount = 0
+  let currentDate = new Date(startDate)
+
+  while (currentDate <= endDate) {
+    const dayOfWeek = currentDate.getDay()
+    // Nếu KHÔNG PHẢI là Chủ Nhật (0) và KHÔNG PHẢI là Thứ 7 (6) thì mới đếm
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      workingDaysCount++
+    }
+    currentDate.setDate(currentDate.getDate() + 1)
+  }
+
+  // Đảm bảo trả về ít nhất 1 ngày (trong trường hợp người ta xin nghỉ trùng vào đúng thứ 7/CN)
+  return workingDaysCount > 0 ? workingDaysCount : 0
 }
 
 // cập nhật days khi from/to thay đổi
@@ -156,7 +166,6 @@ watch(() => [form.fromDate, form.toDate], ([from, to]) => {
     const fDate = new Date(from)
     const tDate = new Date(to)
     if (tDate < fDate) {
-      // nếu to < from thì đặt to = from
       form.toDate = from
     }
     form.days = computeDays(form.fromDate, form.toDate)
@@ -164,34 +173,36 @@ watch(() => [form.fromDate, form.toDate], ([from, to]) => {
     form.days = 1
   }
 })
+
 // Hàm xử lý khi người dùng chọn một gợi ý nhân viên từ danh sách
-function pickSuggestion(emp: any) {
-  form.employeeName = emp.name || emp.employeeName || ''
+function pickSuggestion(emp) {
   form.employeeCode = emp.employeeCode || ''
-  form.department = emp.history[0].department || ''
+  form.employeeName = emp.name || emp.employeeName || ''
+  form.department = emp.history?.[0]?.department || ''
   showSuggestions.value = false
 }
+
 // Hàm xử lý khi người dùng nhập vào trường tên để hiển thị gợi ý
 function onNameInput() {
-  query.value = form.employeeName
+  query.value = form.employeeCode
   showSuggestions.value = !!query.value
 }
 
-// Ham xử lý khi người dùng nhấn nút tạo hoặc lưu
-function submit(){
-  // validate các trường bắt buộc (inline)
+function submit() {
   errors.employeeName = ''
   errors.employeeCode = ''
   errors.fromDate = ''
   errors.toDate = ''
+  
   let ok = true
+  
   if (!form.employeeName) { errors.employeeName = 'Họ và tên là bắt buộc'; ok = false }
   if (!form.employeeCode) { errors.employeeCode = 'Mã nhân viên là bắt buộc'; ok = false }
-  if (!form.fromDate) { errors.fromDate = 'Chọn Từ ngày'; ok = false }
-  if (!form.toDate) { errors.toDate = 'Chọn Đến ngày'; ok = false }
+  if (!form.fromDate) { errors.fromDate = 'Vui lòng chọn ngày bắt đầu'; ok = false }
+  if (!form.toDate) { errors.toDate = 'Vui lòng chọn ngày kết thúc'; ok = false }
+  
   if (!ok) return
 
-  // Với thao tác tạo mới, ép trạng thái về 'Chờ duyệt'
   const payload = {
     employeeName: form.employeeName,
     employeeCode: form.employeeCode,
@@ -199,8 +210,7 @@ function submit(){
     fromDate: form.fromDate,
     toDate: form.toDate,
     days: form.days,
-    reason: form.reason,
-    status: isEdit.value ? form.status : 'Chờ duyệt'
+    reason: form.reason
   }
 
   if (isEdit.value && props.item && props.item.id) {

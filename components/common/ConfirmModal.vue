@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 // Khai báo các Props để tùy biến Modal từ bên ngoài
 defineProps({
   isOpen: { type: Boolean, default: false },

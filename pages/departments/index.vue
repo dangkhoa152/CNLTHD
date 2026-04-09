@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDepartmentStore } from '@/stores/departmentStore'
 import DepartmentModal from '@/components/departments/DepartmentModal.vue'
-import StatCard from '@/components/dashboard/StatCard.vue'
+import StatCard from '@/components/common/StatCard.vue'
 
 const departmentStore = useDepartmentStore()
 const router = useRouter()

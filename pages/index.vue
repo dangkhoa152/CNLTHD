@@ -169,7 +169,7 @@ import { useEmployeeStore } from '~/stores/employeeStore'
 import { useDepartmentStore } from '~/stores/departmentStore'
 import { useLeaveRequestStore } from '~/stores/leaveRequestStore'
 import { useActivityStore } from '~/stores/activityStore'
-import StatCard from '@/components/dashboard/StatCard.vue'
+import StatCard from '@/components/common/StatCard.vue'
 
 ChartJS.register(...registerables)
 
