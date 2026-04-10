@@ -176,24 +176,24 @@ function openEdit(item) {
 function approve(item) {
   const userName = auth.user?.name || 'Admin HR'
   leaveStore.approveLeaveRequest(item.id, userName)
-  selected.value = null
   setTimeout(() => {
     dashboard.addActivity({ type: 'approve', title: `Duyệt đơn nghỉ phép của ${item.employeeName}`, user: userName })
     activityStore.logActivity('edit', 'Duyệt đơn nghỉ phép', item.employeeName)
     toast.success('Đã duyệt đơn!')
   }, 50)
+  selected.value = null
+
 }
 // Từ chối đơn
 function reject(item) {
   leaveStore.rejectLeaveRequest(item.id, auth.user?.name || 'Admin HR', item.rejectionReason || '')
   const userName = auth.user?.name || 'Admin HR'
-  selected.value = null
   setTimeout(() => {
     dashboard.addActivity({ type: 'reject', title: `Từ chối đơn nghỉ phép của ${item.employeeName}`, user: userName })
     activityStore.logActivity('edit', 'Từ chối đơn nghỉ phép', item.employeeName)
     toast.warning('Đã từ chối đơn!')
   }, 50)
-
+  selected.value = null
 }
 // Xác nhận trước khi xóa đơn nghỉ phép
 function handleDeleteClick(item) {
