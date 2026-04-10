@@ -27,7 +27,7 @@ export const useDepartmentStore = defineStore('department', () => {
       let currentDeptName = null
 
       if (emp.history && emp.history.length > 0) {
-        // Đọc theo chuẩn mới của bạn bạn
+        // Đọc theo chuẩn mới với mảng history
         currentDeptId = emp.history[0].departmentId
         currentDeptName = emp.history[0].department
       } else {
