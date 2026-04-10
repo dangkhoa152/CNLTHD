@@ -135,12 +135,12 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useEmployeeStore } from '@/stores/employeeStore' 
 import { useLeaveRequestStore } from '@/stores/leaveRequestStore' 
-import { useDepartmentStore } from '@/stores/departmentStore' // 👉 Bổ sung import
-import { useActivityStore } from '@/stores/activityStore' // 👉 Bổ sung import
+import { useDepartmentStore } from '@/stores/departmentStore' 
+import { useActivityStore } from '@/stores/activityStore' 
 import { useAuthStore } from '@/stores/auth'
 import getNowString from '~/utils/formatDate'
 import EmployeeForm from '@/components/employees/EmployeeForm.vue'
-import { toast } from 'vue3-toastify' // 👉 Bổ sung import toast
+import { toast } from 'vue3-toastify' 
 
 const auth = useAuthStore()
 const route = useRoute()
