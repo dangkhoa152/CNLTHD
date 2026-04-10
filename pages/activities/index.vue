@@ -1,4 +1,9 @@
 <script setup>
+
+definePageMeta({
+  middleware: ['auth', 'admin'] 
+})
+
 import { ref, onMounted, computed } from 'vue'
 import { useActivityStore } from '@/stores/activityStore'
 import getNowString from '~/utils/formatDate'

@@ -1,7 +1,7 @@
 <template>
   <div class="p-6 max-w-7xl mx-auto" v-if="employee">
     
-    <button @click="$router.push('/employees')" class="mb-6 flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
+    <button v-if="auth.user?.role === 'admin'" @click="$router.push('/employees')" class="mb-6 flex items-center text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">
       <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
       Quay lại danh sách
     </button>
@@ -21,7 +21,16 @@
       </div>
 
       <div class="flex-1 w-full border-t md:border-t-0 md:border-l border-gray-200 dark:border-gray-700 md:pl-8 pt-4 md:pt-0">
-        <h3 class="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">Hồ sơ cá nhân</h3>
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-sm font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">Hồ sơ cá nhân</h3>
+          <button 
+            v-if="auth.user?.role === 'employee'" 
+            @click="open"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
+          >
+            Sửa thông tin
+          </button>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 text-sm">
           
           <div class="flex flex-col"><span class="text-gray-500 dark:text-gray-400 mb-1">Mã nhân viên</span> <span class="font-medium text-gray-900 dark:text-gray-200">{{ employee.employeeCode }}</span></div>
@@ -122,6 +131,8 @@
     </div>
   </div>
   
+  <EmployeeForm v-if="showEditModal" :isEdit="true" :departments="depStore.departments" :item="employee" @close="closeForm" @updated="update" />
+
   <div v-else class="flex flex-col justify-center items-center h-screen text-gray-500 dark:text-gray-400">
     <svg class="animate-spin mb-3 h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
     <p>Đang tải hồ sơ...</p>
@@ -129,19 +140,29 @@
 </template>
 
 <script setup>
+
+definePageMeta({
+  middleware: ['auth'] 
+})
+
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useEmployeeStore } from '@/stores/employeeStore' 
 import getNowString from '~/utils/formatDate'
 import { useLeaveRequestStore } from '@/stores/leaveRequestStore' 
-
+import { useAuthStore } from '@/stores/auth'
+import EmployeeForm from '@/components/employees/EmployeeForm.vue'
+const auth = useAuthStore()
 const route = useRoute()
 const router = useRouter()
 const employeeStore = useEmployeeStore()
 const leaveRequestStore = useLeaveRequestStore()
-
-// Khai báo state
+const depStore = useDepartmentStore()
 const employee = ref(null)
+
+const formVisible = ref(false)
+const showEditModal = ref(false)
+const currentIdOnURL = route.params.id
 
 const employeeLeaves = computed(() => {
   if (!employee.value) return []
@@ -155,10 +176,10 @@ const employeeLeaves = computed(() => {
 const currentRole = computed(() => {
   return employee.value?.history?.[0] || null
 })
-
+ 
 // Nạp dữ liệu khi mở tranga
 onMounted(async () => {
-  const rawId = String(route.params.id).replace(/\D/g, '') 
+  const rawId = String(currentIdOnURL).replace(/\D/g, '') 
   const employeeId = Number(rawId)
 
   // Gọi API/Local Storage để nạp dữ liệu vào Store
@@ -169,12 +190,49 @@ onMounted(async () => {
   
   const foundEmployee = employeeStore.employees.find(emp => emp.id === employeeId)
   
-  if (foundEmployee) {
-    employee.value = foundEmployee
-  } else {
+  if (!foundEmployee) {
     alert('Không tìm thấy dữ liệu nhân viên!')
     router.push('/employees')
   }
+  
+  if (auth.user?.role === 'employee' && auth.user?.id !== foundEmployee.id) {
+    navigateTo('/') 
+  }
+  employee.value = foundEmployee
+
 })
 
+function open() {
+  showEditModal.value = true
+}
+function update(payload) {
+  if (showEditModal.value) {
+    if (!payload || !payload.id) return
+    employeeStore.updateEmployee(payload.id, payload.patch || {})
+    selected.value = null;
+    closeForm()
+    logUpdate(payload)
+  }
+}
+
+function closeForm() {
+  showEditModal.value = false
+}
+
+function logUpdate(payload) {
+  const targetName = employee.value?.name || payload.name || 'Hồ sơ nhân viên'
+  const userName = auth.user?.name || 'Admin HR'
+
+  setTimeout(() => {
+    dashboard.addActivity({ 
+      type: 'update', 
+      title: `Cập nhật thông tin của ${targetName}`, 
+      user: userName 
+    })
+    
+    activityStore.logActivity('edit', 'Cập nhật hồ sơ nhân viên', targetName, userName)
+    
+    toast.info(`Cập nhật thành công`)
+  }, 50)
+}
 </script>

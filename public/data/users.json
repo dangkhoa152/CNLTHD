@@ -1,9 +1,26 @@
 [
   {
-    "id": 1,
+    "id": 1001,
     "email": "admin@company.com",
     "password": "123456",
     "name": "Admin HR",
-    "role": "Administrator"
+    "role": "admin",
+    "employeeCode": ""
+  },
+  {
+    "id": 1,
+    "email": "leanhtrang1@company.com",
+    "password": "123456",
+    "name": "Lê Anh Trang",
+    "role": "employee",
+    "employeeCode": "EMP0001"
+  },
+  {
+    "id": 2,
+    "email": "buivanson2@company.com",
+    "password": "123456",
+    "name": "Bùi Văn Sơn",
+    "role": "employee",
+    "employeeCode": "EMP0002"
   }
 ]

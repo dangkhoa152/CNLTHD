@@ -71,14 +71,11 @@ export const useEmployeeStore = defineStore('employees', () => {
 
   const searchEmployees = computed(() => {
     return employees.value.filter(i => {
-      // Trích xuất phòng ban hiện tại từ mảng history
       const currentDept = i.history?.[0]?.department || ''
-      // Lọc theo  Department (from Department UI)
       if (selectedDepartment.value && currentDept !== selectedDepartment.value) return false
 
       if (query.value.status && i.status !== query.value.status) return false
       if (query.value.department && currentDept !== query.value.department) return false
-      // Lọc theo từ khóa tìm kiếm (Search box)
       const q = (query.value.query || '').toLowerCase()
       if (q) {
         return [i.name, i.employeeCode, i.history[0].department, i.history[0].position || '']

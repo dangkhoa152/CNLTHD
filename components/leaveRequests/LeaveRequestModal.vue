@@ -65,8 +65,8 @@
         <div class="px-6 pb-6 pt-2 flex justify-end gap-3 bg-white dark:bg-slate-950">
           
           <template v-if="!isRejecting">
-            <button v-if="item.status === 'Chờ duyệt'" @click="confirmApprove" class="bg-green-600 dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-600 text-white px-5 py-2.5 rounded-xl font-medium transition-colors">Duyệt đơn</button>
-            <button v-if="item.status === 'Chờ duyệt'" @click="startReject" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-medium transition-colors">Từ chối</button>
+            <button v-if="item.status === 'Chờ duyệt' && auth.user?.role === 'admin'" @click="confirmApprove" class="bg-green-600 dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-600 text-white px-5 py-2.5 rounded-xl font-medium transition-colors">Duyệt đơn</button>
+            <button v-if="item.status === 'Chờ duyệt' && auth.user?.role === 'admin'" @click="startReject" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-medium transition-colors">Từ chối</button>
             <button @click="$emit('close')" class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 px-5 py-2.5 rounded-xl font-medium transition-colors">Đóng</button>
           </template>
 
@@ -81,115 +81,102 @@
 </template>
 
 <script setup>
-    import { reactive, ref, watch } from 'vue'
-    import getNowString from '@/utils/formatDate'
-    const props = defineProps({ item: { type: Object, default: null } })
-    const emit = defineEmits(['close', 'approve', 'reject', 'update'])
+import { reactive, ref, watch } from 'vue'
+import getNowString from '@/utils/formatDate'
 
-    const isRejecting = ref(false) 
-    const rejectError = ref('')   
+const auth = useAuthStore()
+const props = defineProps({ item: { type: Object, default: null } })
+const emit = defineEmits(['close', 'approve', 'reject'])
 
-    const form = reactive({
-      fromDate: '',
-      toDate: '',
-      days: 1,
-      reason: '',
-      status: '',
-      rejectionReason: '' 
-    })
+const isRejecting = ref(false) 
+const rejectError = ref('')   
 
-    watch(() => props.item, (v) => {
-      if (v) {
-        form.fromDate = v.fromDate || ''
-        form.toDate = v.toDate || ''
-        form.days = v.days || 1
-        form.reason = v.reason || ''
-        form.status = v.status || ''
-        form.rejectionReason = v.rejectionReason || ''
-        isRejecting.value = false
-        rejectError.value = ''
-      }
-    }, { immediate: true })
+const form = reactive({
+  fromDate: '',
+  toDate: '',
+  days: 1,
+  reason: '',
+  status: '',
+  rejectionReason: '' 
+})
 
-    function confirmApprove() {
-      const updatedItem = {
-        ...props.item,
-      }
-      emit('approve', updatedItem)
-    }
+watch(() => props.item, (v) => {
+  if (v) {
+    form.fromDate = v.fromDate || ''
+    form.toDate = v.toDate || ''
+    form.days = v.days || 1
+    form.reason = v.reason || ''
+    form.status = v.status || ''
+    form.rejectionReason = v.rejectionReason || ''
+    isRejecting.value = false
+    rejectError.value = ''
+  }
+}, { immediate: true })
 
-    function startReject() {
-      isRejecting.value = true
-      rejectError.value = ''
-      form.rejectionReason = ''
-    }
+function confirmApprove() {
+  const updatedItem = {
+    ...props.item,
+  }
+  emit('approve', updatedItem)
+}
 
-    function cancelReject() {
-      isRejecting.value = false
-      rejectError.value = ''
-      form.rejectionReason = ''
-    }
+function startReject() {
+  isRejecting.value = true
+  rejectError.value = ''
+  form.rejectionReason = ''
+}
 
-    function confirmReject() {
-      if (!form.rejectionReason || !form.rejectionReason.trim()) {
-        rejectError.value = 'Vui lòng nhập lý do từ chối để nhân sự nắm thông tin!'
-        return
-      }
-      const updatedItem = {
-        ...props.item,
-        rejectionReason: form.rejectionReason.trim()
-      }
-      emit('reject', updatedItem)     
-      isRejecting.value = false
-    }
+function cancelReject() {
+  isRejecting.value = false
+  rejectError.value = ''
+  form.rejectionReason = ''
+}
 
-    function cancel(){
-      if (props.item) {
-        form.fromDate = props.item.fromDate || ''
-        form.toDate = props.item.toDate || ''
-        form.days = props.item.days || 1
-        form.reason = props.item.reason || ''
-        form.status = props.item.status || ''
-        form.rejectionReason = props.item.rejectionReason || ''
-      }
-    }
+function confirmReject() {
+  if (!form.rejectionReason || !form.rejectionReason.trim()) {
+    rejectError.value = 'Vui lòng nhập lý do từ chối để nhân sự nắm thông tin!'
+    return
+  }
+  const updatedItem = {
+    ...props.item,
+    rejectionReason: form.rejectionReason.trim()
+  }
+  emit('reject', updatedItem)     
+  isRejecting.value = false
+}
 
-    function save(){
-      if (!props.item) return
-      const patch = {
-        fromDate: form.fromDate,
-        toDate: form.toDate,
-        days: form.days,
-        reason: form.reason,
-        status: form.status,
-        rejectionReason: form.rejectionReason
-      }
-      emit('update', { id: props.item.id, patch })
-      editing.value = false
-      emit('close')
-    }
+function cancel(){
+  if (props.item) {
+    form.fromDate = props.item.fromDate || ''
+    form.toDate = props.item.toDate || ''
+    form.days = props.item.days || 1
+    form.reason = props.item.reason || ''
+    form.status = props.item.status || ''
+    form.rejectionReason = props.item.rejectionReason || ''
+  }
+}
 
-    function fmtDate(d){
-      if(!d) return '-'
-      try {
-        const dt = new Date(d)
-        const hours = String(dt.getHours()).padStart(2, '0')
-        const minutes = String(dt.getMinutes()).padStart(2, '0')
-        const day = String(dt.getDate()).padStart(2, '0')
-        const month = String(dt.getMonth() + 1).padStart(2, '0')
-        const year = dt.getFullYear()
-        return `${hours}:${minutes} - ${day}/${month}/${year}`
-      } catch(e){
-        return d
-      }
-    }
+function fmtDate(d){
+  if(!d) return '-'
+  try {
+    const dt = new Date(d)
+    const hours = String(dt.getHours()).padStart(2, '0')
+    const minutes = String(dt.getMinutes()).padStart(2, '0')
+    const day = String(dt.getDate()).padStart(2, '0')
+    const month = String(dt.getMonth() + 1).padStart(2, '0')
+    const year = dt.getFullYear()
+    return `${hours}:${minutes} - ${day}/${month}/${year}`
+  } catch(e){
+    return d
+  }
+}
 
-    function badgeClass(s){
-      if(!s) return 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700'
-      if(s === 'Đã duyệt') return 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800/50'
-      if(s === 'Từ chối' || s === 'Đã từ chối') return 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800/50'
-      return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50'
-    }
+function badgeClass(s){
+  if(!s) return 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700'
+  if(s === 'Đã duyệt') return 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800/50'
+  if(s === 'Từ chối' || s === 'Đã từ chối') return 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800/50'
+  return 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800/50'
+}
 </script>
 
 <style scoped>

@@ -39,10 +39,32 @@
             </button>
           </form>
 
-          <div class="mt-8 rounded-3xl bg-slate-100 p-4 text-sm text-slate-600 dark:bg-slate-900 dark:text-slate-300">
-            <p class="font-semibold mb-2">Tài khoản mẫu</p>
-            <p>Email: <span class="font-medium">admin@company.com</span></p>
-            <p>Password: <span class="font-medium">123456</span></p>
+          <div class="mt-8 rounded-3xl bg-slate-100 p-5 dark:bg-slate-900/50 border dark:border-slate-800">
+            <p class="font-semibold mb-3 text-sm text-slate-700 dark:text-slate-300">Đăng nhập nhanh (Tài khoản mẫu)</p>
+            <div class="grid grid-cols-2 gap-3">
+              <button 
+                type="button"
+                @click="fillDemoAccount('admin')"
+                class="flex flex-col items-start p-3 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 dark:border-blue-800/50 dark:hover:bg-blue-900/40 transition text-left"
+              >
+                <span class="text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">👑 Admin</span>
+              </button>
+
+              <button 
+                type="button"
+                @click="fillDemoAccount('employee1')"
+                class="flex flex-col items-start p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition text-left"
+              >
+                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">👤 Nhân viên 1</span>
+              </button>
+              <button 
+                type="button"
+                @click="fillDemoAccount('employee2')"
+                class="flex flex-col items-start p-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:hover:bg-slate-700 transition text-left"
+              >
+                <span class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">👤 Nhân viên 2</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -85,9 +107,6 @@ const password = ref('123456')
 const dashboard = useDashboardStore()
 const activityStore = useActivityStore()
 
-const userName = auth.user?.name || 'Admin HR'
-
-
 async function handleLogin() {
   const result = await auth.login(email.value, password.value)
 
@@ -112,5 +131,16 @@ async function handleLogin() {
 
   toast.success(result.message)
   await navigateTo('/')
+}
+
+function fillDemoAccount(role) {
+  if (role === 'admin') {
+    email.value = 'admin@company.com'
+  } else if (role === 'employee1') {
+      email.value = 'leanhtrang1@company.com'
+    } else  {
+    email.value = 'buivanson2@company.com'
+    }
+  password.value = '123456'
 }
 </script>
