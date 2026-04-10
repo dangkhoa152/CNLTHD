@@ -10,13 +10,13 @@
       <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
         <p class="text-sm text-slate-500 dark:text-slate-400">Bảng điều khiển tổng quan cung cấp số liệu và biểu đồ quan trọng.</p>
         <div class="flex flex-wrap gap-2">
-          <NuxtLink to="/employees" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
+          <NuxtLink v-if="auth.user?.role==='admin'" to="/employees" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
             👥 Nhân viên
           </NuxtLink>
-          <NuxtLink to="/departments" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
+          <NuxtLink v-if="auth.user?.role==='admin'" to="/departments" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
             🏢 Phòng ban
           </NuxtLink>
-          <NuxtLink to="/leave-requests" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
+          <NuxtLink v-if="auth.user?.role==='admin'" to="/leave-requests" class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">
             📝 Nghỉ phép
           </NuxtLink>
         </div>
@@ -176,7 +176,7 @@ ChartJS.register(...registerables)
 definePageMeta({
   middleware: ['auth']
 })
-
+const auth = useAuthStore()
 const employeeStore = useEmployeeStore()
 const departmentStore = useDepartmentStore()
 const leaveRequestStore = useLeaveRequestStore()

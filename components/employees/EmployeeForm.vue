@@ -148,7 +148,7 @@ const props = defineProps({
     default: () => []
   }
 })
-
+const auth = useAuthStore()
 const emit = defineEmits(['close', 'create', 'update'])
 
 const isEdit = computed(() => !!props.item)
