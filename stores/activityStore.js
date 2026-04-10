@@ -6,7 +6,7 @@ import { loadLocalStorageJSON, loadOrFetchArray, saveLocalStorageJSON } from '~/
 export const useActivityStore = defineStore('activity', () => {
   const activities = ref([])
   const isLoading = ref(false)
-
+  const auth = useAuthStore()
   function saveToLocal() {
     saveLocalStorageJSON('hr_activities', activities.value)
   }
@@ -35,7 +35,7 @@ export const useActivityStore = defineStore('activity', () => {
   }
 
   // Hàm ghi nhận hoạt động mới (Khớp 100% với JSON của bạn)
-  const logActivity = (type, title, target, user = 'Admin HR') => {
+  const logActivity = (type, title, target, user = auth.user.name) => {
     if (activities.value.length === 0) {
       loadFromLocal()
     }
