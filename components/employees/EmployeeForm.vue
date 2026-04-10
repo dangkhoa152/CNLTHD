@@ -136,10 +136,10 @@
 <script setup>
 import { reactive, computed, watch } from 'vue'
 import { useEmployeeStore } from '@/stores/employeeStore'
+import { useAuthStore } from '@/stores/auth'
 
 const employeeStore = useEmployeeStore()
 
-// ... (Đoạn script JS bên dưới giữ nguyên y hệt như phiên bản trước) ...
 const props = defineProps({
   isEdit: Boolean,
   item: Object,
@@ -148,10 +148,9 @@ const props = defineProps({
     default: () => []
   }
 })
+
 const auth = useAuthStore()
 const emit = defineEmits(['close', 'create', 'update'])
-
-const isEdit = computed(() => !!props.item)
 
 const form = reactive({
   employeeCode: '',
@@ -228,7 +227,7 @@ function submit() {
     return
   }  
 
-  if (!isEdit.value) {
+  if (!props.isEdit) {
     emit('create', {...form})
   } else {
     emit('update', { id: props.item.id, patch: {...form} })
