@@ -2,10 +2,10 @@
   <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
     <div class="p-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
       <div class="flex flex-wrap items-center gap-2">
-        <button @click="bulkApprove" :disabled="selectedIds.size===0" class="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50">
+        <button v-if="auth.user?.role === 'admin'" @click="bulkApprove" :disabled="selectedIds.size===0" class="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50">
           Duyệt hàng loạt
         </button>
-        <button @click="bulkReject" :disabled="selectedIds.size===0" class="inline-flex items-center gap-2 rounded-full bg-rose-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:opacity-50">
+        <button v-if="auth.user?.role === 'admin'" @click="bulkReject" :disabled="selectedIds.size===0" class="inline-flex items-center gap-2 rounded-full bg-rose-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:opacity-50">
           Từ chối hàng loạt
         </button>
       </div>
@@ -14,7 +14,7 @@
     <table class="min-w-full table-fixed divide-y border-separate border-spacing-y-2">
       <thead class="bg-gray-50 dark:bg-gray-700 sticky top-0 z-10">
         <tr>
-          <th class="w-16 text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300"><input type="checkbox" :checked="allSelected" @change="toggleAll($event.target.checked)" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" /></th>
+          <th v-if="auth.user?.role === 'admin'" class="w-16 text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300"><input type="checkbox" :checked="allSelected" @change="toggleAll($event.target.checked)" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" /></th>
           <th @click="$emit('sort', 'id')" class="w-12 px-4 py-3 cursor-pointer text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
             <div class="flex items-center gap-1">
               ID
@@ -74,7 +74,8 @@ import LeaveRequestRow from './LeaveRequestRow.vue'
 import SortIcon from '../common/SortIcon.vue'
 import { ref, computed, watch } from 'vue'
 
-//Khởi tạo props để nhận dữ liệu từ component cha và định nghĩa các sự kiện để giao tiếp với component cha
+const auth = useAuthStore() 
+
 const props = defineProps({ 
   items: { type: Array, default: () => [] }, 
   sortColumn: { type: String, default: '' },

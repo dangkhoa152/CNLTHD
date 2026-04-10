@@ -11,6 +11,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     const sortColumn = ref('')
     const sortOrder = ref('asc')
     const employeeStore = useEmployeeStore()
+    const auth = useAuthStore()
 
     // Lưu data vào LocalStorage
     function saveToLocal() {
@@ -156,33 +157,33 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     function getStandardDateString(dateInput) {
         if (!dateInput) return '';
         const d = new Date(dateInput);
-        
-        // Nếu ngày bị lỗi (Invalid Date), trả về rỗng
         if (isNaN(d.getTime())) return ''; 
-        
         const yyyy = d.getFullYear();
         const mm = String(d.getMonth() + 1).padStart(2, '0');
         const dd = String(d.getDate()).padStart(2, '0');
         
-        return `${yyyy}-${mm}-${dd}`; // Luôn trả ra đúng chuẩn YYYY-MM-DD
+        return `${yyyy}-${mm}-${dd}`;
     }
     // Tìm kiếm và lọc đơn nghỉ phép dựa trên query
     const searchLeaveRequest = computed(() => {
         return leaveRequests.value.filter(i => {
-            if (query.value.status && i.status !== query.value.status) return false;
-            if (query.value.department && i.department !== query.value.department) return false;
-            console.log('Comparing dates:', i.createdAt, query.value.createdAt)
-            if (query.value.createdAt) {
-                const itemDateStr = getStandardDateString(i.createdAt);
-                const filterDateStr = getStandardDateString(query.value.createdAt);
-                if(itemDateStr !== filterDateStr) return false;
-                
+            if (auth.user?.role === 'employee' && String(i.employeeCode) !== String(auth.user.employeeCode)) return false;
+            else{
+                if (query.value.status && i.status !== query.value.status) return false;
+                if (query.value.department && i.department !== query.value.department) return false;
+                if (query.value.createdAt) {
+                    const itemDateStr = getNowString(i.createdAt);
+                    const filterDateStr = getNowString(query.value.createdAt);
+                    if(itemDateStr !== filterDateStr) return false;
+                    
+                }
+                const q = (query.value.query || '').toLowerCase().trim();
+                if (q) {
+                    return [i.employeeName, i.employeeCode, i.reason].join(' ').toLowerCase().includes(q);
+                }
+                return true;
             }
-            const q = (query.value.query || '').toLowerCase().trim();
-            if (q) {
-                return [i.employeeName, i.employeeCode, i.reason].join(' ').toLowerCase().includes(q);
-            }
-            return true;
+            
         });
     });
 

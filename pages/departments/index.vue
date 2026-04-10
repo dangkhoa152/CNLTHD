@@ -1,4 +1,9 @@
 <script setup>
+
+definePageMeta({
+  middleware: ['auth', 'admin'] 
+})
+
 import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDepartmentStore } from '@/stores/departmentStore'
