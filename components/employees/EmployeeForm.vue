@@ -135,7 +135,11 @@
 
 <script setup>
 import { reactive, computed, watch } from 'vue'
-const auth = useAuthStore()
+import { useEmployeeStore } from '@/stores/employeeStore'
+
+const employeeStore = useEmployeeStore()
+
+// ... (Đoạn script JS bên dưới giữ nguyên y hệt như phiên bản trước) ...
 const props = defineProps({
   isEdit: Boolean,
   item: Object,
@@ -213,6 +217,17 @@ function submit() {
     return
   }
   
+  const isDuplicate = employeeStore.employees.some(
+    (e) =>
+      e.employeeCode === form.employeeCode &&
+      e.id !== props.item?.id
+  )
+
+  if (isDuplicate) {
+    alert('Mã nhân viên đã tồn tại!')
+    return
+  }  
+
   if (!isEdit.value) {
     emit('create', {...form})
   } else {
