@@ -21,11 +21,11 @@
         <div class="md:col-span-2">
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Người xin <span class="text-sm text-red-600">*</span></label>
           <div class="mt-1 flex gap-2 relative">        
-            <input v-model="form.employeeCode"  @input="onNameInput" :disabled="isEdit" type="text" placeholder="Mã nhân viên" class="w-36 rounded-md 
+            <input v-model="form.employeeCode"  @input="onNameInput" :disabled="isEdit || auth.user?.role === 'employee'" type="text" placeholder="Mã nhân viên" class="w-36 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
-            <input v-model="form.employeeName"  :disabled="isEdit" type="text" placeholder="Họ và tên" class="flex-1 rounded-md 
+            <input v-model="form.employeeName"  :disabled="isEdit || auth.user?.role === 'employee'" type="text" placeholder="Họ và tên" class="flex-1 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
-            <input v-model="form.department" :disabled="isEdit" type="text" placeholder="Phòng ban" class="w-48 rounded-md 
+            <input v-model="form.department" :disabled="isEdit || auth.user?.role === 'employee'" type="text" placeholder="Phòng ban" class="w-48 rounded-md 
             border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
           </div>
           <div v-if="showSuggestions && suggestions.length" class="absolute bg-white dark:bg-gray-800 border w-full max-w-2xl mt-1 rounded shadow z-20">
@@ -72,6 +72,8 @@
 <script setup>
 import { reactive, watch, computed, ref, onMounted } from 'vue'
 import { useEmployeeStore } from '@/stores/employeeStore' // Đảm bảo bạn đã import store này nếu chưa có ở file thực tế
+import {useAuthStore} from '@/stores/auth'
+const auth = useAuthStore() 
 
 const props = defineProps({ item: { type: Object, default: null } })
 const emit = defineEmits(['close','create','update'])
@@ -107,6 +109,12 @@ onMounted(async () => {
   try {
     empStore.loadDataFromLocal()
     employees.value = empStore.employees
+    if (auth.user?.role === 'employee' && !isEdit.value) {
+      const emp = employees.value.find(e => e.employeeCode === auth.user.employeeCode)
+      form.employeeName = emp?.name || ''
+      form.employeeCode = emp?.employeeCode || ''
+      form.department = emp?.history?.[0]?.department || ''
+    }
   } catch (e) {
     employees.value = []
   }
@@ -123,13 +131,11 @@ watch(() => props.item, (v) => {
     form.days = v.days || 1
     form.reason = v.reason || ''
   } else {
-    form.employeeName = ''
-    form.employeeCode = ''
-    form.department = ''
-    form.fromDate = ''
-    form.toDate = ''
-    form.days = 1
-    form.reason = ''
+    
+        form.employeeName = ''
+        form.employeeCode = ''
+        form.department = ''
+    
   }
 }, { immediate: true })
 
@@ -149,14 +155,13 @@ function computeDays(from, to) {
 
   while (currentDate <= endDate) {
     const dayOfWeek = currentDate.getDay()
-    // Nếu KHÔNG PHẢI là Chủ Nhật (0) và KHÔNG PHẢI là Thứ 7 (6) thì mới đếm
+    // không đếm thứ 7 và chủ nhật
     if (dayOfWeek !== 0 && dayOfWeek !== 6) {
       workingDaysCount++
     }
     currentDate.setDate(currentDate.getDate() + 1)
   }
 
-  // Đảm bảo trả về ít nhất 1 ngày (trong trường hợp người ta xin nghỉ trùng vào đúng thứ 7/CN)
   return workingDaysCount > 0 ? workingDaysCount : 0
 }
 

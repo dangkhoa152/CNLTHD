@@ -38,28 +38,16 @@
         <span>Dashboard</span>
       </NuxtLink>
 
-      <NuxtLink
-        to="/employees"
+      <NuxtLink v-if="auth.user?.role === 'employee'" 
+        :to="`/employees/[${auth.user?.employeeCode}]`"
         class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
-        :class="route.path === '/employees' || route.path.startsWith('/employees/')
+        :class="route.path === `/employees/[${auth.user?.employeeCode}]` || route.path.startsWith(`/employees/]${auth.user?.employeeCode}]/`)
           ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
         @click="$emit('close')"
-      >
-        <span class="text-lg">👥</span>
-        <span>Quản lý nhân viên</span>
-      </NuxtLink>
-
-      <NuxtLink
-        to="/departments"
-        class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
-        :class="route.path === '/departments' || route.path.startsWith('/departments/')
-          ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
-          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-        @click="$emit('close')"
-      >
-        <span class="text-lg">🏢</span>
-        <span>Phòng ban</span>
+        >
+        <span class="text-lg">👤</span>
+        <span>Hồ sơ của tôi</span>
       </NuxtLink>
 
       <NuxtLink
@@ -71,20 +59,47 @@
         @click="$emit('close')"
       >
         <span class="text-lg">📝</span>
-        <span>Nghỉ phép</span>
+        <span v-if="auth.user?.role === 'admin'">Quản lý đơn nghỉ phép</span>
+        <span v-if="auth.user?.role === 'employee'">Đơn nghỉ phép</span>
       </NuxtLink>
 
-      <NuxtLink
-        to="/activities"
-        class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
-        :class="route.path === '/activities' || route.path.startsWith('/activities/')
-          ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
-          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
-        @click="$emit('close')"
-      >
-        <span class="text-lg">🕒</span>
-        <span>Lịch sử hoạt động</span>
-      </NuxtLink>
+      <template v-if="auth.user?.role === 'admin'">
+        <NuxtLink
+          to="/departments"
+          class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
+          :class="route.path === '/departments' || route.path.startsWith('/departments/')
+            ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
+            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
+          @click="$emit('close')"
+        >
+          <span class="text-lg">🏢</span>
+          <span>Phòng ban</span>
+        </NuxtLink>
+
+        <NuxtLink
+          to="/employees"
+          class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
+          :class="route.path === '/employees' || route.path.startsWith('/employees/')
+            ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
+            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
+          @click="$emit('close')"
+        >
+          <span class="text-lg">👥</span>
+          <span>Quản lý nhân viên</span>
+        </NuxtLink>
+
+        <NuxtLink
+          to="/activities"
+          class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition"
+          :class="route.path === '/activities' || route.path.startsWith('/activities/')
+            ? 'bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-300 shadow-sm'
+            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'"
+          @click="$emit('close')"
+        >
+          <span class="text-lg">🕒</span>
+          <span>Lịch sử hoạt động</span>
+        </NuxtLink>
+      </template>
     </nav>
 
     <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur">
@@ -101,8 +116,10 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 const route = useRoute()
-
+const auth = useAuthStore()
 defineProps({
   isOpen: {
     type: Boolean,

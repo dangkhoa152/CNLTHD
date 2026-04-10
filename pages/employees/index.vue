@@ -49,6 +49,11 @@
 
 </template>
 <script setup>
+
+definePageMeta({
+  middleware: ['auth'] 
+})
+
 import { ref, onMounted, computed } from 'vue'
 import { toast } from 'vue3-toastify'
 import EmployeeFilter from '~/components/employees/EmployeeFilter.vue'
@@ -93,7 +98,6 @@ onMounted(async () => {
 // filtered list lấy trực tiếp từ store (unwrap value để reactive đúng)
 const filtered = computed(() => employeeStore.sortedEmployees)
 
-// Khai báo pagination dựa trên filtered
 const {
   currentPage,
   totalPages,

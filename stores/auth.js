@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('auth', () => {
       email: foundUser.email,
       name: foundUser.name,
       role: foundUser.role,
-      avatar: foundUser.avatar
+      employeeCode: foundUser.employeeCode
     }
 
     user.value = safeUser
@@ -40,11 +40,6 @@ export const useAuthStore = defineStore('auth', () => {
   function logout() {
     user.value = null
     userCookie.value = null
-
-    if (process.client) {
-      localStorage.removeItem('hr_activities')
-      localStorage.removeItem('hrm_activities')
-    }
     navigateTo('/login')
   }
   return {

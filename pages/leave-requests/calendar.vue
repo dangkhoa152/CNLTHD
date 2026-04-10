@@ -23,6 +23,11 @@
 </template>
 
 <script setup>
+
+definePageMeta({
+  middleware: ['auth'] 
+})
+
 import { computed, onMounted } from 'vue'
 import LeaveCalendar from '~/components/leaveRequests/LeaveCalendar.vue'
 import { useLeaveRequestStore } from '~/stores/leaveRequestStore'

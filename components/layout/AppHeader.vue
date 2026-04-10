@@ -55,6 +55,7 @@ const route = useRoute()
 const pageTitleMap = {
   '/': 'Dashboard',
   '/employees': 'Nhân sự',
+  '/employees/[id]': 'Thông tin nhân sự',
   '/departments': 'Phòng ban',
   '/leave-requests': 'Nghỉ phép',
   '/leave-requests/calendar': 'Lịch nghỉ phép',

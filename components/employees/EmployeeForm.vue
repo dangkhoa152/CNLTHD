@@ -44,6 +44,7 @@
                   <select 
                     v-model="form.department" 
                     @change="handleDepartmentChange"
+                    :disabled="isEdit && auth.user?.role === 'employee'"
                     class="w-full border dark:border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
                   >
                     <option value="">Chọn phòng ban</option>
@@ -55,7 +56,7 @@
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Chức vụ <span class="text-red-500">*</span></label>
                   <select 
                     v-model="form.position" 
-                    :disabled="!form.department"
+                    :disabled="!form.department || (isEdit && auth.user?.role === 'employee')"
                     class="w-full border dark:border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white disabled:bg-gray-100 dark:disabled:bg-gray-800 disabled:text-gray-400 dark:disabled:text-gray-500 transition-colors"
                   >
                     <option value="">Chọn chức vụ</option>
@@ -65,7 +66,7 @@
                 
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Trạng thái</label>
-                  <select v-model="form.status" class="w-full border dark:border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors">
+                  <select v-model="form.status" :disabled="isEdit && auth.user?.role === 'employee'" class="w-full border dark:border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors">
                     <option value="Đang làm việc">Đang làm việc</option>
                     <option value="Tạm nghỉ">Nghỉ phép</option>
                     <option value="Nghỉ việc">Nghỉ việc</option>
@@ -134,8 +135,7 @@
 
 <script setup>
 import { reactive, computed, watch } from 'vue'
-
-// ... (Đoạn script JS bên dưới giữ nguyên y hệt như phiên bản trước) ...
+const auth = useAuthStore()
 const props = defineProps({
   isEdit: Boolean,
   item: Object,
@@ -172,6 +172,7 @@ watch(() => props.item, (newVal) => {
       form.department = newVal.history[0].department || ''
       form.departmentId = newVal.history[0].departmentId || ''
       form.position = newVal.history[0].position || ''
+      form.joinDate = newVal.history[newVal.history.length-1].startDate || ''
     }
   } else {
     form.employeeCode = ''
