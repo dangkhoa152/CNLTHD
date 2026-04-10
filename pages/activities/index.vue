@@ -80,7 +80,8 @@ const getTypeText = (type) => {
       </p>
     </div>
 
-    <div class="flex flex-col gap-4 mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+    <!-- Nếu muốn bộ lọc xuống dòng thì thêm thuộc tính flex-col sau flex -->
+    <div class="flex gap-4 mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
       
       <div class="w-full sm:w-64">
         <FormInput 

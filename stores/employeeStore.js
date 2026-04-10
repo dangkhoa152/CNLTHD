@@ -6,6 +6,7 @@ import { loadOrFetchArray, saveLocalStorageJSON, loadLocalStorageJSON } from '~/
 import { toggleSortColumn } from '~/utils/dataHelpers'
 
 export const useEmployeeStore = defineStore('employees', () => {
+  // Không khởi tạo Store ở đây!
   const employees = ref([])
   const isLoading = ref(false)
   const query = ref({})
@@ -17,6 +18,7 @@ export const useEmployeeStore = defineStore('employees', () => {
   function saveToLocal() {
     if (process.client) {
       saveLocalStorageJSON('hrm_employees', employees.value)
+      // Chỉ khởi tạo khi Action này thực sự được kích hoạt
       const deptStore = useDepartmentStore()
       deptStore.syncEmployeeCounts(employees.value)
     }
