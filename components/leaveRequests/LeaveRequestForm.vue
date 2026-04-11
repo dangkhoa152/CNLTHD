@@ -147,9 +147,7 @@ function computeDays(from, to) {
   const endDate = new Date(to)
   startDate.setHours(12, 0, 0, 0)
   endDate.setHours(12, 0, 0, 0)
-
-  if (endDate < startDate) return 1
-
+  if (endDate < startDate) return 
   let workingDaysCount = 0
   let currentDate = new Date(startDate)
 
@@ -161,7 +159,6 @@ function computeDays(from, to) {
     }
     currentDate.setDate(currentDate.getDate() + 1)
   }
-
   return workingDaysCount > 0 ? workingDaysCount : 0
 }
 

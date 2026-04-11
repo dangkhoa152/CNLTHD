@@ -174,8 +174,8 @@ function openEdit(item) {
 }
 // Duyệt đơn
 function approve(item) {
+  leaveStore.approveLeaveRequest(item.id, auth.user?.name || 'Admin HR')
   const userName = auth.user?.name || 'Admin HR'
-  leaveStore.approveLeaveRequest(item.id, userName)
   setTimeout(() => {
     dashboard.addActivity({ type: 'approve', title: `Duyệt đơn nghỉ phép của ${item.employeeName}`, user: userName })
     activityStore.logActivity('edit', 'Duyệt đơn nghỉ phép', item.employeeName)
