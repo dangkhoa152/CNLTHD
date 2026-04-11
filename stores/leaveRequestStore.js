@@ -104,7 +104,6 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
                 emp.status = 'Nghỉ phép'
                 employeeStore.saveToLocal()
             }
-
             saveToLocal()
         }
     }
@@ -175,7 +174,6 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
                     const itemDateStr = getNowString(i.createdAt);
                     const filterDateStr = getNowString(query.value.createdAt);
                     if(itemDateStr !== filterDateStr) return false;
-                    
                 }
                 const q = (query.value.query || '').toLowerCase().trim();
                 if (q) {
@@ -204,10 +202,8 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
 
         const getValue = (item) => {
             switch (sortColumn.value) {
-                case 'fromDate':
-                    return item.fromDate ? new Date(item.fromDate).getTime() : 0
-                case 'toDate':
-                    return item.toDate ? new Date(item.toDate).getTime() : 0
+                case 'createdAt':
+                    return item.createdAt ? new Date(item.createdAt).getTime() : 0
                 default:
                     return item[sortColumn.value] || ''
             }

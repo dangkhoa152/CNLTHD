@@ -8,62 +8,49 @@ import { ref, computed, watch } from 'vue'
 export function usePagination(dataList, defaultItemsPerPage = 12) {
   const currentPage = ref(1)
   const itemsPerPage = ref(defaultItemsPerPage)
-
-  // 1. Tính tổng số trang
   const totalPages = computed(() => {
     return Math.ceil(dataList.value.length / itemsPerPage.value)
   })
-
-  // 2. Lấy dữ liệu của trang hiện tại (Dùng slice để cắt mảng)
+//  Tính toán danh sách item hiển thị trên trang hiện tại
   const paginatedList = computed(() => {
     const start = (currentPage.value - 1) * itemsPerPage.value
     const end = start + itemsPerPage.value
     return dataList.value.slice(start, end)
   })
-
-  // 3. Các hàm điều hướng
+  // Các hàm điều hướng
   function nextPage() {
     if (currentPage.value < totalPages.value) {
       currentPage.value++
     }
   }
-
   function prevPage() {
     if (currentPage.value > 1) {
       currentPage.value--
     }
   }
-
   function goToPage(page) {
     if (page >= 1 && page <= totalPages.value) {
       currentPage.value = page
     }
   }
-
-  // 4. Reset về trang 1 nếu dữ liệu gốc bị thay đổi (khi lọc hoặc xóa)
+  // Reset về trang 1 nếu dữ liệu gốc bị thay đổi (khi lọc hoặc xóa)
   watch(dataList, () => {
     currentPage.value = 1
   }, { deep: true })
-
-  // 5. Tạo mảng hiển thị số trang có dấu "..."
+  // Tạo mảng hiển thị số trang có dấu "..."
   const visiblePages = computed(() => {
     const pages = []
     const total = totalPages.value
     const current = currentPage.value
-
     if (total <= 7) {
       return Array.from({ length: total }, (_, i) => i + 1)
     }
-
     pages.push(1)
-
     if (current > 4) {
       pages.push('...')
     }
-
     const start = Math.max(2, current - 1)
     const end = Math.min(total - 1, current + 1)
-
     for (let i = start; i <= end; i++) {
       if (!pages.includes(i)) pages.push(i)
     }
