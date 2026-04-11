@@ -12,6 +12,7 @@ import DepartmentModal from '@/components/departments/DepartmentModal.vue'
 import StatCard from '@/components/common/StatCard.vue'
 import ConfirmModal from '@/components/common/ConfirmModal.vue'
 import FormInput from '@/components/common/FormInput.vue'
+import { toast } from 'vue3-toastify'
 
 const departmentStore = useDepartmentStore()
 const employeeStore = useEmployeeStore()
@@ -77,10 +78,10 @@ const openCreateModal = () => {
 const handleSaveDepartment = (formData) => {
   if (formData.id) {
     departmentStore.updateDepartment(formData)
-    alert('Cập nhật thành công!')
+    toast.info('Cập nhật thành công!')
   } else {
     departmentStore.addDepartment(formData)
-    alert('Thêm phòng ban mới thành công!')
+    toast.success('Thêm phòng ban mới thành công!')
   }
   isModalOpen.value = false
 }
@@ -99,7 +100,7 @@ const confirmDelete = async (dep) => {
     })
     
     if (employeesInDept.length > 0) {
-      alert(`⚠️ KHÔNG THỂ XÓA!\n\nPhòng [${dep.name}] đang có ${employeesInDept.length} nhân sự.\nVui lòng chuyển họ sang phòng khác trước khi xóa.`)
+      toast.warning(`KHÔNG THỂ XÓA!\n\nPhòng [${dep.name}] đang có ${employeesInDept.length} nhân sự.\nVui lòng chuyển họ sang phòng khác trước khi xóa.`)
       return
     }
 
@@ -119,7 +120,7 @@ const executeDelete = () => {
     
     departmentStore.deleteDepartment(idToDelete.value)
     
-    alert(`Đã xóa thành công phòng ban: ${name}`)
+    toast.info(`Đã xóa thành công phòng ban: ${name}`)
     
     isConfirmModalOpen.value = false
     deptToDelete.value = null

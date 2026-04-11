@@ -36,7 +36,7 @@
                 
                 <div>
                   <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Ngày vào làm</label>
-                  <input v-model="form.joinDate" type="date" class="w-full border dark:border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors" />
+                  <input v-model="form.joinDate" type="date" :disabled="isEdit" class="w-full border dark:border-gray-600 rounded-md p-2 focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors" />
                 </div>
                 
                 <div>
@@ -136,10 +136,10 @@
 <script setup>
 import { reactive, computed, watch } from 'vue'
 import { useEmployeeStore } from '@/stores/employeeStore'
+import { useAuthStore } from '@/stores/auth'
 
 const employeeStore = useEmployeeStore()
 
-// ... (Đoạn script JS bên dưới giữ nguyên y hệt như phiên bản trước) ...
 const props = defineProps({
   isEdit: Boolean,
   item: Object,
@@ -148,10 +148,9 @@ const props = defineProps({
     default: () => []
   }
 })
+
 const auth = useAuthStore()
 const emit = defineEmits(['close', 'create', 'update'])
-
-const isEdit = computed(() => !!props.item)
 
 const form = reactive({
   employeeCode: '',
@@ -228,7 +227,7 @@ function submit() {
     return
   }  
 
-  if (!isEdit.value) {
+  if (!props.isEdit) {
     emit('create', {...form})
   } else {
     emit('update', { id: props.item.id, patch: {...form} })
