@@ -200,65 +200,94 @@ function handleDeleteClick(item) {
   isConfirmOpen.value = true;
   formItem.value = item;
 }
-// Xóa đơn nghỉ phép
-function executeDelete() {
-  if (!formItem.value || !formItem.value.id) return
-  leaveStore.deleteLeaveRequest(formItem.value.id)
-  isConfirmOpen.value = false;
-  logDelete()
+// Gửi yêu cầu tạo đơn nghỉ phép mới từ form modal
+function create(payload) {
+  if (!payload) return
+  
+  const targetName = payload?.employeeName || payload?.name || 'một nhân viên'
+  
+  leaveStore.addLeaveRequest(payload)
+  toast.success('Tạo đơn thành công!')
+  
+  closeForm() 
+  logCreate(targetName) 
 }
 // Gửi yêu cầu Cập nhật đơn nghỉ phép sau khi chỉnh sửa từ form modal
 function update(payload) {
   if (!payload || !payload.id) return
+  
+  const targetName = payload?.patch?.employeeName || payload?.patch?.name || formItem.value?.employeeName || 'một nhân viên'
+
   leaveStore.updateLeaveRequest(payload.id, payload.patch || {})
   selected.value = null
-  logUpdate()
+  
   closeForm()
-}
-// Gửi yêu cầu tạo đơn nghỉ phép mới từ form modal
-function create(payload) {
-  if (!payload) return
-  leaveStore.addLeaveRequest(payload)
-  formVisible.value = false
-  toast.success('Tạo đơn thành công!')
-  closeForm()
-  logCreate()
+  logUpdate(targetName) 
 }
 
-function logCreate(){
-  setTimeout(() => {
-    const targetName = formItem.value?.employeeName || 'một nhân viên'
-    const userName = auth.user?.name || 'Admin HR'
-    dashboard.addActivity({ type: 'add', title: `Tạo đơn nghỉ phép cho ${targetName}`, user: userName })
-    activityStore.logActivity('add', 'Tạo đơn xin nghỉ', targetName)
-  }, 50)
+// Xóa đơn nghỉ phép
+function executeDelete() {
+  if (!formItem.value || !formItem.value.id) return
+  
+  const targetName = formItem.value?.employeeName || 'một nhân viên'
+
+  leaveStore.deleteLeaveRequest(formItem.value.id)
+  isConfirmOpen.value = false
+  
+  
+  logDelete(targetName)
 }
+
 // Đóng form tạo/sửa đơn nghỉ phép
 function closeForm() {
   formVisible.value = false
   formItem.value = null
 }
-// Ghi log hoạt động khi cập nhật đơn nghỉ phép
-function logUpdate() {
+// Ghi log hoạt động khi tạo đơn nghỉ phép
+function logCreate(targetName) {
   setTimeout(() => {
-    const targetName = formItem.value?.employeeName || 'một nhân viên'
+    const userName = auth.user?.name || 'Admin HR'
+    
+    dashboard.addActivity({ 
+      type: 'add', 
+      title: `Tạo đơn nghỉ phép cho ${targetName}`, 
+      user: userName 
+    })
+    
+    activityStore.logActivity('add', 'Tạo đơn xin nghỉ', targetName, userName)
+  }, 50)
+}
+// Ghi log hoạt động khi cập nhật đơn nghỉ phép
+function logUpdate(targetName) {
+  setTimeout(() => {
     const userName = auth.user?.name || 'Admin HR' 
-    dashboard.addActivity({ type: 'update', title: `Sửa đơn nghỉ phép của ${targetName}`, user: userName })
-    activityStore.logActivity('edit', 'Cập nhật đơn nghỉ phép', targetName)
+    
+    dashboard.addActivity({ 
+      type: 'update', 
+      title: `Sửa đơn nghỉ phép của ${targetName}`, 
+      user: userName 
+    })
+    
+    activityStore.logActivity('edit', 'Cập nhật đơn nghỉ phép', targetName, userName)
     toast.info(`Cập nhật thành công`)
   }, 50)
 }
 // Ghi log hoạt động khi xóa đơn nghỉ phép
-function logDelete() {
+function logDelete(targetName) {
   setTimeout(() => {
-    const targetName = formItem.value?.employeeName || 'một nhân viên'
     const userName = auth.user?.name || 'Admin HR'
-    dashboard.addActivity({ type: 'delete', title: `Đã xóa đơn nghỉ phép của ${targetName}`, user: userName })
-    activityStore.logActivity('delete', 'Xóa đơn nghỉ phép', targetName)
+    
+    dashboard.addActivity({ 
+      type: 'delete', 
+      title: `Đã xóa đơn nghỉ phép của ${targetName}`, 
+      user: userName 
+    })
+    
+    activityStore.logActivity('delete', 'Xóa đơn nghỉ phép', targetName, userName)
     toast.info(`Xóa thành công`)
   }, 50)
 }
-// ghi log hoạt động khi duyệt hoặc từ chối hàng loạt đơn nghỉ phép
+// Ghi log hoạt động khi duyệt hoặc từ chối hàng loạt đơn nghỉ phép
 function logBulkAction(action, count) {
   setTimeout(() => {
     const titleText = action === 'approve' ? 'Duyệt' : 'Từ chối'

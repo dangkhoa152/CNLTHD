@@ -62,7 +62,9 @@ import Pagination from '~/components/common/Pagination.vue'
 import EmployeeForm from '~/components/employees/EmployeeForm.vue'
 import ConfirmModal from '~/components/common/ConfirmModal.vue'
 import { useEmployeeStore } from '~/stores/employeeStore'
+import { useAuthStore } from '@/stores/auth'
 import StatCard from '~/components/common/StatCard.vue'
+
 const router = useRouter()
 const route = useRoute()
 const dashboard = useDashboardStore()
@@ -158,7 +160,7 @@ function update(payload) {
 
 // Ghi log hoạt động khi cập nhật hồ sơ nhân viên
 function logUpdate(payload) {
-  const targetName = formItem.value?.name || payload.name || 'Hồ sơ nhân viên'
+  const targetName = payload?.patch?.name || formItem.value?.name || 'Hồ sơ nhân viên'
   const userName = auth.user?.name || 'Admin HR'
 
   setTimeout(() => {
