@@ -16,32 +16,40 @@
     </div>
 
     <div class="min-w-[140px] flex-1 md:flex-none">
-      <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Ngày gửi</label>
+      <!-- <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Ngày gửi</label>
       <input 
         v-model="createdAt" 
         type="date"
         class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+      /> -->
+      <FormInput
+        v-model="createdAt"
+        type="date"
+        label="Ngày gửi"
+        placeholder="Chọn ngày gửi"
       />
     </div>    
 
     <div class="min-w-[140px]">
-      <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Trạng thái</label>
-      <select v-model="status"
-        class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:ring-blue-500">
-        <option value="">Tất cả trạng thái</option>
-        <option value="Chờ duyệt">Chờ duyệt</option>
-        <option value="Đã duyệt">Đã duyệt</option>
-        <option value="Từ chối">Từ chối</option>
-      </select>
+      <FormSelect
+        v-model="status"
+        label="Trạng thái"
+        placeholder="Tất cả trạng thái"
+        :options="[
+          { value: 'Chờ duyệt', label: 'Chờ duyệt' },
+          { value: 'Đã duyệt', label: 'Đã duyệt' },
+          { value: 'Từ chối', label: 'Đã từ chối' }
+        ]"
+      />    
     </div>
 
     <div class="min-w-[140px]">
-      <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Phòng ban</label>
-      <select v-model="department"
-        class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:ring-blue-500">
-        <option value="">Tất cả phòng ban</option>
-        <option v-for="d in departments" :key="d" :value="d">{{ d }}</option>
-      </select>
+      <FormSelect
+        v-model="department"
+        label="Phòng ban"
+        placeholder="Tất cả phòng ban"
+        :options="departments.map(dep => ({ value: dep, label: dep}))"
+      />
     </div>
 
     <div class="flex items-end">

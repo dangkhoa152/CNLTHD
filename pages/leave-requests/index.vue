@@ -82,14 +82,14 @@ definePageMeta({
 
 import { ref, onMounted, computed } from 'vue'
 import {toast} from 'vue3-toastify'
-import LeaveRequestFilter from '~/components/leaveRequests/LeaveRequestFilter.vue'
-import LeaveRequestTable from '~/components/leaveRequests/LeaveRequestTable.vue'
-import LeaveRequestModal from '~/components/leaveRequests/LeaveRequestModal.vue'
-import LeaveRequestForm from '~/components/leaveRequests/LeaveRequestForm.vue'
+// import LeaveRequestFilter from '~/components/leaveRequests/LeaveRequestFilter.vue'
+// import LeaveRequestTable from '~/components/leaveRequests/LeaveRequestTable.vue'
+// import LeaveRequestModal from '~/components/leaveRequests/LeaveRequestModal.vue'
+// import LeaveRequestForm from '~/components/leaveRequests/LeaveRequestForm.vue'
 import { useLeaveRequestStore } from '~/stores/leaveRequestStore'
-import ConfirmModal from '~/components/common/ConfirmModal.vue'
-import Pagination from '~/components/common/Pagination.vue'
-import StatCard from '~/components/common/StatCard.vue'
+// import ConfirmModal from '~/components/common/ConfirmModal.vue'
+// import Pagination from '~/components/common/Pagination.vue'
+// import StatCard from '~/components/common/StatCard.vue'
 
 const isAdmin = computed(() => auth.user?.role === 'admin')
 

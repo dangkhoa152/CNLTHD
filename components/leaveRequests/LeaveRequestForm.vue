@@ -6,64 +6,62 @@
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900
                     text-indigo-700 dark:text-indigo-200 
-                    rounded-full flex items-center justify-center"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M8 9a3 3 0 100-6 3 3 0 000 6z" /><path fill-rule="evenodd" d="M2 13.5A6.5 6.5 0 0110.5 7h1A6.5 6.5 0 0118 13.5V15a2 2 0 01-2 2H4a2 2 0 01-2-2v-1.5z" clip-rule="evenodd" /></svg>
+                    rounded-full flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M8 9a3 3 0 100-6 3 3 0 000 6z" />
+              <path fill-rule="evenodd"
+                d="M2 13.5A6.5 6.5 0 0110.5 7h1A6.5 6.5 0 0118 13.5V15a2 2 0 01-2 2H4a2 2 0 01-2-2v-1.5z"
+                clip-rule="evenodd" />
+            </svg>
           </div>
           <h3 class="text-lg font-semibold">{{ isEdit ? 'Sửa đơn nghỉ phép' : 'Tạo đơn nghỉ phép' }}</h3>
         </div>
-        <button @click="$emit('close')" aria-label="Close" class="w-8 h-8 rounded-full
-         hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center
-          text-gray-600 dark:text-gray-300">X</button>
+        <FormButton variant="ghost" aria-label="Close" @click="$emit('close')"
+          class="!w-8 !h-8 !p-0 !rounded-full !border-0">
+          X
+        </FormButton>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="md:col-span-2">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Người xin <span class="text-sm text-red-600">*</span></label>
-          <div class="mt-1 flex gap-2 relative">        
-            <input v-model="form.employeeCode"  @input="onNameInput" :disabled="isEdit || auth.user?.role === 'employee'" type="text" placeholder="Mã nhân viên" class="w-36 rounded-md 
-            border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
-            <input v-model="form.employeeName"  :disabled="isEdit || auth.user?.role === 'employee'" type="text" placeholder="Họ và tên" class="flex-1 rounded-md 
-            border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
-            <input v-model="form.department" :disabled="isEdit || auth.user?.role === 'employee'" type="text" placeholder="Phòng ban" class="w-48 rounded-md 
-            border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Người xin <span
+              class="text-sm text-red-600">*</span></label>
+          <div class="mt-1 flex gap-2 relative">
+            <FormInput v-model="form.employeeCode" @input="onNameInput"
+              :disabled="isEdit || auth.user?.role === 'employee'" type="text" placeholder="Mã nhân viên"
+              :error="errors.employeeCode" :hint="'Nhập mã để hiện gợi ý'" class="!w-36 !rounded-none" />
+            <FormInput v-model="form.employeeName" :disabled="isEdit || auth.user?.role === 'employee'" type="text"
+              placeholder="Họ và tên" :error="errors.employeeName" class="!w-48 !rounded-none" />
+            <FormInput v-model="form.department" :disabled="isEdit || auth.user?.role === 'employee'" type="text"
+              placeholder="Phòng ban" class="!flex-1 !rounded-none" />
           </div>
-          <div v-if="showSuggestions && suggestions.length" class="absolute bg-white dark:bg-gray-800 border w-full max-w-2xl mt-1 rounded shadow z-20">
+
+          <div v-if="showSuggestions && suggestions.length"
+            class="absolute bg-white dark:bg-gray-800 border max-w-2xl mt-1 rounded shadow z-20">
             <ul>
-              <li v-for="s in suggestions" :key="s.employeeCode" @click="pickSuggestion(s)" class="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{{ s.employeeCode }} — {{ s.name }} — {{ s.history[0].department }}</li>
+              <li v-for="s in suggestions" :key="s.employeeCode" @click="pickSuggestion(s)"
+                class="px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">{{ s.employeeCode }} — {{
+                s.name }} — {{ s.history[0].department }}</li>
             </ul>
           </div>
-          <div class="mt-1">
-            <div v-if="errors.employeeName" class="text-sm text-red-600">{{ errors.employeeName }}</div>
-            <div v-if="errors.employeeCode" class="text-sm text-red-600">{{ errors.employeeCode }}</div>
-          </div>
+
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Từ ngày <span class="text-sm text-red-600">*</span></label>
-          <input v-model="form.fromDate" type="date" class="mt-1 block w-full rounded-md 
-          border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
-          <div v-if="errors.fromDate" class="text-sm text-red-600 mt-1">{{ errors.fromDate }}</div>
+          <FormInput v-model="form.fromDate" type="date" label="Từ ngày" :error="errors.fromDate" required
+            class="!rounded-md" />
         </div>
-
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Đến ngày <span class="text-sm text-red-600">*</span></label>
-          <input v-model="form.toDate" type="date" class="mt-1 block w-full rounded-md 
-          border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2" />
-          <div v-if="errors.toDate" class="text-sm text-red-600 mt-1">{{ errors.toDate }}</div>
+          <FormInput v-model="form.toDate" type="date" label="Đến ngày" :error="errors.toDate" required
+            class="!rounded-md" />
         </div>
-
-        <div class="md:col-span-2">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-200">Lý do</label>
-          <textarea v-model="form.reason" rows="3" placeholder="Mô tả ngắn gọn lý do nghỉ" class="mt-1 block w-full rounded-md 
-          border border-gray-200 focus:ring-2 focus:ring-indigo-200 dark:bg-gray-700 dark:border-gray-600 p-2"></textarea>
-        </div>
-
+        <FormTextarea v-model="form.reason" label="Lý do" placeholder="Mô tả ngắn gọn lý do nghỉ" rows="3"
+          class="!rounded-md !md:col-span-2" />
       </div>
 
       <div class="mt-6 flex justify-end gap-2">
-        <button @click="$emit('close')" class="bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 rounded">Hủy</button>
-        <button @click="submit" class="bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 text-white px-4 py-2 rounded">{{ isEdit ? 'Lưu' : 'Tạo' }}</button>
+        <FormButton @click="$emit('close')" variant="secondary" class="!px-4 !py-2">Hủy</FormButton>
+        <FormButton @click="submit" variant="primary" :loading="false" class="!px-4 !py-2"> {{ isEdit ? 'Lưu' : 'Tạo' }}</FormButton>
       </div>
     </div>
   </div>
@@ -71,12 +69,13 @@
 
 <script setup>
 import { reactive, watch, computed, ref, onMounted } from 'vue'
-import { useEmployeeStore } from '@/stores/employeeStore' // Đảm bảo bạn đã import store này nếu chưa có ở file thực tế
-import {useAuthStore} from '@/stores/auth'
-const auth = useAuthStore() 
+import { useEmployeeStore } from '@/stores/employeeStore'
+import { useAuthStore } from '@/stores/auth'
+import { Form } from 'lucide-vue-next'
+const auth = useAuthStore()
 
 const props = defineProps({ item: { type: Object, default: null } })
-const emit = defineEmits(['close','create','update'])
+const emit = defineEmits(['close', 'create', 'update'])
 const empStore = useEmployeeStore()
 
 const form = reactive({
@@ -98,7 +97,7 @@ const query = ref('')
 const suggestions = computed(() => {
   const q = query.value.trim().toLowerCase()
   if (!q) return []
-  return employees.value.filter(e => 
+  return employees.value.filter(e =>
     (e.employeeCode || e.name || e.employeeName || '').toString().toLowerCase().includes(q)
   ).slice(0, 8)
 })
@@ -118,7 +117,7 @@ onMounted(async () => {
   } catch (e) {
     employees.value = []
   }
-}) 
+})
 
 // Theo dõi thay đổi của props.item để cập nhật form khi chỉnh sửa hoặc reset khi tạo mới
 watch(() => props.item, (v) => {
@@ -131,11 +130,11 @@ watch(() => props.item, (v) => {
     form.days = v.days || 1
     form.reason = v.reason || ''
   } else {
-    
-        form.employeeName = ''
-        form.employeeCode = ''
-        form.department = ''
-    
+
+    form.employeeName = ''
+    form.employeeCode = ''
+    form.department = ''
+
   }
 }, { immediate: true })
 
@@ -145,9 +144,10 @@ function computeDays(from, to) {
   if (!from || !to) return 1
   const startDate = new Date(from)
   const endDate = new Date(to)
+  // Đặt giờ về giữa trưa để tránh lỗi do múi giờ hoặc giờ mùa hè
   startDate.setHours(12, 0, 0, 0)
   endDate.setHours(12, 0, 0, 0)
-  if (endDate < startDate) return 
+  if (endDate < startDate) return
   let workingDaysCount = 0
   let currentDate = new Date(startDate)
 
@@ -195,14 +195,14 @@ function submit() {
   errors.employeeCode = ''
   errors.fromDate = ''
   errors.toDate = ''
-  
+
   let ok = true
-  
+
   if (!form.employeeName) { errors.employeeName = 'Họ và tên là bắt buộc'; ok = false }
   if (!form.employeeCode) { errors.employeeCode = 'Mã nhân viên là bắt buộc'; ok = false }
   if (!form.fromDate) { errors.fromDate = 'Vui lòng chọn ngày bắt đầu'; ok = false }
   if (!form.toDate) { errors.toDate = 'Vui lòng chọn ngày kết thúc'; ok = false }
-  
+
   if (!ok) return
 
   const payload = {

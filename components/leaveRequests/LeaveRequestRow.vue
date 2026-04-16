@@ -14,7 +14,7 @@
     </td>
     <td class="px-4 py-3 text-center space-x-1">
       <button @click="$emit('view', item)" class="text-blue-600 dark:text-blue-200 font-semibold hover:text-blue-800 dark:hover:text-blue-300">Xem</button>
-      <button @click="$emit('edit', item)" class="text-amber-600 dark:text-amber-200 font-semibold hover:text-amber-800 dark:hover:text-amber-300">Sửa</button>
+      <button @click="$emit('edit', item)" class="px-2 text-amber-600 dark:text-amber-200 font-semibold hover:text-amber-800 dark:hover:text-amber-300">Sửa</button>
       <button v-if="auth.user?.role === 'admin'" @click="$emit('delete', item)" class="text-red-600 dark:text-red-200 font-semibold hover:text-red-800 dark:hover:text-red-300">Xóa</button>
     </td>
   </tr>

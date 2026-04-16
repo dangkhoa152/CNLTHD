@@ -11,9 +11,7 @@
           </div>
           <div class="flex items-center gap-3">
             <span :class="badgeClass(item.status)" class="inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold">{{ item.status }}</span>
-            <button @click="$emit('close')" aria-label="Đóng" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:text-white transition">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
+            <FormButton @click="$emit('close')" variant="ghost" aria-label="Đóng" class="!w-8 !h-8 !p-0 !rounded-full !border-0"> X </FormButton>
           </div>
         </div>
 
@@ -57,22 +55,20 @@
         </div>
 
         <div v-if="isRejecting" class="px-6 pb-2">
-          <label class="block text-sm font-semibold text-red-600 dark:text-red-400 mb-2">Vui lòng nhập lý do từ chối <span class="text-red-500">*</span></label>
-          <textarea v-model="form.rejectionReason" rows="2" placeholder="Ví dụ: Công việc đang nhiều, không đủ nhân sự backup..." class="w-full rounded-xl border border-red-300 focus:ring-2 focus:ring-red-500 p-3 outline-none dark:bg-gray-900 dark:border-red-800 dark:text-white transition-colors resize-none"></textarea>
-          <p v-if="rejectError" class="text-sm text-red-500 mt-2 font-medium">{{ rejectError }}</p>
+          <FormTextarea v-model="form.rejectionReason" label="Lý do từ chối" placeholder="Ví dụ: Công việc đang nhiều, không đủ nhân sự backup..." rows="3" :error="rejectError"/>
         </div>
 
         <div class="px-6 pb-6 pt-2 flex justify-end gap-3 bg-white dark:bg-slate-950">
           
           <template v-if="!isRejecting">
-            <button v-if="item.status === 'Chờ duyệt' && auth.user?.role === 'admin'" @click="confirmApprove" class="bg-green-600 dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-600 text-white px-5 py-2.5 rounded-xl font-medium transition-colors">Duyệt đơn</button>
-            <button v-if="item.status === 'Chờ duyệt' && auth.user?.role === 'admin'" @click="startReject" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-medium transition-colors">Từ chối</button>
-            <button @click="$emit('close')" class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 px-5 py-2.5 rounded-xl font-medium transition-colors">Đóng</button>
+            <FormButton v-if="item.status === 'Chờ duyệt' && auth.user?.role === 'admin'" @click="confirmApprove" variant="success" class="!px-5 !py-2.5 !rounded-md">Duyệt đơn</FormButton>
+            <FormButton v-if="item.status === 'Chờ duyệt' && auth.user?.role === 'admin'" @click="startReject" variant="danger" class="!px-5 !py-2.5 !rounded-md">Từ chối</FormButton>
+            <FormButton @click="$emit('close')" variant="ghost" aria-label="Đóng" class=" !px-5 !py-2.5 !rounded-md"> Đóng </FormButton>
           </template>
 
           <template v-if="isRejecting">
-            <button @click="confirmReject" class="bg-red-600 dark:bg-red-700 hover:bg-red-700 dark:hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-medium transition-colors shadow-sm">Xác nhận từ chối</button>
-            <button @click="cancelReject" class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 px-5 py-2.5 rounded-xl font-medium transition-colors">Hủy thao tác</button>
+            <FormButton @click="confirmReject" variant="danger" class="!px-5 !py-2.5 !rounded-md">Xác nhận từ chối</FormButton>
+            <FormButton @click="cancelReject" variant="secondary" class="!px-5 !py-2.5 !rounded-md">Hủy thao tác</FormButton>
           </template>
 
         </div>
