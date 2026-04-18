@@ -124,7 +124,7 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
     function bulkUpdateStatus(ids = [], status, by, rejectReason) {
         ids.forEach(id => {
             const it = leaveRequests.value.find(i => i.id === id)
-            if (it) {
+            if (it.status === 'Chờ duyệt') {
                 it.status = status
                 if (status === 'Đã duyệt') {
                     it.approver = by
@@ -153,16 +153,6 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         query.value = {}
     }
 
-    function getStandardDateString(dateInput) {
-        if (!dateInput) return '';
-        const d = new Date(dateInput);
-        if (isNaN(d.getTime())) return ''; 
-        const yyyy = d.getFullYear();
-        const mm = String(d.getMonth() + 1).padStart(2, '0');
-        const dd = String(d.getDate()).padStart(2, '0');
-        
-        return `${yyyy}-${mm}-${dd}`;
-    }
     // Tìm kiếm và lọc đơn nghỉ phép dựa trên query
     const searchLeaveRequest = computed(() => {
         return leaveRequests.value.filter(i => {
@@ -212,7 +202,23 @@ export const useLeaveRequestStore = defineStore('leaveRequest', () => {
         return sortArrayByValue(result, sortColumn.value, sortOrder.value, getValue)
     });
 
+    // Hàm bôi vàng từ khóa tìm kiếm
+    function highlightText(text, keyword) {
+    // 1. Nếu không có từ khóa hoặc từ khóa toàn dấu cách -> Trả về chữ gốc bình thường
+    if (!keyword || !keyword.trim()) return text;
 
+    // 2. Nếu tên nhân viên bị rỗng (đề phòng lỗi data)
+    if (!text) return '';
+
+    // 3. Tạo quy tắc tìm kiếm (Regex)
+    // 'g' (global): Tìm tất cả các chữ khớp, không chỉ chữ đầu tiên.
+    // 'i' (ignore case): KHÔNG phân biệt chữ hoa/chữ thường (gõ 'anh' vẫn tìm ra 'Anh').
+    const regex = new RegExp(`(${keyword})`, 'gi');
+
+    // 4. Thay thế chữ tìm được bằng thẻ <mark> của HTML kèm class Tailwind cho đẹp
+    // Ký hiệu $1 có nghĩa là: Bê y nguyên cái chữ gốc đắp vào đây (để giữ nguyên việc viết hoa/thường của người ta).
+    return text.replace(regex, '<mark class="bg-yellow-300 text-gray-900 rounded-sm px-0.5">$1</mark>');
+    }
     return {
         leaveRequests,
         loading,

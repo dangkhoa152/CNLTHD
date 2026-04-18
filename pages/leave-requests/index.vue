@@ -163,7 +163,7 @@ function openCreate() {
 }
 // Mở form chỉnh sửa đơn nghỉ phép
 function openEdit(item) {
-  if(item.status !== 'Chờ duyệt') {
+  if(item.status !== 'Chờ duyệt' && auth.user?.role !== 'admin') {
     setTimeout(() => {
       toast.warning(`Không thể chỉnh sửa đơn ${item.status}`)
     }, 50)
@@ -180,7 +180,7 @@ function approve(item) {
     dashboard.addActivity({ type: 'approve', title: `Duyệt đơn nghỉ phép của ${item.employeeName}`, user: userName })
     activityStore.logActivity('edit', 'Duyệt đơn nghỉ phép', item.employeeName)
     toast.success('Đã duyệt đơn!')
-  }, 50)
+  }, 100)
   selected.value = null
 
 }
@@ -192,7 +192,7 @@ function reject(item) {
     dashboard.addActivity({ type: 'reject', title: `Từ chối đơn nghỉ phép của ${item.employeeName}`, user: userName })
     activityStore.logActivity('edit', 'Từ chối đơn nghỉ phép', item.employeeName)
     toast.warning('Đã từ chối đơn!')
-  }, 50)
+  }, 100)
   selected.value = null
 }
 // Xác nhận trước khi xóa đơn nghỉ phép
@@ -301,14 +301,12 @@ function logBulkAction(action, count) {
 }
 // Xử lý duyệt hàng loạt
 function prepareBulkApprove(ids) {
-  if (!ids || ids.length === 0) return
   bulkAction.value = 'approve'
   bulkActionIds.value = ids
   bulkConfirmOpen.value = true
 }
 
 function prepareBulkReject(ids) {
-  if (!ids || ids.length === 0) return
   bulkAction.value = 'reject'
   bulkActionIds.value = ids
   bulkConfirmOpen.value = true
@@ -343,7 +341,7 @@ function handleBulkApprove(ids) {
 // Xử lý từ chối hàng loạt
 function handleBulkReject(ids) {
   if (!ids || ids.length === 0) return
-  leaveStore.bulkUpdateStatus(ids, 'Đã từ chối', auth.user?.name || 'Admin HR')
+  leaveStore.bulkUpdateStatus(ids, 'Từ chối', auth.user?.name || 'Admin HR')
   logBulkAction('reject', ids.length)
 }
 </script>

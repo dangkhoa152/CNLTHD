@@ -16,12 +16,6 @@
     </div>
 
     <div class="min-w-[140px] flex-1 md:flex-none">
-      <!-- <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Ngày gửi</label>
-      <input 
-        v-model="createdAt" 
-        type="date"
-        class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-      /> -->
       <FormInput
         v-model="createdAt"
         type="date"

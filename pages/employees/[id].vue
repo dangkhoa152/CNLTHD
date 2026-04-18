@@ -139,7 +139,6 @@ import { useDepartmentStore } from '@/stores/departmentStore'
 import { useActivityStore } from '@/stores/activityStore' 
 import { useAuthStore } from '@/stores/auth'
 import getNowString from '~/utils/formatDate'
-import EmployeeForm from '@/components/employees/EmployeeForm.vue'
 import { toast } from 'vue3-toastify' 
 
 const auth = useAuthStore()
@@ -148,7 +147,7 @@ const router = useRouter()
 const employeeStore = useEmployeeStore()
 const leaveRequestStore = useLeaveRequestStore()
 const depStore = useDepartmentStore()
-const activityStore = useActivityStore() // 👉 Khởi tạo Store
+const activityStore = useActivityStore()
 
 const employee = ref(null)
 const showEditModal = ref(false)

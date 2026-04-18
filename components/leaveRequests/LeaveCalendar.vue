@@ -25,6 +25,11 @@
           <FormInput v-model="searchQuery" type="text" placeholder="Tìm mã hoặc tên..."
             class="!pl-10 !py-2 !md:w-64" />
         </div>
+        <div class="relative">
+          <FormSelect v-model="department" placeholder="Tất cả phòng ban"
+           :options="props.departments.map(dep => ({ value: dep.name, label: dep.name }))"
+           />
+        </div>
 
         <!-- Chế độ xem Month/Week -->
         <div class="flex bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
@@ -54,9 +59,15 @@
           isToday(day.date) ? 'bg-blue-50/30 dark:bg-blue-900/10' : 'bg-white dark:bg-gray-900',
           !isSameMonth(day.date) ? 'opacity-40' : ''
         ]">
-          <div
-            :class="['text-xs font-semibold mb-2 flex justify-center items-center w-7 h-7 rounded-full', isToday(day.date) ? 'bg-blue-600 text-white' : 'text-gray-500']">
-            {{ day.date.getDate() }}
+          <div class="flex justify-between items-start mb-2">
+            <span :class="['text-xs font-semibold mb-2 flex justify-center items-center w-7 h-7 rounded-full', isToday(day.date) ? 'bg-blue-600 text-white' : 'text-gray-500']">
+              {{ day.date.getDate() }} 
+            </span>
+
+            <span v-if="checkDepartmentCapacity(department, day.date,props.events)" 
+              class="text-red-500 text-xs font-bold bg-red-100 px-2 py-0.5 rounded-md">
+              ⚠️ Quá tải
+            </span>
           </div>
 
           <div class="space-y-1">
@@ -65,8 +76,7 @@
                 class="group relative flex items-center px-2 py-1 text-[10px] font-medium bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded border border-emerald-100 dark:border-emerald-800 transition-all hover:scale-[1.02] cursor-default">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
                 <span class="truncate">{{ ev.employeeCode }} - {{ ev.employeeName }}</span>
-                <div
-                  class="absolute z-10 hidden group-hover:block bg-gray-900 text-white p-2 rounded shadow-lg -top-10 left-0 whitespace-nowrap text-xs">
+                <div class="absolute z-10 hidden group-hover:block bg-gray-900 text-white p-2 rounded shadow-lg -top-10 left-0 whitespace-nowrap text-xs">
                   {{ ev.employeeName }} ({{ ev.department || 'Nghỉ phép' }})
                 </div>
               </div>
@@ -113,19 +123,21 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-
+import getNowString from '@/utils/formatDate'
 const props = defineProps({
-  events: { type: Array, default: () => [] }
+  events: { type: Array, default: () => [] },
+  departments: { type: Array, default: () => [] }
 })
 
+const department = ref('') // State để lưu phòng
 const view = ref('month')
-const cursor = ref(new Date()) // State để theo dõi tháng/tuần hiện tại đang hiển thị
+const cursor = ref(new Date()) // State để theo dõi ngày của tháng/tuần hiện tại đang hiển thị
 const searchQuery = ref('') // State cho bộ lọc
 const weekDays = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN']
 
 // --- LOGIC LỌC DỮ LIỆU ---
 const filteredEvents = computed(() => {
-  const query = searchQuery.value.toLowerCase().trim()
+  const query = searchQuery.value.toLowerCase().trim() 
   if (!query) return props.events
   return props.events.filter(ev =>
     ev.employeeName.toLowerCase().includes(query) ||
@@ -142,9 +154,15 @@ const isToday = (date) => {
 }
 
 const isSameMonth = (date) => date.getMonth() === cursor.value.getMonth()
-// Các hàm tính toán ngày tháng
-function startOfMonth(d) { return new Date(d.getFullYear(), d.getMonth(), 1) } // Lấy đầu tháng của ngày d
-function endOfMonth(d) { return new Date(d.getFullYear(), d.getMonth() + 1, 0) } // Lấy cuối tháng của ngày d
+
+function startOfMonth(d) { 
+  return new Date(d.getFullYear(), d.getMonth(), 1) 
+} // Lấy ngày đầu tháng
+
+function endOfMonth(d) { 
+  return new Date(d.getFullYear(), d.getMonth() + 1, 0) 
+} // Lấy ngày cuối tháng
+
 function startOfWeek(d) {
   const day = d.getDay() || 7
   const diff = day - 1
@@ -163,12 +181,13 @@ const isWeekend = (date) => {
 const title = computed(() => {
   if (view.value === 'month') return cursor.value.toLocaleString('vi-VN', { month: 'long', year: 'numeric' })
   const start = startOfWeek(cursor.value)
-  const end = new Date(start); end.setDate(start.getDate() + 6)
+  const end = new Date(start); 
+  end.setDate(start.getDate() + 6)
   return `T${start.getMonth() + 1} ${start.getDate()} - ${end.getDate()}`
 })
 // Tạo mảng ngày cho chế độ xem tháng
 const monthGrid = computed(() => {
-  const start = startOfWeek(startOfMonth(cursor.value))
+  const start = startOfWeek(startOfMonth(cursor.value)) 
   const end = endOfMonth(cursor.value)
   const last = startOfWeek(end)
   const days = []
@@ -200,6 +219,21 @@ function eventsForDate(d) {
   })
 }
 
+ function checkDepartmentCapacity(departmentName, checkDate, leaveRequestsList){
+    let count = 0;
+    if (!leaveRequestsList || leaveRequestsList.length === 0) return false;
+    for (const leave of leaveRequestsList) {
+        if (leave.department === departmentName) {
+            const from = getNowString(leave.fromDate);
+            const to = getNowString(leave.toDate);
+            const check = getNowString(checkDate);
+            if (from <= check && check <= to) {
+                count++;
+            }
+        }
+    } 
+    return count>=2;
+}
 // --- NAVIGATION ---
 const prev = () => {
   const d = new Date(cursor.value)
@@ -212,6 +246,8 @@ const next = () => {
   cursor.value = d
 }
 const goToToday = () => { cursor.value = new Date() }
-
-watch(view, () => { cursor.value = new Date() })
+// Khi người dùng thay đổi chế độ xem, tự động chuyển về tháng/tuần hiện tại để tránh việc hiển thị dữ liệu trống
+watch(view, () => { 
+  cursor.value = new Date() 
+})
 </script>

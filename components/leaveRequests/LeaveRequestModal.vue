@@ -66,7 +66,7 @@
             <FormButton @click="$emit('close')" variant="ghost" aria-label="Đóng" class=" !px-5 !py-2.5 !rounded-md"> Đóng </FormButton>
           </template>
 
-          <template v-if="isRejecting">
+          <template v-else>
             <FormButton @click="confirmReject" variant="danger" class="!px-5 !py-2.5 !rounded-md">Xác nhận từ chối</FormButton>
             <FormButton @click="cancelReject" variant="secondary" class="!px-5 !py-2.5 !rounded-md">Hủy thao tác</FormButton>
           </template>
@@ -121,13 +121,13 @@ function startReject() {
   rejectError.value = ''
   form.rejectionReason = ''
 }
-
+// Hủy từ chối đơn
 function cancelReject() {
   isRejecting.value = false
   rejectError.value = ''
   form.rejectionReason = ''
 }
-
+// Xác nhận từ chối đơn
 function confirmReject() {
   if (!form.rejectionReason || !form.rejectionReason.trim()) {
     rejectError.value = 'Vui lòng nhập lý do từ chối để nhân sự nắm thông tin!'

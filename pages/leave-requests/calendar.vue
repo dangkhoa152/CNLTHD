@@ -16,7 +16,7 @@
       </div>
 
       <div class="mt-6 rounded-[1.75rem] border border-gray-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-        <LeaveCalendar :events="approvedLeaves" />
+        <LeaveCalendar :events="approvedLeaves" :departments="departmentStore.departments" />
       </div>
     </div>
   </div>
@@ -29,9 +29,10 @@ definePageMeta({
 })
 
 import { computed, onMounted } from 'vue'
-import LeaveCalendar from '~/components/leaveRequests/LeaveCalendar.vue'
 import { useLeaveRequestStore } from '~/stores/leaveRequestStore'
+import { useDepartmentStore } from '~/stores/departmentStore'
 const router = useRouter()
+const departmentStore = useDepartmentStore()
 const leaveStore = useLeaveRequestStore()
 const approvedLeaves = computed(() => leaveStore.leaveRequests.filter(i => i.status === 'Đã duyệt'))
 
@@ -42,10 +43,9 @@ function goBack() {
 onMounted(async () => {
   try {
     await leaveStore.fetchLeaveRequests()
+    await departmentStore.fetchDepartments()
   } catch (e) {
     console.error('Không thể load dữ liệu đơn nghỉ phép', e)
   }
 })
 </script>
-
-<style scoped></style>

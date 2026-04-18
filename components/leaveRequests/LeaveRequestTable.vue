@@ -2,12 +2,12 @@
   <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm overflow-x-auto border border-gray-200 dark:border-gray-700">
     <div class="p-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
       <div class="flex flex-wrap items-center gap-2">
-        <button v-if="auth.user?.role === 'admin'" @click="bulkApprove" :disabled="selectedIds.size===0" class="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50">
-          Duyệt hàng loạt
-        </button>
-        <button v-if="auth.user?.role === 'admin'" @click="bulkReject" :disabled="selectedIds.size===0" class="inline-flex items-center gap-2 rounded-full bg-rose-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-700 disabled:opacity-50">
+        <FormButton v-if="auth.user?.role === 'admin'" @click="bulkApprove" :disabled="selectedIds.size===0" variant="success" class="inline-flex items-center gap-2 disabled:opacity-50">
+          Duyệt hàng loạt 
+        </FormButton>
+        <FormButton v-if="auth.user?.role === 'admin'" @click="bulkReject" :disabled="selectedIds.size===0" variant="danger" class="inline-flex items-center gap-2 disabled:opacity-50">
           Từ chối hàng loạt
-        </button>
+        </FormButton>
       </div>
       <div class="text-sm text-slate-500 dark:text-slate-400">Đã chọn: <span class="font-semibold text-slate-700 dark:text-slate-100">{{ selectedIds.size }}</span></div>
     </div>
@@ -70,8 +70,7 @@
 </template>
 
 <script setup>
-import LeaveRequestRow from './LeaveRequestRow.vue'
-import SortIcon from '../common/SortIcon.vue'
+
 import { ref, computed, watch } from 'vue'
 
 const auth = useAuthStore() 
@@ -92,7 +91,9 @@ function toggleSelect(id, checked) {
   emit('selection-changed', Array.from(selectedIds.value))
 }
 // Computed property để kiểm tra xem tất cả các mục có được chọn hay không, dùng để điều khiển checkbox "Chọn tất cả"
-const allSelected = computed(() => props.items.length > 0 && props.items.every(i => selectedIds.value.has(i.id)))
+const allSelected = computed(() =>
+  props.items.length > 0 && 
+  props.items.every(i => selectedIds.value.has(i.id)))
 
 watch(() => props.resetSelectionCounter, (current, previous) => {
   if (previous !== undefined && current !== previous) {

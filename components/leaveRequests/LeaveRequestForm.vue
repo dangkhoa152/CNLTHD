@@ -60,8 +60,8 @@
       </div>
 
       <div class="mt-6 flex justify-end gap-2">
-        <FormButton @click="$emit('close')" variant="secondary" class="!px-4 !py-2">Hủy</FormButton>
-        <FormButton @click="submit" variant="primary" :loading="false" class="!px-4 !py-2"> {{ isEdit ? 'Lưu' : 'Tạo' }}</FormButton>
+        <FormButton @click="$emit('close')" variant="secondary" class="!px-4 !py-2 !rounded-md">Hủy</FormButton>
+        <FormButton @click="submit" variant="primary" :loading="false" class="!px-4 !py-2 !rounded-md"> {{ isEdit ? 'Lưu' : 'Tạo' }}</FormButton>
       </div>
     </div>
   </div>
